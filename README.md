@@ -1,28 +1,36 @@
-# RatingStar für WordPress
+# RatingStar for WordPress
 
-Bindet das RatingStar-Siegel und die Google-Sterne (Rich Snippets) einer
-RatingStar-Filiale (https://ratingstar.de) in eine WordPress-Website ein.
+Embed your [RatingStar](https://ratingstar.de) seal and Google review stars
+(rich snippets) into any WordPress site.
 
-**Status: in Entwicklung** — Funktionsumfang und Roadmap stehen in den
-Issues dieses Repos.
+> **Status:** early development — see the repository issues for the roadmap.
 
-## Geplanter Funktionsumfang
+## Features
 
-- Einstellungsseite: RatingStar-Profil-Slug + Embed-Key hinterlegen
-- Siegel-Widget (Rundsiegel, Banderole, Floating-Badge) als Shortcode
-  `[ratingstar]` und Gutenberg-Block
-- Google-Sterne: serverseitiges JSON-LD über den offiziellen
-  RatingStar-PHP-Snippet-Endpunkt (`/seal/k/<key>.json`)
+- **Settings page** — store your RatingStar profile slug and embed key once
+  under *Settings → RatingStar*; the slug is verified against your live profile.
+- **Seal widget** *(planned)* — render the RatingStar seal (round badge,
+  banderole, floating badge) via the `[ratingstar]` shortcode or a Gutenberg block.
+- **Google stars** *(planned)* — server-side JSON-LD (`AggregateRating`) in the
+  page head, cached via a transient, toggleable per page.
 
-## Entwicklung
+## Requirements
 
-Dieses Repo enthält **nur das Plugin**. Die lokale Test-Instanz liegt
-drumherum: DDEV-Projekt `ratingstar-plugin-wordpress`
-(https://ratingstar-plugin-wordpress.ddev.site, Login `admin`),
-das Plugin ist dort unter `wp-content/plugins/ratingstar` ausgecheckt.
+- WordPress 6.0 or newer
+- PHP 8.1 or newer
 
-```bash
-cd ~/Sites/Dev/ratingstar-plugin-wordpress
-ddev start
-ddev wp plugin activate ratingstar
-```
+## Installation
+
+1. Upload the `ratingstar` folder to `wp-content/plugins/`, or install the ZIP
+   via *Plugins → Add New → Upload Plugin*.
+2. Activate **RatingStar** under *Plugins*.
+3. Open *Settings → RatingStar* and enter your profile slug and embed key.
+
+## Development
+
+The plugin is self-contained and loads without a build step — drop the folder
+into any WordPress install's `wp-content/plugins/` directory to test.
+
+## License
+
+GPL-2.0-or-later.
