@@ -133,10 +133,15 @@ class RatingStar_Seal {
 
 		wp_enqueue_script( self::SCRIPT_HANDLE );
 
+		// When the plugin emits server-side JSON-LD, suppress seal.js's own
+		// rich snippet so the AggregateRating is not duplicated.
+		$no_rich = empty( $settings['jsonld_enabled'] ) ? '' : ' data-no-richsnippet="1"';
+
 		return sprintf(
-			'<div class="rs-seal" data-slug="%1$s" data-variant="%2$s"></div>',
+			'<div class="rs-seal" data-slug="%1$s" data-variant="%2$s"%3$s></div>',
 			esc_attr( $slug ),
-			esc_attr( $variant )
+			esc_attr( $variant ),
+			$no_rich
 		);
 	}
 }

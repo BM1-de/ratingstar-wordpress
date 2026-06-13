@@ -25,6 +25,8 @@ final class RatingStar_Plugin {
 
 	public RatingStar_Seal $seal;
 
+	public RatingStar_JsonLd $jsonld;
+
 	/**
 	 * Returns the single plugin instance, creating it on first call.
 	 */
@@ -42,6 +44,9 @@ final class RatingStar_Plugin {
 
 		$this->seal = new RatingStar_Seal();
 		$this->seal->register();
+
+		$this->jsonld = new RatingStar_JsonLd();
+		$this->jsonld->register();
 
 		add_action( 'init', array( $this, 'load_textdomain' ) );
 	}
@@ -64,8 +69,9 @@ final class RatingStar_Plugin {
 	 */
 	public static function get_settings(): array {
 		$defaults = array(
-			'profile_slug' => '',
-			'embed_key'    => '',
+			'profile_slug'   => '',
+			'embed_key'      => '',
+			'jsonld_enabled' => true,
 		);
 
 		$stored = get_option( self::OPTION_KEY, array() );

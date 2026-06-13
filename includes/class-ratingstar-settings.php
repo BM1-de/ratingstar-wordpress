@@ -55,8 +55,9 @@ class RatingStar_Settings {
 				'type'              => 'array',
 				'sanitize_callback' => array( $this, 'sanitize' ),
 				'default'           => array(
-					'profile_slug' => '',
-					'embed_key'    => '',
+					'profile_slug'   => '',
+					'embed_key'      => '',
+					'jsonld_enabled' => true,
 				),
 			)
 		);
@@ -85,6 +86,15 @@ class RatingStar_Settings {
 			'ratingstar_main',
 			array( 'label_for' => 'ratingstar_embed_key' )
 		);
+
+		add_settings_field(
+			'jsonld_enabled',
+			__( 'Google review stars', 'ratingstar' ),
+			array( $this, 'render_field_jsonld' ),
+			self::PAGE_SLUG,
+			'ratingstar_main',
+			array( 'label_for' => 'ratingstar_jsonld_enabled' )
+		);
 	}
 
 	/**
@@ -101,8 +111,9 @@ class RatingStar_Settings {
 		$current = RatingStar_Plugin::get_settings();
 		$input   = is_array( $input ) ? $input : array();
 
-		$slug = isset( $input['profile_slug'] ) ? sanitize_title( wp_unslash( $input['profile_slug'] ) ) : '';
-		$key  = isset( $input['embed_key'] ) ? sanitize_text_field( wp_unslash( $input['embed_key'] ) ) : '';
+		$slug   = isset( $input['profile_slug'] ) ? sanitize_title( wp_unslash( $input['profile_slug'] ) ) : '';
+		$key    = isset( $input['embed_key'] ) ? sanitize_text_field( wp_unslash( $input['embed_key'] ) ) : '';
+		$jsonld = ! empty( $input['jsonld_enabled'] );
 
 		if ( '' !== $slug && $slug !== $current['profile_slug'] ) {
 			$result = $this->validate_slug( $slug );
@@ -134,8 +145,9 @@ class RatingStar_Settings {
 		}
 
 		return array(
-			'profile_slug' => $slug,
-			'embed_key'    => $key,
+			'profile_slug'   => $slug,
+			'embed_key'      => $key,
+			'jsonld_enabled' => $jsonld,
 		);
 	}
 
@@ -244,6 +256,21 @@ class RatingStar_Settings {
 		);
 
 		echo '<p class="description">' . esc_html__( 'Embed / API key for the Google review stars snippet (Seal & widget codes in your RatingStar backend).', 'ratingstar' ) . '</p>';
+	}
+
+	/**
+	 * Renders the Google-stars (JSON-LD) toggle.
+	 */
+	public function render_field_jsonld(): void {
+		$settings = RatingStar_Plugin::get_settings();
+
+		printf(
+			'<label><input type="checkbox" id="ratingstar_jsonld_enabled" name="%1$s[jsonld_enabled]" value="1" %2$s /> %3$s</label>',
+			esc_attr( RatingStar_Plugin::OPTION_KEY ),
+			checked( ! empty( $settings['jsonld_enabled'] ), true, false ),
+			esc_html__( 'Output Google review stars (JSON-LD) on the front page', 'ratingstar' )
+		);
+		echo '<p class="description">' . esc_html__( 'Adds an AggregateRating snippet to the homepage so Google can show review stars, and disables the seal’s built-in snippet to avoid duplicates.', 'ratingstar' ) . '</p>';
 	}
 
 	/**

@@ -31,5 +31,6 @@ define( 'RATINGSTAR_API_BASE', 'https://ratingstar.de' );
 require_once RATINGSTAR_PATH . 'includes/class-ratingstar-plugin.php';
 require_once RATINGSTAR_PATH . 'includes/class-ratingstar-settings.php';
 require_once RATINGSTAR_PATH . 'includes/class-ratingstar-seal.php';
+require_once RATINGSTAR_PATH . 'includes/class-ratingstar-jsonld.php';
 
 RatingStar_Plugin::instance();
