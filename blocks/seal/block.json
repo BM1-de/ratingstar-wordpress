@@ -1,0 +1,23 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "ratingstar/seal",
+	"version": "0.1.0",
+	"title": "RatingStar Seal",
+	"category": "widgets",
+	"icon": "star-filled",
+	"description": "Display your RatingStar seal (rating badge) in one of three variants.",
+	"keywords": [ "ratingstar", "rating", "reviews", "seal", "stars" ],
+	"textdomain": "ratingstar",
+	"attributes": {
+		"variant": {
+			"type": "string",
+			"default": "banner"
+		}
+	},
+	"supports": {
+		"html": false,
+		"multiple": true
+	},
+	"editorScript": "file:./editor.js"
+}

@@ -23,6 +23,8 @@ final class RatingStar_Plugin {
 
 	public RatingStar_Settings $settings;
 
+	public RatingStar_Seal $seal;
+
 	/**
 	 * Returns the single plugin instance, creating it on first call.
 	 */
@@ -37,6 +39,9 @@ final class RatingStar_Plugin {
 	private function __construct() {
 		$this->settings = new RatingStar_Settings();
 		$this->settings->register();
+
+		$this->seal = new RatingStar_Seal();
+		$this->seal->register();
 
 		add_action( 'init', array( $this, 'load_textdomain' ) );
 	}
