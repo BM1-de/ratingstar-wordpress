@@ -26,11 +26,23 @@ Embed your [RatingStar](https://ratingstar.de) seal and Google review stars
 2. Activate **RatingStar** under *Plugins*.
 3. Open *Settings → RatingStar* and enter your profile slug and embed key.
 
+## Usage
+
+Place the seal with the shortcode `[ratingstar variant="banner"]` (variants:
+`banner`, `circle`, `card`) or the **RatingStar Seal** block (pick the variant
+in the sidebar). Keep **Google review stars** enabled under *Settings →
+RatingStar* to also output the rating as server-side JSON-LD on your front page.
+
 ## Development
 
 The plugin is self-contained and loads without a build step — drop the folder
 into any WordPress install's `wp-content/plugins/` directory to test.
 
+For a release, `bin/build.sh` produces an installable, dev-file-free ZIP.
+Pushing a `v*` tag triggers the GitHub Action that deploys that version to the
+WordPress.org plugin SVN (requires the `SVN_USERNAME` / `SVN_PASSWORD`
+repository secrets).
+
 ## License
 
-GPL-2.0-or-later.
+[GPL-2.0-or-later](LICENSE).

@@ -1,0 +1,10 @@
+# Files and folders that must not ship to the WordPress.org SVN / plugin ZIP.
+/.git
+/.github
+/.gitignore
+/.distignore
+/bin
+/node_modules
+/vendor
+/README.md
+*.zip

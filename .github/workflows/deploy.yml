@@ -1,0 +1,31 @@
+name: Deploy to WordPress.org
+
+# Push a version tag (e.g. v0.1.0) to publish that release to the
+# WordPress.org plugin SVN. The tag must match the "Stable tag" in readme.txt.
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  deploy:
+    name: Deploy to WordPress.org SVN
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: WordPress.org plugin deploy
+        uses: 10up/action-wordpress-plugin-deploy@stable
+        with:
+          generate-zip: true
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SLUG: ratingstar
+
+      - name: Upload release ZIP as workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ratingstar
+          path: ${{ github.workspace }}/ratingstar.zip
