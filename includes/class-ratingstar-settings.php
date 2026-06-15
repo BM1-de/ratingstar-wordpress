@@ -57,6 +57,7 @@ class RatingStar_Settings {
 				'default'           => array(
 					'profile_slug'   => '',
 					'embed_key'      => '',
+					'base_origin'    => RATINGSTAR_API_BASE,
 					'jsonld_enabled' => true,
 				),
 			)
@@ -95,6 +96,15 @@ class RatingStar_Settings {
 			'ratingstar_main',
 			array( 'label_for' => 'ratingstar_jsonld_enabled' )
 		);
+
+		add_settings_field(
+			'base_origin',
+			__( 'RatingStar base URL', 'ratingstar' ),
+			array( $this, 'render_field_origin' ),
+			self::PAGE_SLUG,
+			'ratingstar_main',
+			array( 'label_for' => 'ratingstar_base_origin' )
+		);
 	}
 
 	/**
@@ -112,11 +122,31 @@ class RatingStar_Settings {
 		$input   = is_array( $input ) ? $input : array();
 
 		$slug   = isset( $input['profile_slug'] ) ? sanitize_title( wp_unslash( $input['profile_slug'] ) ) : '';
-		$key    = isset( $input['embed_key'] ) ? sanitize_text_field( wp_unslash( $input['embed_key'] ) ) : '';
 		$jsonld = ! empty( $input['jsonld_enabled'] );
 
+		// Base origin: fall back to the default when the field is emptied.
+		$origin_raw = isset( $input['base_origin'] ) ? esc_url_raw( trim( (string) wp_unslash( $input['base_origin'] ) ) ) : '';
+		$origin     = '' !== $origin_raw ? untrailingslashit( $origin_raw ) : RATINGSTAR_API_BASE;
+
+		// API key: accept only the rs_live_<40> form. Keep the previous key on a
+		// malformed value (never store free text); an explicit empty clears it.
+		$key_raw = isset( $input['embed_key'] ) ? sanitize_text_field( wp_unslash( $input['embed_key'] ) ) : '';
+		$key     = $current['embed_key'];
+		if ( '' === $key_raw ) {
+			$key = '';
+		} elseif ( RatingStar_Plugin::is_valid_key( $key_raw ) ) {
+			$key = $key_raw;
+		} else {
+			add_settings_error(
+				RatingStar_Plugin::OPTION_KEY,
+				'key_invalid',
+				__( 'The API key must look like “rs_live_” followed by 40 letters or digits. Kept the previous value.', 'ratingstar' ),
+				'error'
+			);
+		}
+
 		if ( '' !== $slug && $slug !== $current['profile_slug'] ) {
-			$result = $this->validate_slug( $slug );
+			$result = $this->validate_slug( $slug, $origin );
 
 			if ( is_wp_error( $result ) ) {
 				add_settings_error(
@@ -144,9 +174,14 @@ class RatingStar_Settings {
 			}
 		}
 
+		// Drop cached profile data so config/key/slug changes take effect now.
+		RatingStar_JsonLd::delete_cache( $current['profile_slug'] );
+		RatingStar_JsonLd::delete_cache( $slug );
+
 		return array(
 			'profile_slug'   => $slug,
 			'embed_key'      => $key,
+			'base_origin'    => $origin,
 			'jsonld_enabled' => $jsonld,
 		);
 	}
@@ -157,8 +192,8 @@ class RatingStar_Settings {
 	 * @param string $slug Sanitized profile slug.
 	 * @return string|WP_Error Profile display name on success, WP_Error otherwise.
 	 */
-	private function validate_slug( string $slug ) {
-		$url = trailingslashit( RATINGSTAR_API_BASE ) . 't/' . rawurlencode( $slug );
+	private function validate_slug( string $slug, string $origin ) {
+		$url = untrailingslashit( $origin ) . '/t/' . rawurlencode( $slug );
 
 		$response = wp_remote_get(
 			$url,
@@ -238,7 +273,7 @@ class RatingStar_Settings {
 		printf(
 			/* translators: %s: example profile URL pattern */
 			esc_html__( 'The slug from your profile URL %s.', 'ratingstar' ),
-			'<code>' . esc_html( trailingslashit( RATINGSTAR_API_BASE ) . 't/<slug>' ) . '</code>'
+			'<code>' . esc_html( RatingStar_Plugin::get_origin() . '/t/<slug>' ) . '</code>'
 		);
 		echo '</p>';
 	}
@@ -250,12 +285,12 @@ class RatingStar_Settings {
 		$settings = RatingStar_Plugin::get_settings();
 
 		printf(
-			'<input type="text" id="ratingstar_embed_key" name="%1$s[embed_key]" value="%2$s" class="regular-text" autocomplete="off" />',
+			'<input type="text" id="ratingstar_embed_key" name="%1$s[embed_key]" value="%2$s" class="regular-text code" autocomplete="off" placeholder="rs_live_…" />',
 			esc_attr( RatingStar_Plugin::OPTION_KEY ),
 			esc_attr( $settings['embed_key'] )
 		);
 
-		echo '<p class="description">' . esc_html__( 'Embed / API key for the Google review stars snippet (Seal & widget codes in your RatingStar backend).', 'ratingstar' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'API key (format: “rs_live_” + 40 characters) from your RatingStar backend. Drives the rename-proof key-based endpoints. Optional for now.', 'ratingstar' ) . '</p>';
 	}
 
 	/**
@@ -271,6 +306,27 @@ class RatingStar_Settings {
 			esc_html__( 'Output Google review stars (JSON-LD) on the front page', 'ratingstar' )
 		);
 		echo '<p class="description">' . esc_html__( 'Adds an AggregateRating snippet to the homepage so Google can show review stars, and disables the seal’s built-in snippet to avoid duplicates.', 'ratingstar' ) . '</p>';
+	}
+
+	/**
+	 * Renders the base URL (origin) input — advanced, for staging/self-hosted.
+	 */
+	public function render_field_origin(): void {
+		$settings = RatingStar_Plugin::get_settings();
+
+		printf(
+			'<input type="url" id="ratingstar_base_origin" name="%1$s[base_origin]" value="%2$s" class="regular-text code" placeholder="%3$s" />',
+			esc_attr( RatingStar_Plugin::OPTION_KEY ),
+			esc_attr( $settings['base_origin'] ),
+			esc_attr( RATINGSTAR_API_BASE )
+		);
+		echo '<p class="description">';
+		printf(
+			/* translators: %s: default origin URL */
+			esc_html__( 'Advanced: the RatingStar origin every URL is built from. Leave as %s unless you use a staging or self-hosted RatingStar.', 'ratingstar' ),
+			'<code>' . esc_html( RATINGSTAR_API_BASE ) . '</code>'
+		);
+		echo '</p>';
 	}
 
 	/**

@@ -118,7 +118,7 @@ class RatingStar_JsonLd {
 			return is_array( $cached ) ? $cached : array();
 		}
 
-		$url = trailingslashit( RATINGSTAR_API_BASE ) . 'seal/' . rawurlencode( $slug ) . '.json';
+		$url = RatingStar_Plugin::get_origin() . '/seal/' . rawurlencode( $slug ) . '.json';
 
 		$response = wp_remote_get(
 			$url,
@@ -143,5 +143,15 @@ class RatingStar_JsonLd {
 		set_transient( $key, $data, self::CACHE_TTL );
 
 		return $data;
+	}
+
+	/**
+	 * Drops the cached profile data for a slug (called when settings change so
+	 * config/key rotation takes effect without waiting for the TTL).
+	 */
+	public static function delete_cache( string $slug ): void {
+		if ( '' !== $slug ) {
+			delete_transient( self::TRANSIENT_PREFIX . md5( $slug ) );
+		}
 	}
 }

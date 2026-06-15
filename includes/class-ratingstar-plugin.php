@@ -71,11 +71,30 @@ final class RatingStar_Plugin {
 		$defaults = array(
 			'profile_slug'   => '',
 			'embed_key'      => '',
+			'base_origin'    => RATINGSTAR_API_BASE,
 			'jsonld_enabled' => true,
 		);
 
 		$stored = get_option( self::OPTION_KEY, array() );
 
 		return wp_parse_args( is_array( $stored ) ? $stored : array(), $defaults );
+	}
+
+	/**
+	 * Returns the configured RatingStar base origin without a trailing slash.
+	 * Every API URL must be built from this — never hard-code a host.
+	 */
+	public static function get_origin(): string {
+		$settings = self::get_settings();
+		$origin   = '' !== $settings['base_origin'] ? $settings['base_origin'] : RATINGSTAR_API_BASE;
+
+		return untrailingslashit( $origin );
+	}
+
+	/**
+	 * Validates the API key format: "rs_live_" followed by 40 alphanumeric chars.
+	 */
+	public static function is_valid_key( string $key ): bool {
+		return 1 === preg_match( '/^rs_live_[A-Za-z0-9]{40}$/', $key );
 	}
 }

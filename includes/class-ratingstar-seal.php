@@ -43,7 +43,7 @@ class RatingStar_Seal {
 	public function register_assets(): void {
 		wp_register_script(
 			self::SCRIPT_HANDLE,
-			'https://ratingstar.de/seal.js',
+			RatingStar_Plugin::get_origin() . '/seal.js',
 			array(),
 			null,
 			true
