@@ -51,6 +51,9 @@ class RatingStar_Seal {
 	/** Allowed data-position values. */
 	const POSITIONS = array( 'bottom-right', 'bottom-left', 'top-right', 'top-left' );
 
+	/** Variants available as a static SVG (no-JS fallback). */
+	const STATIC_VARIANTS = array( 'banner', 'circle', 'card' );
+
 	/** Registered handle for the external seal.js. */
 	const SCRIPT_HANDLE = 'ratingstar-seal';
 
@@ -118,12 +121,18 @@ class RatingStar_Seal {
 				'variant'  => self::DEFAULT_VARIANT,
 				'slug'     => '',
 				'position' => '',
+				'static'   => '',
 			),
 			$atts,
 			'ratingstar'
 		);
 
-		return $this->render_markup( (string) $atts['variant'], (string) $atts['slug'], (string) $atts['position'] );
+		return $this->render_markup(
+			(string) $atts['variant'],
+			(string) $atts['slug'],
+			(string) $atts['position'],
+			filter_var( $atts['static'], FILTER_VALIDATE_BOOLEAN )
+		);
 	}
 
 	/**
@@ -136,8 +145,9 @@ class RatingStar_Seal {
 		$variant  = isset( $attributes['variant'] ) ? (string) $attributes['variant'] : self::DEFAULT_VARIANT;
 		$slug     = isset( $attributes['slug'] ) ? (string) $attributes['slug'] : '';
 		$position = isset( $attributes['position'] ) ? (string) $attributes['position'] : '';
+		$static   = ! empty( $attributes['static'] );
 
-		return $this->render_markup( $variant, $slug, $position );
+		return $this->render_markup( $variant, $slug, $position, $static );
 	}
 
 	/**
@@ -147,7 +157,7 @@ class RatingStar_Seal {
 	 * @param string $slug_override Optional slug overriding the configured one.
 	 * @return string
 	 */
-	private function render_markup( string $variant, string $slug_override, string $position = '' ): string {
+	private function render_markup( string $variant, string $slug_override, string $position = '', bool $static = false ): string {
 		$variant  = in_array( $variant, self::VARIANTS, true ) ? $variant : self::DEFAULT_VARIANT;
 		$settings = RatingStar_Plugin::get_settings();
 		$slug     = '' !== $slug_override ? sanitize_title( $slug_override ) : $settings['profile_slug'];
@@ -159,6 +169,18 @@ class RatingStar_Seal {
 			}
 
 			return '';
+		}
+
+		// Static SVG fallback (no JavaScript) — for email/PDF/AMP/JS-off contexts.
+		if ( $static ) {
+			$svg_variant = in_array( $variant, self::STATIC_VARIANTS, true ) ? $variant : 'banner';
+			$src         = RatingStar_Plugin::get_origin() . '/seal/' . rawurlencode( $slug ) . '.svg?variant=' . rawurlencode( $svg_variant );
+
+			return sprintf(
+				'<img class="rs-seal-static" src="%1$s" alt="%2$s" loading="lazy" decoding="async" />',
+				esc_url( $src ),
+				esc_attr__( 'RatingStar rating seal', 'ratingstar' )
+			);
 		}
 
 		wp_enqueue_script( self::SCRIPT_HANDLE );

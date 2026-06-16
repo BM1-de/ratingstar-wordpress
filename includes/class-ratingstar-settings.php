@@ -253,6 +253,7 @@ class RatingStar_Settings {
 	 */
 	public function render_section_intro(): void {
 		echo '<p>' . esc_html__( 'Enter your RatingStar profile details. They are used by the seal widget and the Google review stars.', 'ratingstar' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Whitelist this site’s domain in your RatingStar backend (tab “Auslieferung” / Delivery) and verify it with a TXT _ratingstar.<domain> DNS record — otherwise the seal data is blocked with HTTP 403. The key-based output works on all plans.', 'ratingstar' ) . '</p>';
 	}
 
 	/**

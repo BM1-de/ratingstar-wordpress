@@ -17,6 +17,7 @@
 	var PanelBody = components.PanelBody;
 	var SelectControl = components.SelectControl;
 	var TextControl = components.TextControl;
+	var ToggleControl = components.ToggleControl;
 
 	// Full VARIANT_META set (see seal.js): static variants work on all plans;
 	// live variants need a 4-star+ plan and degrade to a static seal otherwise.
@@ -64,6 +65,13 @@
 					value: a.slug || '',
 					placeholder: __( 'Default: slug from Settings → RatingStar', 'ratingstar' ),
 					onChange: function ( value ) { props.setAttributes( { slug: value } ); }
+				} ),
+				el( ToggleControl, {
+					key: 'static',
+					label: __( 'Static image (no JavaScript)', 'ratingstar' ),
+					help: __( 'Render a plain SVG image (banner/circle/card) instead of the live widget — for email/PDF/AMP/no-JS.', 'ratingstar' ),
+					checked: !! a.static,
+					onChange: function ( value ) { props.setAttributes( { static: value } ); }
 				} )
 			];
 

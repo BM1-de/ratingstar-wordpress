@@ -21,6 +21,10 @@
 		"position": {
 			"type": "string",
 			"default": ""
+		},
+		"static": {
+			"type": "boolean",
+			"default": false
 		}
 	},
 	"supports": {
