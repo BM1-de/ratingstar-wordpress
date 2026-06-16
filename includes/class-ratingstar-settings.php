@@ -174,9 +174,8 @@ class RatingStar_Settings {
 			}
 		}
 
-		// Drop cached profile data so config/key/slug changes take effect now.
-		RatingStar_JsonLd::delete_cache( $current['profile_slug'] );
-		RatingStar_JsonLd::delete_cache( $slug );
+		// Drop the cached JSON-LD so config/key/slug changes take effect now.
+		RatingStar_JsonLd::delete_cache();
 
 		return array(
 			'profile_slug'   => $slug,

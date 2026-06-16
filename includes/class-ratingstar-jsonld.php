@@ -1,10 +1,13 @@
 <?php
 /**
- * Server-side Google review stars (JSON-LD AggregateRating).
+ * Server-side Google review stars (JSON-LD).
  *
- * Fetches the public profile data from ratingstar.de/seal/<slug>.json (cached
- * in a transient) and prints an Organization AggregateRating snippet into
- * wp_head on the front page — only when there are actual ratings.
+ * Fetches the ready-made JSON-LD from the RatingStar app and prints it into
+ * wp_head on the front page. The endpoint is key-based when an API key is set
+ * (rename-proof, preferred), otherwise slug-based. The app builds the schema —
+ * LocalBusiness with an aggregateRating only when real ratings exist and the
+ * plan allows it, a bare LocalBusiness otherwise — and the plugin passes it
+ * through unchanged (never inventing or zero-ing a rating). Cached for 6 hours.
  *
  * @package RatingStar
  */
@@ -14,17 +17,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Outputs the AggregateRating JSON-LD for the configured RatingStar profile.
+ * Outputs the RatingStar LocalBusiness JSON-LD for the configured profile.
  */
 class RatingStar_JsonLd {
 
-	/** Transient key prefix for cached seal data. */
-	const TRANSIENT_PREFIX = 'ratingstar_seal_';
+	/** Single transient holding the fetched JSON-LD (one profile per site). */
+	const TRANSIENT_KEY = 'ratingstar_jsonld';
 
-	/** How long to cache a successful profile fetch. */
+	/** Cache lifetime for a successful fetch (matches the contract's ~6h). */
 	const CACHE_TTL = 6 * HOUR_IN_SECONDS;
 
-	/** Shorter cache for failed fetches, so we retry sooner. */
+	/** Shorter cache for failures (403/tier or transient errors), to retry sooner. */
 	const NEGATIVE_TTL = 15 * MINUTE_IN_SECONDS;
 
 	/**
@@ -35,90 +38,51 @@ class RatingStar_JsonLd {
 	}
 
 	/**
-	 * Prints the JSON-LD snippet on the front page when appropriate.
+	 * Prints the JSON-LD on the front page when the feature is enabled.
 	 */
 	public function output(): void {
-		// An organisation-level rating belongs on the front page once, not on
-		// every sub-page (which would duplicate the AggregateRating).
+		$settings = RatingStar_Plugin::get_settings();
+
+		if ( empty( $settings['jsonld_enabled'] ) ) {
+			return;
+		}
+
+		// One organisation-level snippet, on the front page only (never duplicated
+		// across sub-pages).
 		if ( ! is_front_page() ) {
 			return;
 		}
 
-		$schema = $this->build_schema();
+		$jsonld = $this->get_jsonld();
 
-		if ( null === $schema ) {
+		if ( null === $jsonld ) {
 			return;
 		}
 
-		// wp_json_encode escapes "/" to "<\/script>", so this is safe in <script>.
-		echo "\n" . '<script type="application/ld+json">' . wp_json_encode( $schema ) . '</script>' . "\n";
+		// Re-encode the validated data so the output is safe inside <script>
+		// (wp_json_encode escapes "/", preventing a "</script>" break-out).
+		echo "\n" . '<script type="application/ld+json">' . wp_json_encode( $jsonld ) . '</script>' . "\n";
 	}
 
 	/**
-	 * Builds the AggregateRating schema, or null when it should not be shown
-	 * (feature off, no slug, no data, or no actual ratings).
+	 * Returns the cached JSON-LD as an array, fetching it on a miss. Null when
+	 * nothing is configured, the request fails (e.g. 403 tier-gating), or the
+	 * response is not valid schema.
 	 *
 	 * @return array|null
 	 */
-	public function build_schema(): ?array {
-		$settings = RatingStar_Plugin::get_settings();
-
-		if ( empty( $settings['jsonld_enabled'] ) || '' === $settings['profile_slug'] ) {
-			return null;
-		}
-
-		$data = $this->get_data( $settings['profile_slug'] );
-
-		if ( empty( $data ) ) {
-			return null;
-		}
-
-		$count  = isset( $data['count'] ) ? (int) $data['count'] : 0;
-		$rating = isset( $data['rating'] ) ? (float) $data['rating'] : 0.0;
-
-		// Google requires a real rating; never emit a 0-value AggregateRating.
-		if ( $count < 1 || $rating <= 0 ) {
-			return null;
-		}
-
-		$tenant = ( isset( $data['tenant'] ) && is_array( $data['tenant'] ) ) ? $data['tenant'] : array();
-
-		$schema = array(
-			'@context'        => 'https://schema.org',
-			'@type'           => 'Organization',
-			'name'            => ! empty( $tenant['name'] ) ? $tenant['name'] : get_bloginfo( 'name' ),
-			'url'             => home_url( '/' ),
-			'aggregateRating' => array(
-				'@type'       => 'AggregateRating',
-				'ratingValue' => round( $rating, 1 ),
-				'reviewCount' => $count,
-				'bestRating'  => 5,
-				'worstRating' => 1,
-			),
-		);
-
-		if ( ! empty( $tenant['logo'] ) ) {
-			$schema['logo'] = $tenant['logo'];
-		}
-
-		return $schema;
-	}
-
-	/**
-	 * Returns the cached profile data, fetching it from RatingStar on a miss.
-	 *
-	 * @param string $slug Profile slug.
-	 * @return array Profile data, or an empty array on failure.
-	 */
-	private function get_data( string $slug ): array {
-		$key    = self::TRANSIENT_PREFIX . md5( $slug );
-		$cached = get_transient( $key );
+	private function get_jsonld(): ?array {
+		$cached = get_transient( self::TRANSIENT_KEY );
 
 		if ( false !== $cached ) {
-			return is_array( $cached ) ? $cached : array();
+			return ( is_array( $cached ) && array() !== $cached ) ? $cached : null;
 		}
 
-		$url = RatingStar_Plugin::get_origin() . '/seal/' . rawurlencode( $slug ) . '.json';
+		$url = $this->endpoint();
+
+		if ( null === $url ) {
+			return null;
+		}
 
 		$response = wp_remote_get(
 			$url,
@@ -128,30 +92,52 @@ class RatingStar_JsonLd {
 			)
 		);
 
+		// 403 (json-api-tier / embed-not-authorized) or a transient error: cache
+		// an empty marker briefly and emit nothing, never breaking the page.
 		if ( is_wp_error( $response ) || 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
-			set_transient( $key, array(), self::NEGATIVE_TTL );
-			return array();
+			set_transient( self::TRANSIENT_KEY, array(), self::NEGATIVE_TTL );
+			return null;
 		}
 
 		$data = json_decode( wp_remote_retrieve_body( $response ), true );
 
-		if ( ! is_array( $data ) ) {
-			set_transient( $key, array(), self::NEGATIVE_TTL );
-			return array();
+		// Must look like schema.org JSON-LD (has an @type); otherwise ignore.
+		if ( ! is_array( $data ) || empty( $data['@type'] ) ) {
+			set_transient( self::TRANSIENT_KEY, array(), self::NEGATIVE_TTL );
+			return null;
 		}
 
-		set_transient( $key, $data, self::CACHE_TTL );
+		set_transient( self::TRANSIENT_KEY, $data, self::CACHE_TTL );
 
 		return $data;
 	}
 
 	/**
-	 * Drops the cached profile data for a slug (called when settings change so
-	 * config/key rotation takes effect without waiting for the TTL).
+	 * Builds the JSON-LD endpoint URL. Key-based when an API key is configured
+	 * (rename-proof, works on all plans), otherwise slug-based.
+	 *
+	 * @return string|null
 	 */
-	public static function delete_cache( string $slug ): void {
-		if ( '' !== $slug ) {
-			delete_transient( self::TRANSIENT_PREFIX . md5( $slug ) );
+	private function endpoint(): ?string {
+		$settings = RatingStar_Plugin::get_settings();
+		$origin   = RatingStar_Plugin::get_origin();
+
+		if ( '' !== $settings['embed_key'] ) {
+			return $origin . '/seal/k/' . rawurlencode( $settings['embed_key'] ) . '.jsonld';
 		}
+
+		if ( '' !== $settings['profile_slug'] ) {
+			return $origin . '/seal/' . rawurlencode( $settings['profile_slug'] ) . '.jsonld';
+		}
+
+		return null;
+	}
+
+	/**
+	 * Clears the cached JSON-LD (called when settings change so config/key/slug
+	 * changes take effect without waiting for the TTL).
+	 */
+	public static function delete_cache(): void {
+		delete_transient( self::TRANSIENT_KEY );
 	}
 }
