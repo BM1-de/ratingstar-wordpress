@@ -18,11 +18,38 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class RatingStar_Seal {
 
-	/** Supported seal variants (see seal.js). */
-	const VARIANTS = array( 'banner', 'circle', 'card' );
+	/**
+	 * Supported seal variants (seal.js SealConfig::VARIANT_META). Static variants
+	 * work on all tiers (canonical keys + back-compat aliases); live variants
+	 * (4-star+) are rendered by seal.js and degrade to a static seal on lower
+	 * tiers. Canonical keys listed first.
+	 */
+	const VARIANTS = array(
+		// Static (all tiers) — canonical keys + aliases.
+		'seal-circle',
+		'seal-circle-banner',
+		'circle',
+		'banner',
+		'card',
+		// Live (4-star and up).
+		'profile-card',
+		'bar',
+		'floating',
+		'hero',
+		'quote',
+		'carousel',
+		'wall',
+		'footer-bar',
+	);
 
 	/** Default variant when none/invalid is given. */
 	const DEFAULT_VARIANT = 'banner';
+
+	/** Variants that honour data-position (floating corner / footer bar). */
+	const POSITIONABLE = array( 'floating', 'footer-bar' );
+
+	/** Allowed data-position values. */
+	const POSITIONS = array( 'bottom-right', 'bottom-left', 'top-right', 'top-left' );
 
 	/** Registered handle for the external seal.js. */
 	const SCRIPT_HANDLE = 'ratingstar-seal';
@@ -88,14 +115,15 @@ class RatingStar_Seal {
 	public function render_shortcode( $atts ): string {
 		$atts = shortcode_atts(
 			array(
-				'variant' => self::DEFAULT_VARIANT,
-				'slug'    => '',
+				'variant'  => self::DEFAULT_VARIANT,
+				'slug'     => '',
+				'position' => '',
 			),
 			$atts,
 			'ratingstar'
 		);
 
-		return $this->render_markup( (string) $atts['variant'], (string) $atts['slug'] );
+		return $this->render_markup( (string) $atts['variant'], (string) $atts['slug'], (string) $atts['position'] );
 	}
 
 	/**
@@ -105,9 +133,11 @@ class RatingStar_Seal {
 	 * @return string
 	 */
 	public function render_block( $attributes ): string {
-		$variant = isset( $attributes['variant'] ) ? (string) $attributes['variant'] : self::DEFAULT_VARIANT;
+		$variant  = isset( $attributes['variant'] ) ? (string) $attributes['variant'] : self::DEFAULT_VARIANT;
+		$slug     = isset( $attributes['slug'] ) ? (string) $attributes['slug'] : '';
+		$position = isset( $attributes['position'] ) ? (string) $attributes['position'] : '';
 
-		return $this->render_markup( $variant, '' );
+		return $this->render_markup( $variant, $slug, $position );
 	}
 
 	/**
@@ -117,7 +147,7 @@ class RatingStar_Seal {
 	 * @param string $slug_override Optional slug overriding the configured one.
 	 * @return string
 	 */
-	private function render_markup( string $variant, string $slug_override ): string {
+	private function render_markup( string $variant, string $slug_override, string $position = '' ): string {
 		$variant  = in_array( $variant, self::VARIANTS, true ) ? $variant : self::DEFAULT_VARIANT;
 		$settings = RatingStar_Plugin::get_settings();
 		$slug     = '' !== $slug_override ? sanitize_title( $slug_override ) : $settings['profile_slug'];
@@ -133,14 +163,21 @@ class RatingStar_Seal {
 
 		wp_enqueue_script( self::SCRIPT_HANDLE );
 
+		// data-position is only meaningful for the floating / footer-bar variants.
+		$pos_attr = '';
+		if ( '' !== $position && in_array( $variant, self::POSITIONABLE, true ) && in_array( $position, self::POSITIONS, true ) ) {
+			$pos_attr = sprintf( ' data-position="%s"', esc_attr( $position ) );
+		}
+
 		// When the plugin emits server-side JSON-LD, suppress seal.js's own
 		// rich snippet so the AggregateRating is not duplicated.
 		$no_rich = empty( $settings['jsonld_enabled'] ) ? '' : ' data-no-richsnippet="1"';
 
 		return sprintf(
-			'<div class="rs-seal" data-slug="%1$s" data-variant="%2$s"%3$s></div>',
+			'<div class="rs-seal" data-slug="%1$s" data-variant="%2$s"%3$s%4$s></div>',
 			esc_attr( $slug ),
 			esc_attr( $variant ),
+			$pos_attr,
 			$no_rich
 		);
 	}

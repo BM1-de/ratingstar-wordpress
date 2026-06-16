@@ -6,13 +6,21 @@
 	"title": "RatingStar Seal",
 	"category": "widgets",
 	"icon": "star-filled",
-	"description": "Display your RatingStar seal (rating badge) in one of three variants.",
+	"description": "Display your RatingStar seal (rating badge) in your chosen variant.",
 	"keywords": [ "ratingstar", "rating", "reviews", "seal", "stars" ],
 	"textdomain": "ratingstar",
 	"attributes": {
 		"variant": {
 			"type": "string",
 			"default": "banner"
+		},
+		"slug": {
+			"type": "string",
+			"default": ""
+		},
+		"position": {
+			"type": "string",
+			"default": ""
 		}
 	},
 	"supports": {

@@ -2,8 +2,9 @@
  * RatingStar Seal block — editor UI (no build step; classic createElement).
  *
  * Dynamic block: save() returns null, the markup is rendered in PHP. The editor
- * shows a static placeholder (seal.js does not run inside the editor) plus a
- * variant selector in the inspector sidebar.
+ * shows a static placeholder (seal.js does not run inside the editor) plus the
+ * variant, an optional slug override and — for the floating/footer-bar variants
+ * — a position selector, matching the [ratingstar] shortcode's attributes.
  */
 ( function ( blocks, blockEditor, element, components, i18n ) {
 	'use strict';
@@ -15,16 +16,67 @@
 	var InspectorControls = blockEditor.InspectorControls;
 	var PanelBody = components.PanelBody;
 	var SelectControl = components.SelectControl;
+	var TextControl = components.TextControl;
 
+	// Full VARIANT_META set (see seal.js): static variants work on all plans;
+	// live variants need a 4-star+ plan and degrade to a static seal otherwise.
 	var VARIANTS = [
-		{ label: __( 'Banner', 'ratingstar' ), value: 'banner' },
-		{ label: __( 'Circle', 'ratingstar' ), value: 'circle' },
-		{ label: __( 'Card', 'ratingstar' ), value: 'card' }
+		{ label: __( 'Banner (static)', 'ratingstar' ), value: 'banner' },
+		{ label: __( 'Circle (static)', 'ratingstar' ), value: 'circle' },
+		{ label: __( 'Card (static)', 'ratingstar' ), value: 'card' },
+		{ label: __( 'Profile card (live)', 'ratingstar' ), value: 'profile-card' },
+		{ label: __( 'Bar (live)', 'ratingstar' ), value: 'bar' },
+		{ label: __( 'Floating badge (live)', 'ratingstar' ), value: 'floating' },
+		{ label: __( 'Hero (live)', 'ratingstar' ), value: 'hero' },
+		{ label: __( 'Quote (live)', 'ratingstar' ), value: 'quote' },
+		{ label: __( 'Carousel (live)', 'ratingstar' ), value: 'carousel' },
+		{ label: __( 'Wall (live)', 'ratingstar' ), value: 'wall' },
+		{ label: __( 'Footer bar (live)', 'ratingstar' ), value: 'footer-bar' }
 	];
+
+	var POSITIONS = [
+		{ label: __( 'Default', 'ratingstar' ), value: '' },
+		{ label: __( 'Bottom right', 'ratingstar' ), value: 'bottom-right' },
+		{ label: __( 'Bottom left', 'ratingstar' ), value: 'bottom-left' },
+		{ label: __( 'Top right', 'ratingstar' ), value: 'top-right' },
+		{ label: __( 'Top left', 'ratingstar' ), value: 'top-left' }
+	];
+
+	var POSITIONABLE = [ 'floating', 'footer-bar' ];
 
 	blocks.registerBlockType( 'ratingstar/seal', {
 		edit: function ( props ) {
-			var variant = props.attributes.variant || 'banner';
+			var a = props.attributes;
+			var variant = a.variant || 'banner';
+			var showPosition = POSITIONABLE.indexOf( variant ) !== -1;
+
+			var controls = [
+				el( SelectControl, {
+					key: 'variant',
+					label: __( 'Variant', 'ratingstar' ),
+					value: variant,
+					options: VARIANTS,
+					onChange: function ( value ) { props.setAttributes( { variant: value } ); }
+				} ),
+				el( TextControl, {
+					key: 'slug',
+					label: __( 'Profile slug (optional override)', 'ratingstar' ),
+					value: a.slug || '',
+					placeholder: __( 'Default: slug from Settings → RatingStar', 'ratingstar' ),
+					onChange: function ( value ) { props.setAttributes( { slug: value } ); }
+				} )
+			];
+
+			if ( showPosition ) {
+				controls.push( el( SelectControl, {
+					key: 'position',
+					label: __( 'Position', 'ratingstar' ),
+					value: a.position || '',
+					options: POSITIONS,
+					help: __( 'Only used by the floating and footer-bar variants.', 'ratingstar' ),
+					onChange: function ( value ) { props.setAttributes( { position: value } ); }
+				} ) );
+			}
 
 			return el(
 				Fragment,
@@ -32,18 +84,7 @@
 				el(
 					InspectorControls,
 					null,
-					el(
-						PanelBody,
-						{ title: __( 'Seal settings', 'ratingstar' ), initialOpen: true },
-						el( SelectControl, {
-							label: __( 'Variant', 'ratingstar' ),
-							value: variant,
-							options: VARIANTS,
-							onChange: function ( value ) {
-								props.setAttributes( { variant: value } );
-							}
-						} )
-					)
+					el( PanelBody, { title: __( 'Seal settings', 'ratingstar' ), initialOpen: true }, controls )
 				),
 				el(
 					'div',
@@ -62,7 +103,7 @@
 						},
 						el( 'strong', null, '★ RatingStar' ),
 						el( 'br' ),
-						__( 'Seal preview', 'ratingstar' ) + ' — ' + variant
+						__( 'Seal preview', 'ratingstar' ) + ' — ' + variant + ( a.slug ? ' (' + a.slug + ')' : '' )
 					)
 				)
 			);
