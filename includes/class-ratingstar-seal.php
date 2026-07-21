@@ -144,13 +144,15 @@ class RatingStar_Seal {
 			return;
 		}
 
-		echo $this->render_markup( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- render_markup() escapes every attribute.
+		$markup = $this->render_markup(
 			$variant,
 			'',
 			(string) $settings['sitewide_position'],
 			false,
 			$this->parse_overrides_text( (string) $settings['sitewide_overrides'] )
 		);
+
+		echo $markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- render_markup() escapes every attribute.
 	}
 
 	/**

@@ -4,7 +4,7 @@
  * Plugin URI:        https://ratingstar.de
  * Description:       Embed your RatingStar seal and Google review stars (rich snippets) into WordPress.
  * Version:           1.0.0
- * Requires at least: 6.0
+ * Requires at least: 6.3
  * Requires PHP:      8.1
  * Author:            Baumgärtner Marketing GmbH
  * Author URI:        https://bm1.de
