@@ -17,6 +17,7 @@
 	var PanelBody = components.PanelBody;
 	var SelectControl = components.SelectControl;
 	var TextControl = components.TextControl;
+	var TextareaControl = components.TextareaControl;
 	var ToggleControl = components.ToggleControl;
 
 	// Full VARIANT_META set (see seal.js): static variants work on all plans;
@@ -85,6 +86,17 @@
 					onChange: function ( value ) { props.setAttributes( { position: value } ); }
 				} ) );
 			}
+
+			// Per-embed overrides: pass-through of the whitelisted data-*
+			// attributes produced by the embed generator in the RatingStar
+			// portal (seal.js validates the values).
+			controls.push( el( TextareaControl, {
+				key: 'overrides',
+				label: __( 'Embed attributes (advanced)', 'ratingstar' ),
+				help: __( 'Optional appearance overrides for this embed, as key=value pairs — e.g. pc-color=gold car-count=4. Copy them from the embed generator in your RatingStar portal; the data- prefix may be included or left out.', 'ratingstar' ),
+				value: a.overrides || '',
+				onChange: function ( value ) { props.setAttributes( { overrides: value } ); }
+			} ) );
 
 			return el(
 				Fragment,

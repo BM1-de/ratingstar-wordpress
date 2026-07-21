@@ -25,6 +25,10 @@
 		"static": {
 			"type": "boolean",
 			"default": false
+		},
+		"overrides": {
+			"type": "string",
+			"default": ""
 		}
 	},
 	"supports": {

@@ -54,6 +54,46 @@ class RatingStar_Seal {
 	/** Variants available as a static SVG (no-JS fallback). */
 	const STATIC_VARIANTS = array( 'banner', 'circle', 'card' );
 
+	/**
+	 * Whitelisted per-embed override keys (seal-embed.js EMBED_OVERRIDES).
+	 * Cosmetic only — camelCase key becomes a kebab-cased data attribute on the
+	 * embed div (pcColor → data-pc-color). Value validation (enums, ranges,
+	 * hex colours) happens in seal.js; invalid values fall back silently.
+	 * Tier gates and the §5b transparency hint are server-controlled on
+	 * purpose and must never appear here.
+	 */
+	const EMBED_OVERRIDES = array(
+		'size',
+		'pcPosition',
+		'pcWidth',
+		'pcShowCount',
+		'pcColor',
+		'pcMobile',
+		'pcClick',
+		'barShowCount',
+		'barShowVerified',
+		'heroShowCount',
+		'heroShowVerified',
+		'quotePick',
+		'quoteWidth',
+		'carCount',
+		'carRotate',
+		'carMin',
+		'carWidth',
+		'wallCols',
+		'wallTotal',
+		'wallMin',
+		'wallSort',
+		'wallWidth',
+		'footerBarBg',
+		'footerBarText',
+		'footerBarLinkColor',
+		'footerBarLinkHover',
+		'footerBarPosition',
+		'reviewsOnlyNamed',
+		'reviewsOnlyWithComment',
+	);
+
 	/** Registered handle for the external seal.js. */
 	const SCRIPT_HANDLE = 'ratingstar-seal';
 
@@ -112,26 +152,41 @@ class RatingStar_Seal {
 	/**
 	 * Renders the [ratingstar] shortcode.
 	 *
+	 * Besides variant/slug/position/static, every whitelisted per-embed
+	 * override is accepted as its own kebab-cased attribute, e.g.
+	 * [ratingstar variant="carousel" car-width="s" car-count="4"].
+	 *
 	 * @param array|string $atts Shortcode attributes.
 	 * @return string
 	 */
 	public function render_shortcode( $atts ): string {
-		$atts = shortcode_atts(
-			array(
-				'variant'  => self::DEFAULT_VARIANT,
-				'slug'     => '',
-				'position' => '',
-				'static'   => '',
-			),
-			$atts,
-			'ratingstar'
+		$defaults = array(
+			'variant'  => self::DEFAULT_VARIANT,
+			'slug'     => '',
+			'position' => '',
+			'static'   => '',
 		);
+
+		foreach ( self::EMBED_OVERRIDES as $camel ) {
+			$defaults[ self::kebab_case( $camel ) ] = '';
+		}
+
+		$atts = shortcode_atts( $defaults, $atts, 'ratingstar' );
+
+		$overrides = array();
+		foreach ( self::EMBED_OVERRIDES as $camel ) {
+			$kebab = self::kebab_case( $camel );
+			if ( '' !== (string) $atts[ $kebab ] ) {
+				$overrides[ $kebab ] = (string) $atts[ $kebab ];
+			}
+		}
 
 		return $this->render_markup(
 			(string) $atts['variant'],
 			(string) $atts['slug'],
 			(string) $atts['position'],
-			filter_var( $atts['static'], FILTER_VALIDATE_BOOLEAN )
+			filter_var( $atts['static'], FILTER_VALIDATE_BOOLEAN ),
+			$overrides
 		);
 	}
 
@@ -142,12 +197,69 @@ class RatingStar_Seal {
 	 * @return string
 	 */
 	public function render_block( $attributes ): string {
-		$variant  = isset( $attributes['variant'] ) ? (string) $attributes['variant'] : self::DEFAULT_VARIANT;
-		$slug     = isset( $attributes['slug'] ) ? (string) $attributes['slug'] : '';
-		$position = isset( $attributes['position'] ) ? (string) $attributes['position'] : '';
-		$static   = ! empty( $attributes['static'] );
+		$variant   = isset( $attributes['variant'] ) ? (string) $attributes['variant'] : self::DEFAULT_VARIANT;
+		$slug      = isset( $attributes['slug'] ) ? (string) $attributes['slug'] : '';
+		$position  = isset( $attributes['position'] ) ? (string) $attributes['position'] : '';
+		$static    = ! empty( $attributes['static'] );
+		$overrides = $this->parse_overrides_text( isset( $attributes['overrides'] ) ? (string) $attributes['overrides'] : '' );
 
-		return $this->render_markup( $variant, $slug, $position, $static );
+		return $this->render_markup( $variant, $slug, $position, $static, $overrides );
+	}
+
+	/**
+	 * Converts a camelCase override key to its kebab-cased attribute form
+	 * (pcColor → pc-color, as used by data-pc-color).
+	 */
+	private static function kebab_case( string $key ): string {
+		return strtolower( preg_replace( '/([a-z0-9])([A-Z])/', '$1-$2', $key ) );
+	}
+
+	/**
+	 * Parses the block's free-text override field into a whitelisted
+	 * kebab-key => value map. Accepts the attribute snippet as produced by the
+	 * embed generator in the RatingStar portal — keys with or without the
+	 * data- prefix, kebab or camelCase, values bare or quoted:
+	 * pc-color=gold, data-car-count="4", reviewsOnlyNamed=1.
+	 *
+	 * @param string $text Raw field value.
+	 * @return array<string, string>
+	 */
+	private function parse_overrides_text( string $text ): array {
+		if ( '' === trim( $text ) ) {
+			return array();
+		}
+
+		$allowed = array();
+		foreach ( self::EMBED_OVERRIDES as $camel ) {
+			$allowed[ self::kebab_case( $camel ) ] = true;
+		}
+
+		$overrides = array();
+
+		if ( preg_match_all( '/(?:data-)?([a-zA-Z][a-zA-Z0-9-]*)\s*=\s*(?:"([^"]*)"|\'([^\']*)\'|(\S+))/', $text, $matches, PREG_SET_ORDER ) ) {
+			foreach ( $matches as $match ) {
+				$key = self::kebab_case( $match[1] );
+
+				if ( ! isset( $allowed[ $key ] ) ) {
+					continue;
+				}
+
+				// Exactly one of the three value groups is non-empty.
+				$value = '';
+				for ( $i = 4; $i >= 2; $i-- ) {
+					if ( isset( $match[ $i ] ) && '' !== $match[ $i ] ) {
+						$value = $match[ $i ];
+						break;
+					}
+				}
+
+				if ( '' !== $value ) {
+					$overrides[ $key ] = $value;
+				}
+			}
+		}
+
+		return $overrides;
 	}
 
 	/**
@@ -155,9 +267,12 @@ class RatingStar_Seal {
 	 *
 	 * @param string $variant       Requested variant.
 	 * @param string $slug_override Optional slug overriding the configured one.
+	 * @param string $position      Optional data-position (floating/footer-bar).
+	 * @param bool   $static        Render the static SVG fallback instead.
+	 * @param array  $overrides     Whitelisted per-embed overrides (kebab-key => value).
 	 * @return string
 	 */
-	private function render_markup( string $variant, string $slug_override, string $position = '', bool $static = false ): string {
+	private function render_markup( string $variant, string $slug_override, string $position = '', bool $static = false, array $overrides = array() ): string {
 		$variant  = in_array( $variant, self::VARIANTS, true ) ? $variant : self::DEFAULT_VARIANT;
 		$settings = RatingStar_Plugin::get_settings();
 		$slug     = '' !== $slug_override ? sanitize_title( $slug_override ) : $settings['profile_slug'];
@@ -191,15 +306,23 @@ class RatingStar_Seal {
 			$pos_attr = sprintf( ' data-position="%s"', esc_attr( $position ) );
 		}
 
+		// Per-embed overrides travel as individual data attributes; seal.js
+		// validates the values (invalid ones fall back silently).
+		$override_attrs = '';
+		foreach ( $overrides as $kebab => $value ) {
+			$override_attrs .= sprintf( ' data-%s="%s"', $kebab, esc_attr( $value ) );
+		}
+
 		// When the plugin emits server-side JSON-LD, suppress seal.js's own
 		// rich snippet so the AggregateRating is not duplicated.
 		$no_rich = empty( $settings['jsonld_enabled'] ) ? '' : ' data-no-richsnippet="1"';
 
 		return sprintf(
-			'<div class="rs-seal" data-slug="%1$s" data-variant="%2$s"%3$s%4$s></div>',
+			'<div class="rs-seal" data-slug="%1$s" data-variant="%2$s"%3$s%4$s%5$s></div>',
 			esc_attr( $slug ),
 			esc_attr( $variant ),
 			$pos_attr,
+			$override_attrs,
 			$no_rich
 		);
 	}
