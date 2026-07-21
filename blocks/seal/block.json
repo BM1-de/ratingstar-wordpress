@@ -2,7 +2,7 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 2,
 	"name": "ratingstar/seal",
-	"version": "0.2.2",
+	"version": "1.0.0",
 	"title": "RatingStar Seal",
 	"category": "widgets",
 	"icon": "star-filled",
