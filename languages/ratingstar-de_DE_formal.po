@@ -1,0 +1,318 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: RatingStar 0.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ratingstar\n"
+"Last-Translator: Baumgärtner Marketing GmbH <info@bm1.de>\n"
+"Language-Team: Deutsch (Sie)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-07-21T15:53:46+02:00\n"
+"PO-Revision-Date: 2026-07-21T16:00:00+02:00\n"
+"Language: de_DE_formal\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: ratingstar\n"
+
+#. Plugin Name of the plugin
+#: ratingstar.php
+#: includes/class-ratingstar-settings.php:39
+#: includes/class-ratingstar-settings.php:40
+msgid "RatingStar"
+msgstr "RatingStar"
+
+#. Plugin URI of the plugin
+#: ratingstar.php
+msgid "https://ratingstar.de"
+msgstr "https://ratingstar.de"
+
+#. Description of the plugin
+#: ratingstar.php
+msgid "Embed your RatingStar seal and Google review stars (rich snippets) into WordPress."
+msgstr "Bindet Ihr RatingStar-Siegel und Google-Bewertungssterne (Rich Snippets) in WordPress ein."
+
+#. Author of the plugin
+#: ratingstar.php
+msgid "Baumgärtner Marketing GmbH"
+msgstr "Baumgärtner Marketing GmbH"
+
+#. Author URI of the plugin
+#: ratingstar.php
+msgid "https://bm1.de"
+msgstr "https://bm1.de"
+
+#: includes/class-ratingstar-seal.php:333
+msgid "RatingStar: set your profile slug under Settings → RatingStar."
+msgstr "RatingStar: Hinterlegen Sie Ihren Profil-Slug unter Einstellungen → RatingStar."
+
+#: includes/class-ratingstar-seal.php:355
+msgid "RatingStar rating seal"
+msgstr "RatingStar-Bewertungssiegel"
+
+#: includes/class-ratingstar-settings.php:71
+msgid "RatingStar connection"
+msgstr "RatingStar-Verbindung"
+
+#: includes/class-ratingstar-settings.php:78
+msgid "Profile slug"
+msgstr "Profil-Slug"
+
+#: includes/class-ratingstar-settings.php:87
+msgid "Embed key"
+msgstr "Embed-Key"
+
+#: includes/class-ratingstar-settings.php:96
+msgid "Google review stars"
+msgstr "Google-Bewertungssterne"
+
+#: includes/class-ratingstar-settings.php:105
+msgid "RatingStar base URL"
+msgstr "RatingStar-Basis-URL"
+
+#: includes/class-ratingstar-settings.php:114
+msgid "Site-wide seal"
+msgstr "Website-weites Siegel"
+
+#: includes/class-ratingstar-settings.php:121
+msgid "Show on every page"
+msgstr "Auf jeder Seite anzeigen"
+
+#: includes/class-ratingstar-settings.php:130
+msgid "Position"
+msgstr "Position"
+
+#: includes/class-ratingstar-settings.php:139
+#: blocks/seal/editor.js:127
+msgid "Embed attributes (advanced)"
+msgstr "Embed-Attribute (erweitert)"
+
+#: includes/class-ratingstar-settings.php:180
+msgid "The API key must look like “rs_live_” followed by 40 letters or digits. Kept the previous value."
+msgstr "Der API-Key muss aus „rs_live_“ gefolgt von 40 Buchstaben oder Ziffern bestehen. Der bisherige Wert wurde beibehalten."
+
+#. translators: 1: profile slug, 2: error detail
+#: includes/class-ratingstar-settings.php:194
+#, php-format
+msgid "The profile slug “%1$s” could not be verified: %2$s"
+msgstr "Der Profil-Slug „%1$s“ konnte nicht überprüft werden: %2$s"
+
+#. translators: %s: RatingStar profile / company name
+#: includes/class-ratingstar-settings.php:206
+#, php-format
+msgid "Connected to RatingStar profile: %s"
+msgstr "Mit RatingStar-Profil verbunden: %s"
+
+#: includes/class-ratingstar-settings.php:268
+msgid "no profile exists for this slug."
+msgstr "unter diesem Slug existiert kein Profil."
+
+#. translators: %d: HTTP status code
+#: includes/class-ratingstar-settings.php:276
+#, php-format
+msgid "unexpected response (HTTP %d)."
+msgstr "unerwartete Antwort (HTTP %d)."
+
+#: includes/class-ratingstar-settings.php:310
+msgid "Enter your RatingStar profile details. They are used by the seal widget and the Google review stars."
+msgstr "Tragen Sie hier die Daten Ihres RatingStar-Profils ein. Sie werden vom Siegel-Widget und den Google-Bewertungssternen verwendet."
+
+#: includes/class-ratingstar-settings.php:311
+msgid "Whitelist this site’s domain in your RatingStar backend (tab “Auslieferung” / Delivery) and verify it with a TXT _ratingstar.<domain> DNS record — otherwise the seal data is blocked with HTTP 403. The key-based output works on all plans."
+msgstr "Tragen Sie die Domain dieser Website im RatingStar-Backend ein (Tab „Auslieferung“) und verifizieren Sie sie per DNS-Eintrag TXT _ratingstar.<domain> — sonst blockiert die API die Siegel-Daten mit HTTP 403. Die key-basierte Ausgabe funktioniert in allen Tarifen."
+
+#: includes/class-ratingstar-settings.php:324
+msgid "e.g. stadtwerk-tauberfranken"
+msgstr "z. B. stadtwerk-tauberfranken"
+
+#. translators: %s: example profile URL pattern
+#: includes/class-ratingstar-settings.php:330
+#, php-format
+msgid "The slug from your profile URL %s."
+msgstr "Der Slug aus Ihrer Profil-URL %s."
+
+#: includes/class-ratingstar-settings.php:348
+msgid "API key (format: “rs_live_” + 40 characters) from your RatingStar backend. Drives the rename-proof key-based endpoints. Optional for now."
+msgstr "API-Key (Format: „rs_live_“ + 40 Zeichen) aus Ihrem RatingStar-Backend. Steuert die umbenennungssicheren key-basierten Endpunkte. Aktuell optional."
+
+#: includes/class-ratingstar-settings.php:361
+msgid "Output Google review stars (JSON-LD) on the front page"
+msgstr "Google-Bewertungssterne (JSON-LD) auf der Startseite ausgeben"
+
+#: includes/class-ratingstar-settings.php:363
+msgid "Adds an AggregateRating snippet to the homepage so Google can show review stars, and disables the seal’s built-in snippet to avoid duplicates."
+msgstr "Ergänzt die Startseite um ein AggregateRating-Snippet, damit Google Bewertungssterne anzeigen kann, und unterdrückt das eingebaute Snippet des Siegels, um Dubletten zu vermeiden."
+
+#. translators: %s: default origin URL
+#: includes/class-ratingstar-settings.php:381
+#, php-format
+msgid "Advanced: the RatingStar origin every URL is built from. Leave as %s unless you use a staging or self-hosted RatingStar."
+msgstr "Für Fortgeschrittene: die RatingStar-Origin, aus der jede URL gebaut wird. Belassen Sie den Wert auf %s, außer Sie nutzen ein Staging- oder selbst gehostetes RatingStar."
+
+#: includes/class-ratingstar-settings.php:391
+msgid "Show a seal automatically on every page — no theme edit or per-page block needed. Only the self-positioning overlay variants are available here. If you enable this, don’t also place the same variant via block or shortcode, or it will appear twice."
+msgstr "Zeigt automatisch ein Siegel auf jeder Seite — ohne Theme-Änderung oder Block pro Seite. Hier stehen nur die selbst-positionierenden Overlay-Varianten zur Wahl. Wenn Sie das aktivieren, platzieren Sie dieselbe Variante nicht zusätzlich per Block oder Shortcode, sonst erscheint sie doppelt."
+
+#: includes/class-ratingstar-settings.php:401
+msgid "Off"
+msgstr "Aus"
+
+#: includes/class-ratingstar-settings.php:402
+msgid "Profile card (floating)"
+msgstr "Profil-Karte (schwebend)"
+
+#: includes/class-ratingstar-settings.php:403
+#: blocks/seal/editor.js:37
+msgid "Footer bar"
+msgstr "Footer-Bar"
+
+#: includes/class-ratingstar-settings.php:417
+msgid "Both are live variants (4-star plan and up); on lower plans seal.js degrades them to a static seal. The floating profile card replaces the former floating badge."
+msgstr "Beides sind Live-Varianten (ab Tarif 4-Star); in niedrigeren Tarifen stuft seal.js sie automatisch auf ein statisches Siegel herab. Die schwebende Profil-Karte ersetzt das frühere Floating-Badge."
+
+#: includes/class-ratingstar-settings.php:427
+#: blocks/seal/editor.js:51
+msgid "Default (portal setting)"
+msgstr "Standard (Portal-Einstellung)"
+
+#: includes/class-ratingstar-settings.php:428
+#: blocks/seal/editor.js:53
+msgid "Bottom right"
+msgstr "Unten rechts"
+
+#: includes/class-ratingstar-settings.php:429
+#: blocks/seal/editor.js:54
+msgid "Bottom left"
+msgstr "Unten links"
+
+#: includes/class-ratingstar-settings.php:430
+#: blocks/seal/editor.js:55
+msgid "Top right"
+msgstr "Oben rechts"
+
+#: includes/class-ratingstar-settings.php:431
+#: blocks/seal/editor.js:56
+msgid "Top left"
+msgstr "Oben links"
+
+#: includes/class-ratingstar-settings.php:445
+msgid "Screen corner for the floating profile card; the footer bar ignores this."
+msgstr "Bildschirm-Ecke für die schwebende Profil-Karte; die Footer-Bar ignoriert diese Einstellung."
+
+#: includes/class-ratingstar-settings.php:461
+msgid "Optional appearance overrides as key=value pairs — copy them from the embed generator in your RatingStar portal; the data- prefix may be included or left out."
+msgstr "Optionale Darstellungs-Overrides als key=value-Paare — kopieren Sie sie aus dem Embed-Generator in Ihrem RatingStar-Portal; das data--Präfix kann mitkopiert oder weggelassen werden."
+
+#: blocks/seal/editor.js:52
+msgid "Inline (at this spot)"
+msgstr "Inline (an dieser Stelle)"
+
+#: blocks/seal/editor.js:78
+msgid "Variant"
+msgstr "Variante"
+
+#: blocks/seal/editor.js:94
+msgid "Profile slug (optional override)"
+msgstr "Profil-Slug (optionaler Override)"
+
+#: blocks/seal/editor.js:96
+msgid "Default: slug from Settings → RatingStar"
+msgstr "Standard: Slug aus Einstellungen → RatingStar"
+
+#: blocks/seal/editor.js:104
+msgid "Static image (no JavaScript)"
+msgstr "Statisches Bild (ohne JavaScript)"
+
+#: blocks/seal/editor.js:114
+msgid "Placement"
+msgstr "Platzierung"
+
+#: blocks/seal/editor.js:117
+msgid "Inline renders the card right here; a corner floats it fixed on screen (the former floating badge)."
+msgstr "Inline rendert die Karte an genau dieser Stelle; eine Ecke lässt sie fest am Bildschirmrand schweben (das frühere Floating-Badge)."
+
+#: blocks/seal/editor.js:128
+msgid "Optional appearance overrides for this embed, as key=value pairs — e.g. pc-color=gold car-count=4. Copy them from the embed generator in your RatingStar portal; the data- prefix may be included or left out."
+msgstr "Optionale Darstellungs-Overrides für dieses Embed als key=value-Paare — z. B. pc-color=gold car-count=4. Kopieren Sie sie aus dem Embed-Generator in Ihrem RatingStar-Portal; das data--Präfix kann mitkopiert oder weggelassen werden."
+
+#: blocks/seal/editor.js:139
+msgid "Seal settings"
+msgstr "Siegel-Einstellungen"
+
+#: blocks/seal/editor.js:158
+msgid "Seal preview"
+msgstr "Siegel-Vorschau"
+
+#: blocks/seal/block.json
+msgctxt "block title"
+msgid "RatingStar Seal"
+msgstr "RatingStar-Siegel"
+
+#: blocks/seal/block.json
+msgctxt "block description"
+msgid "Display your RatingStar seal (rating badge) in your chosen variant."
+msgstr "Zeigt Ihr RatingStar-Siegel (Bewertungs-Badge) in der gewünschten Variante an."
+
+#: blocks/seal/block.json
+msgctxt "block keyword"
+msgid "ratingstar"
+msgstr "ratingstar"
+
+#: blocks/seal/block.json
+msgctxt "block keyword"
+msgid "rating"
+msgstr "bewertung"
+
+#: blocks/seal/block.json
+msgctxt "block keyword"
+msgid "reviews"
+msgstr "bewertungen"
+
+#: blocks/seal/block.json
+msgctxt "block keyword"
+msgid "seal"
+msgstr "siegel"
+
+#: blocks/seal/block.json
+msgctxt "block keyword"
+msgid "stars"
+msgstr "sterne"
+
+#: blocks/seal/editor.js:105
+msgid "Render the seal as a plain, linked SVG image instead of the live widget — for email/PDF/AMP/no-JS."
+msgstr "Rendert das Siegel als einfaches, verlinktes SVG-Bild statt des Live-Widgets — für E-Mail/PDF/AMP/ohne JS."
+
+#: blocks/seal/editor.js:29
+msgid "Round seal"
+msgstr "Rundsiegel"
+
+#: blocks/seal/editor.js:30
+msgid "Banner seal"
+msgstr "Banderole"
+
+#: blocks/seal/editor.js:31
+msgid "Profile card"
+msgstr "Profil-Karte"
+
+#: blocks/seal/editor.js:32
+msgid "Trust bar"
+msgstr "Trust-Bar"
+
+#: blocks/seal/editor.js:33
+msgid "Hero snippet"
+msgstr "Hero-Snippet"
+
+#: blocks/seal/editor.js:34
+msgid "Featured quote"
+msgstr "Featured Quote"
+
+#: blocks/seal/editor.js:35
+msgid "Carousel"
+msgstr "Carousel"
+
+#: blocks/seal/editor.js:36
+msgid "Wall of love"
+msgstr "Wall of Love"
+
+#: blocks/seal/editor.js:81
+msgid "The round and banner seal work on every plan; the other variants are live widgets (4-star plan and up — below that, seal.js shows the banner seal instead)."
+msgstr "Rundsiegel und Banderole laufen in jedem Tarif; die übrigen Varianten sind Live-Widgets (ab Tarif 4-Star — darunter zeigt seal.js stattdessen die Banderole)."
