@@ -65,14 +65,17 @@ final class RatingStar_Plugin {
 	/**
 	 * Returns the stored settings merged with defaults.
 	 *
-	 * @return array{profile_slug: string, embed_key: string}
+	 * @return array{profile_slug: string, embed_key: string, base_origin: string, jsonld_enabled: bool, sitewide_variant: string, sitewide_position: string, sitewide_overrides: string}
 	 */
 	public static function get_settings(): array {
 		$defaults = array(
-			'profile_slug'   => '',
-			'embed_key'      => '',
-			'base_origin'    => RATINGSTAR_API_BASE,
-			'jsonld_enabled' => true,
+			'profile_slug'       => '',
+			'embed_key'          => '',
+			'base_origin'        => RATINGSTAR_API_BASE,
+			'jsonld_enabled'     => true,
+			'sitewide_variant'   => '',
+			'sitewide_position'  => '',
+			'sitewide_overrides' => '',
 		);
 
 		$stored = get_option( self::OPTION_KEY, array() );

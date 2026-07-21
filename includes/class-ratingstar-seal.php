@@ -19,22 +19,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 class RatingStar_Seal {
 
 	/**
-	 * Supported seal variants (seal.js SealConfig::VARIANT_META). Static variants
-	 * work on all tiers (canonical keys + back-compat aliases); live variants
-	 * (4-star+) are rendered by seal.js and degrade to a static seal on lower
-	 * tiers. Canonical keys listed first.
+	 * Canonical seal variants (seal.js SealConfig::VARIANT_META). Static
+	 * variants work on all plans; live variants (4-star+) are rendered by
+	 * seal.js and degrade to a static seal on lower plans. Legacy values are
+	 * accepted via VARIANT_ALIAS.
 	 */
 	const VARIANTS = array(
-		// Static (all tiers) — canonical keys + aliases.
+		// Static (all plans).
 		'seal-circle',
 		'seal-circle-banner',
-		'circle',
-		'banner',
-		'card',
 		// Live (4-star and up).
 		'profile-card',
 		'bar',
-		'floating',
 		'hero',
 		'quote',
 		'carousel',
@@ -42,17 +38,44 @@ class RatingStar_Seal {
 		'footer-bar',
 	);
 
+	/**
+	 * Legacy variant values → canonical keys (SealConfig::VARIANT_ALIAS).
+	 * The former stand-alone floating badge is now the profile card fixed to
+	 * a screen corner via its position setting.
+	 */
+	const VARIANT_ALIAS = array(
+		'circle'   => 'seal-circle',
+		'banner'   => 'seal-circle-banner',
+		'card'     => 'profile-card',
+		'floating' => 'profile-card',
+		'pro'      => 'profile-card',
+	);
+
 	/** Default variant when none/invalid is given. */
-	const DEFAULT_VARIANT = 'banner';
+	const DEFAULT_VARIANT = 'seal-circle-banner';
 
-	/** Variants that honour data-position (floating corner / footer bar). */
-	const POSITIONABLE = array( 'floating', 'footer-bar' );
+	/** Variants that honour data-position (profile card: inline or screen corner). */
+	const POSITIONABLE = array( 'profile-card' );
 
-	/** Allowed data-position values. */
-	const POSITIONS = array( 'bottom-right', 'bottom-left', 'top-right', 'top-left' );
+	/**
+	 * Variants that may be emitted site-wide from the settings: the overlays
+	 * that position themselves fixed to the viewport, independent of where
+	 * their container sits in the markup.
+	 */
+	const SITEWIDE_VARIANTS = array( 'profile-card', 'footer-bar' );
 
-	/** Variants available as a static SVG (no-JS fallback). */
-	const STATIC_VARIANTS = array( 'banner', 'circle', 'card' );
+	/** Allowed data-position values (profile card placement). */
+	const POSITIONS = array( 'inline', 'bottom-right', 'bottom-left', 'top-right', 'top-left' );
+
+	/**
+	 * Canonical variant → variant name of the static SVG endpoint
+	 * (?variant= is its own namespace: banner | circle | card).
+	 */
+	const STATIC_SVG_MAP = array(
+		'seal-circle'        => 'circle',
+		'seal-circle-banner' => 'banner',
+		'profile-card'       => 'card',
+	);
 
 	/**
 	 * Whitelisted per-embed override keys (seal-embed.js EMBED_OVERRIDES).
@@ -104,6 +127,30 @@ class RatingStar_Seal {
 		add_action( 'init', array( $this, 'on_init' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_assets' ) );
 		add_filter( 'script_loader_tag', array( $this, 'make_async' ), 10, 2 );
+		add_action( 'wp_footer', array( $this, 'render_sitewide' ) );
+	}
+
+	/**
+	 * Prints the site-wide seal configured under Settings → RatingStar into
+	 * wp_footer — no theme edit or per-page block needed. Restricted to the
+	 * self-positioning variants; runs before wp_print_footer_scripts (20), so
+	 * the seal.js enqueue inside render_markup() still makes it out.
+	 */
+	public function render_sitewide(): void {
+		$settings = RatingStar_Plugin::get_settings();
+		$variant  = (string) $settings['sitewide_variant'];
+
+		if ( '' === $variant || ! in_array( $variant, self::SITEWIDE_VARIANTS, true ) ) {
+			return;
+		}
+
+		echo $this->render_markup( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- render_markup() escapes every attribute.
+			$variant,
+			'',
+			(string) $settings['sitewide_position'],
+			false,
+			$this->parse_overrides_text( (string) $settings['sitewide_overrides'] )
+		);
 	}
 
 	/**
@@ -273,6 +320,9 @@ class RatingStar_Seal {
 	 * @return string
 	 */
 	private function render_markup( string $variant, string $slug_override, string $position = '', bool $static = false, array $overrides = array() ): string {
+		// Normalize legacy values (banner, circle, card, floating, pro) onto
+		// the canonical keys before validating.
+		$variant  = self::VARIANT_ALIAS[ $variant ] ?? $variant;
 		$variant  = in_array( $variant, self::VARIANTS, true ) ? $variant : self::DEFAULT_VARIANT;
 		$settings = RatingStar_Plugin::get_settings();
 		$slug     = '' !== $slug_override ? sanitize_title( $slug_override ) : $settings['profile_slug'];
@@ -286,13 +336,21 @@ class RatingStar_Seal {
 			return '';
 		}
 
-		// Static SVG fallback (no JavaScript) — for email/PDF/AMP/JS-off contexts.
-		if ( $static ) {
-			$svg_variant = in_array( $variant, self::STATIC_VARIANTS, true ) ? $variant : 'banner';
-			$src         = RatingStar_Plugin::get_origin() . '/seal/' . rawurlencode( $slug ) . '.svg?variant=' . rawurlencode( $svg_variant );
+		// Static SVG fallback (no JavaScript) — for email/PDF/AMP/JS-off
+		// contexts. Only the variants with a static counterpart support it;
+		// for the live-only variants the flag is ignored (never a silently
+		// different motif) and the live widget renders instead. The image is
+		// rendered and cached by the app (plus CDN / browser caching via
+		// long-lived cache headers) and linked to the public profile like
+		// every live widget (attribution, no nofollow).
+		if ( $static && isset( self::STATIC_SVG_MAP[ $variant ] ) ) {
+			$svg_variant = self::STATIC_SVG_MAP[ $variant ];
+			$origin      = RatingStar_Plugin::get_origin();
+			$src         = $origin . '/seal/' . rawurlencode( $slug ) . '.svg?variant=' . rawurlencode( $svg_variant );
 
 			return sprintf(
-				'<img class="rs-seal-static" src="%1$s" alt="%2$s" loading="lazy" decoding="async" />',
+				'<a class="rs-seal-static-link" href="%1$s" target="_blank" rel="noopener"><img class="rs-seal-static" src="%2$s" alt="%3$s" loading="lazy" decoding="async" /></a>',
+				esc_url( $origin . '/t/' . rawurlencode( $slug ) ),
 				esc_url( $src ),
 				esc_attr__( 'RatingStar rating seal', 'ratingstar' )
 			);

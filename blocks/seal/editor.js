@@ -1,10 +1,12 @@
 /**
  * RatingStar Seal block — editor UI (no build step; classic createElement).
  *
- * Dynamic block: save() returns null, the markup is rendered in PHP. The editor
- * shows a static placeholder (seal.js does not run inside the editor) plus the
- * variant, an optional slug override and — for the floating/footer-bar variants
- * — a position selector, matching the [ratingstar] shortcode's attributes.
+ * Dynamic block: save() returns null, the markup is rendered in PHP. The
+ * editor shows a static placeholder (seal.js does not run inside the editor;
+ * a live iframe preview was tried and dropped — it swallowed the clicks
+ * meant to select the block) plus the variant, an optional slug override,
+ * a placement selector for the profile card and the per-embed override
+ * passthrough, matching the [ratingstar] shortcode's attributes.
  */
 ( function ( blocks, blockEditor, element, components, i18n ) {
 	'use strict';
@@ -20,37 +22,55 @@
 	var TextareaControl = components.TextareaControl;
 	var ToggleControl = components.ToggleControl;
 
-	// Full VARIANT_META set (see seal.js): static variants work on all plans;
-	// live variants need a 4-star+ plan and degrade to a static seal otherwise.
+	// Canonical VARIANT_META set (see seal.js): static variants work on all
+	// plans; live variants need a 4-star+ plan and degrade otherwise (told in
+	// the select's help text). Labels follow the RatingStar portal naming.
 	var VARIANTS = [
-		{ label: __( 'Banner (static)', 'ratingstar' ), value: 'banner' },
-		{ label: __( 'Circle (static)', 'ratingstar' ), value: 'circle' },
-		{ label: __( 'Card (static)', 'ratingstar' ), value: 'card' },
-		{ label: __( 'Profile card (live)', 'ratingstar' ), value: 'profile-card' },
-		{ label: __( 'Bar (live)', 'ratingstar' ), value: 'bar' },
-		{ label: __( 'Floating badge (live)', 'ratingstar' ), value: 'floating' },
-		{ label: __( 'Hero (live)', 'ratingstar' ), value: 'hero' },
-		{ label: __( 'Quote (live)', 'ratingstar' ), value: 'quote' },
-		{ label: __( 'Carousel (live)', 'ratingstar' ), value: 'carousel' },
-		{ label: __( 'Wall (live)', 'ratingstar' ), value: 'wall' },
-		{ label: __( 'Footer bar (live)', 'ratingstar' ), value: 'footer-bar' }
+		{ label: __( 'Round seal', 'ratingstar' ), value: 'seal-circle' },
+		{ label: __( 'Banner seal', 'ratingstar' ), value: 'seal-circle-banner' },
+		{ label: __( 'Profile card', 'ratingstar' ), value: 'profile-card' },
+		{ label: __( 'Trust bar', 'ratingstar' ), value: 'bar' },
+		{ label: __( 'Hero snippet', 'ratingstar' ), value: 'hero' },
+		{ label: __( 'Featured quote', 'ratingstar' ), value: 'quote' },
+		{ label: __( 'Carousel', 'ratingstar' ), value: 'carousel' },
+		{ label: __( 'Wall of love', 'ratingstar' ), value: 'wall' },
+		{ label: __( 'Footer bar', 'ratingstar' ), value: 'footer-bar' }
 	];
 
+	// Legacy stored values → canonical keys (kept working server-side too).
+	// The former floating badge is the profile card fixed to a screen corner.
+	var VARIANT_ALIAS = {
+		circle: 'seal-circle',
+		banner: 'seal-circle-banner',
+		card: 'profile-card',
+		floating: 'profile-card',
+		pro: 'profile-card'
+	};
+
 	var POSITIONS = [
-		{ label: __( 'Default', 'ratingstar' ), value: '' },
+		{ label: __( 'Default (portal setting)', 'ratingstar' ), value: '' },
+		{ label: __( 'Inline (at this spot)', 'ratingstar' ), value: 'inline' },
 		{ label: __( 'Bottom right', 'ratingstar' ), value: 'bottom-right' },
 		{ label: __( 'Bottom left', 'ratingstar' ), value: 'bottom-left' },
 		{ label: __( 'Top right', 'ratingstar' ), value: 'top-right' },
 		{ label: __( 'Top left', 'ratingstar' ), value: 'top-left' }
 	];
 
-	var POSITIONABLE = [ 'floating', 'footer-bar' ];
+	var POSITIONABLE = [ 'profile-card' ];
+
+	// Variants that exist as a static SVG. Only these offer the static-image
+	// toggle — never a silently different motif for the live-only variants.
+	var STATIC_CAPABLE = [ 'seal-circle', 'seal-circle-banner', 'profile-card' ];
 
 	blocks.registerBlockType( 'ratingstar/seal', {
 		edit: function ( props ) {
 			var a = props.attributes;
-			var variant = a.variant || 'banner';
+			var variant = a.variant || 'seal-circle-banner';
+			// Blocks saved before the canonical keys keep working: map the
+			// stored legacy value onto its canonical successor for the UI.
+			variant = VARIANT_ALIAS[ variant ] || variant;
 			var showPosition = POSITIONABLE.indexOf( variant ) !== -1;
+			var showStatic = STATIC_CAPABLE.indexOf( variant ) !== -1;
 
 			var controls = [
 				el( SelectControl, {
@@ -58,7 +78,16 @@
 					label: __( 'Variant', 'ratingstar' ),
 					value: variant,
 					options: VARIANTS,
-					onChange: function ( value ) { props.setAttributes( { variant: value } ); }
+					help: __( 'The round and banner seal work on every plan; the other variants are live widgets (4-star plan and up — below that, seal.js shows the banner seal instead).', 'ratingstar' ),
+					onChange: function ( value ) {
+						var next = { variant: value };
+						// Live-only variants have no static image — drop the flag
+						// instead of silently rendering a different motif.
+						if ( STATIC_CAPABLE.indexOf( value ) === -1 ) {
+							next.static = false;
+						}
+						props.setAttributes( next );
+					}
 				} ),
 				el( TextControl, {
 					key: 'slug',
@@ -66,23 +95,26 @@
 					value: a.slug || '',
 					placeholder: __( 'Default: slug from Settings → RatingStar', 'ratingstar' ),
 					onChange: function ( value ) { props.setAttributes( { slug: value } ); }
-				} ),
-				el( ToggleControl, {
-					key: 'static',
-					label: __( 'Static image (no JavaScript)', 'ratingstar' ),
-					help: __( 'Render a plain SVG image (banner/circle/card) instead of the live widget — for email/PDF/AMP/no-JS.', 'ratingstar' ),
-					checked: !! a.static,
-					onChange: function ( value ) { props.setAttributes( { static: value } ); }
 				} )
 			];
+
+			if ( showStatic ) {
+				controls.push( el( ToggleControl, {
+					key: 'static',
+					label: __( 'Static image (no JavaScript)', 'ratingstar' ),
+					help: __( 'Render the seal as a plain, linked SVG image instead of the live widget — for email/PDF/AMP/no-JS.', 'ratingstar' ),
+					checked: !! a.static,
+					onChange: function ( value ) { props.setAttributes( { static: value } ); }
+				} ) );
+			}
 
 			if ( showPosition ) {
 				controls.push( el( SelectControl, {
 					key: 'position',
-					label: __( 'Position', 'ratingstar' ),
+					label: __( 'Placement', 'ratingstar' ),
 					value: a.position || '',
 					options: POSITIONS,
-					help: __( 'Only used by the floating and footer-bar variants.', 'ratingstar' ),
+					help: __( 'Inline renders the card right here; a corner floats it fixed on screen (the former floating badge).', 'ratingstar' ),
 					onChange: function ( value ) { props.setAttributes( { position: value } ); }
 				} ) );
 			}

@@ -55,10 +55,13 @@ class RatingStar_Settings {
 				'type'              => 'array',
 				'sanitize_callback' => array( $this, 'sanitize' ),
 				'default'           => array(
-					'profile_slug'   => '',
-					'embed_key'      => '',
-					'base_origin'    => RATINGSTAR_API_BASE,
-					'jsonld_enabled' => true,
+					'profile_slug'       => '',
+					'embed_key'          => '',
+					'base_origin'        => RATINGSTAR_API_BASE,
+					'jsonld_enabled'     => true,
+					'sitewide_variant'   => '',
+					'sitewide_position'  => '',
+					'sitewide_overrides' => '',
 				),
 			)
 		);
@@ -105,6 +108,40 @@ class RatingStar_Settings {
 			'ratingstar_main',
 			array( 'label_for' => 'ratingstar_base_origin' )
 		);
+
+		add_settings_section(
+			'ratingstar_sitewide',
+			__( 'Site-wide seal', 'ratingstar' ),
+			array( $this, 'render_section_sitewide' ),
+			self::PAGE_SLUG
+		);
+
+		add_settings_field(
+			'sitewide_variant',
+			__( 'Show on every page', 'ratingstar' ),
+			array( $this, 'render_field_sitewide_variant' ),
+			self::PAGE_SLUG,
+			'ratingstar_sitewide',
+			array( 'label_for' => 'ratingstar_sitewide_variant' )
+		);
+
+		add_settings_field(
+			'sitewide_position',
+			__( 'Position', 'ratingstar' ),
+			array( $this, 'render_field_sitewide_position' ),
+			self::PAGE_SLUG,
+			'ratingstar_sitewide',
+			array( 'label_for' => 'ratingstar_sitewide_position' )
+		);
+
+		add_settings_field(
+			'sitewide_overrides',
+			__( 'Embed attributes (advanced)', 'ratingstar' ),
+			array( $this, 'render_field_sitewide_overrides' ),
+			self::PAGE_SLUG,
+			'ratingstar_sitewide',
+			array( 'label_for' => 'ratingstar_sitewide_overrides' )
+		);
 	}
 
 	/**
@@ -115,7 +152,7 @@ class RatingStar_Settings {
 	 * admin can correct a typo) but surfaces an error notice.
 	 *
 	 * @param mixed $input Raw submitted values.
-	 * @return array{profile_slug: string, embed_key: string}
+	 * @return array{profile_slug: string, embed_key: string, base_origin: string, jsonld_enabled: bool, sitewide_variant: string, sitewide_position: string, sitewide_overrides: string}
 	 */
 	public function sanitize( $input ): array {
 		$current = RatingStar_Plugin::get_settings();
@@ -174,14 +211,32 @@ class RatingStar_Settings {
 			}
 		}
 
+		// Site-wide seal: variant/position must come from the known sets,
+		// anything else falls back to off/default. The overrides field stores
+		// the raw text; the whitelist filter runs at render time.
+		$sitewide_variant = isset( $input['sitewide_variant'] ) ? sanitize_key( wp_unslash( $input['sitewide_variant'] ) ) : '';
+		if ( ! in_array( $sitewide_variant, RatingStar_Seal::SITEWIDE_VARIANTS, true ) ) {
+			$sitewide_variant = '';
+		}
+
+		$sitewide_position = isset( $input['sitewide_position'] ) ? sanitize_key( wp_unslash( $input['sitewide_position'] ) ) : '';
+		if ( ! in_array( $sitewide_position, RatingStar_Seal::POSITIONS, true ) ) {
+			$sitewide_position = '';
+		}
+
+		$sitewide_overrides = isset( $input['sitewide_overrides'] ) ? sanitize_textarea_field( wp_unslash( $input['sitewide_overrides'] ) ) : '';
+
 		// Drop the cached JSON-LD so config/key/slug changes take effect now.
 		RatingStar_JsonLd::delete_cache();
 
 		return array(
-			'profile_slug'   => $slug,
-			'embed_key'      => $key,
-			'base_origin'    => $origin,
-			'jsonld_enabled' => $jsonld,
+			'profile_slug'       => $slug,
+			'embed_key'          => $key,
+			'base_origin'        => $origin,
+			'jsonld_enabled'     => $jsonld,
+			'sitewide_variant'   => $sitewide_variant,
+			'sitewide_position'  => $sitewide_position,
+			'sitewide_overrides' => $sitewide_overrides,
 		);
 	}
 
@@ -327,6 +382,83 @@ class RatingStar_Settings {
 			'<code>' . esc_html( RATINGSTAR_API_BASE ) . '</code>'
 		);
 		echo '</p>';
+	}
+
+	/**
+	 * Renders the site-wide section intro text.
+	 */
+	public function render_section_sitewide(): void {
+		echo '<p>' . esc_html__( 'Show a seal automatically on every page — no theme edit or per-page block needed. Only the self-positioning overlay variants are available here. If you enable this, don’t also place the same variant via block or shortcode, or it will appear twice.', 'ratingstar' ) . '</p>';
+	}
+
+	/**
+	 * Renders the site-wide variant select.
+	 */
+	public function render_field_sitewide_variant(): void {
+		$settings = RatingStar_Plugin::get_settings();
+
+		$choices = array(
+			''             => __( 'Off', 'ratingstar' ),
+			'profile-card' => __( 'Profile card (floating)', 'ratingstar' ),
+			'footer-bar'   => __( 'Footer bar', 'ratingstar' ),
+		);
+
+		printf( '<select id="ratingstar_sitewide_variant" name="%s[sitewide_variant]">', esc_attr( RatingStar_Plugin::OPTION_KEY ) );
+		foreach ( $choices as $value => $label ) {
+			printf(
+				'<option value="%1$s"%2$s>%3$s</option>',
+				esc_attr( $value ),
+				selected( $settings['sitewide_variant'], $value, false ),
+				esc_html( $label )
+			);
+		}
+		echo '</select>';
+
+		echo '<p class="description">' . esc_html__( 'Both are live variants (4-star plan and up); on lower plans seal.js degrades them to a static seal. The floating profile card replaces the former floating badge.', 'ratingstar' ) . '</p>';
+	}
+
+	/**
+	 * Renders the site-wide position select.
+	 */
+	public function render_field_sitewide_position(): void {
+		$settings = RatingStar_Plugin::get_settings();
+
+		$choices = array(
+			''             => __( 'Default (portal setting)', 'ratingstar' ),
+			'bottom-right' => __( 'Bottom right', 'ratingstar' ),
+			'bottom-left'  => __( 'Bottom left', 'ratingstar' ),
+			'top-right'    => __( 'Top right', 'ratingstar' ),
+			'top-left'     => __( 'Top left', 'ratingstar' ),
+		);
+
+		printf( '<select id="ratingstar_sitewide_position" name="%s[sitewide_position]">', esc_attr( RatingStar_Plugin::OPTION_KEY ) );
+		foreach ( $choices as $value => $label ) {
+			printf(
+				'<option value="%1$s"%2$s>%3$s</option>',
+				esc_attr( $value ),
+				selected( $settings['sitewide_position'], $value, false ),
+				esc_html( $label )
+			);
+		}
+		echo '</select>';
+
+		echo '<p class="description">' . esc_html__( 'Screen corner for the floating profile card; the footer bar ignores this.', 'ratingstar' ) . '</p>';
+	}
+
+	/**
+	 * Renders the site-wide overrides textarea (data-* passthrough).
+	 */
+	public function render_field_sitewide_overrides(): void {
+		$settings = RatingStar_Plugin::get_settings();
+
+		printf(
+			'<textarea id="ratingstar_sitewide_overrides" name="%1$s[sitewide_overrides]" class="large-text code" rows="2" placeholder="%2$s">%3$s</textarea>',
+			esc_attr( RatingStar_Plugin::OPTION_KEY ),
+			esc_attr( 'footer-bar-bg=#1b1314 footer-bar-text=#ffffff' ),
+			esc_textarea( $settings['sitewide_overrides'] )
+		);
+
+		echo '<p class="description">' . esc_html__( 'Optional appearance overrides as key=value pairs — copy them from the embed generator in your RatingStar portal; the data- prefix may be included or left out.', 'ratingstar' ) . '</p>';
 	}
 
 	/**
