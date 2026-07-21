@@ -6,6 +6,10 @@
 # uploaded via Plugins → Add New → Upload Plugin. Dev files (.git, CI config,
 # this script, README.md) are excluded; the WordPress.org readme is readme.txt.
 #
+# The ZIP is written to the parent directory of the plugin checkout so the
+# build artifact never sits inside the working tree (keeps mirrors/checks
+# clean).
+#
 set -euo pipefail
 
 SLUG="ratingstar"
@@ -13,7 +17,7 @@ SLUG="ratingstar"
 # Move to the plugin root (this script lives in bin/).
 cd "$(dirname "$0")/.."
 ROOT="$(pwd)"
-OUT="${ROOT}/${SLUG}.zip"
+OUT="$(dirname "${ROOT}")/${SLUG}.zip"
 
 BUILD_DIR="$(mktemp -d)"
 DEST="${BUILD_DIR}/${SLUG}"
