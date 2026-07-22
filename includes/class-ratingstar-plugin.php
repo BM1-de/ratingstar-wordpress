@@ -47,19 +47,6 @@ final class RatingStar_Plugin {
 
 		$this->jsonld = new RatingStar_JsonLd();
 		$this->jsonld->register();
-
-		add_action( 'init', array( $this, 'load_textdomain' ) );
-	}
-
-	/**
-	 * Loads translations for self-hosted installs (WordPress.org loads them automatically).
-	 */
-	public function load_textdomain(): void {
-		load_plugin_textdomain(
-			'ratingstar',
-			false,
-			dirname( plugin_basename( RATINGSTAR_FILE ) ) . '/languages'
-		);
 	}
 
 	/**

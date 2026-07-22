@@ -68,6 +68,22 @@ The seal widget loads `seal.js` and rating data from `ratingstar.de`, so visitor
 
 The seal works with your public profile slug alone. The API key (format `rs_live_…` from your RatingStar backend) is recommended for the Google review stars: it drives the rename-proof key-based endpoints, which keep working when your profile slug changes and are open on all plans.
 
+== External services ==
+
+This plugin connects to the **RatingStar** platform (https://ratingstar.de), a review collection and rating seal service operated by Baumgärtner Marketing GmbH. The connection is what the plugin is for: it displays your RatingStar seal with live rating data and outputs your rating as Google review stars. Without a RatingStar profile the plugin does nothing.
+
+What is sent, and when:
+
+* **Seal widget:** When a page containing a seal is shown, the visitor's browser loads `seal.js`, the seal styles and the rating data for the configured profile from ratingstar.de, and requests a tracking pixel that counts the seal impression (and, on click, the click). As with any web request, the visitor's IP address and user agent technically reach the server; the plugin itself transmits no names, e-mail addresses or other personal fields.
+* **Static image mode:** The visitor's browser loads a single SVG image from ratingstar.de.
+* **Google review stars (JSON-LD):** Your web server — not the visitor — fetches the rating summary from ratingstar.de (identified by your site URL in the user agent) and caches it for 6 hours. No visitor data is involved.
+* **Settings:** When you save a changed profile slug, your web server verifies it against ratingstar.de once.
+
+Service provider: Baumgärtner Marketing GmbH, Germany.
+
+* Terms of service: https://ratingstar.de/agb
+* Privacy policy: https://ratingstar.de/datenschutz
+
 == Screenshots ==
 
 1. Settings → RatingStar: profile connection, Google review stars and the site-wide seal.

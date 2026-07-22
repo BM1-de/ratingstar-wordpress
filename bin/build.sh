@@ -29,6 +29,7 @@ rsync -a "${ROOT}/" "${DEST}/" \
 	--exclude='.gitignore' \
 	--exclude='.distignore' \
 	--exclude='bin' \
+	--exclude='languages' \
 	--exclude='node_modules' \
 	--exclude='vendor' \
 	--exclude='README.md' \

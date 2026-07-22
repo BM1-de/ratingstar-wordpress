@@ -8,3 +8,6 @@
 /vendor
 /README.md
 *.zip
+# Translations are managed by translate.wordpress.org; the PO/MO sources stay
+# in the repo only as the import base for the language packs.
+/languages
