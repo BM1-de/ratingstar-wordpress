@@ -1,4 +1,4 @@
-=== RatingStar ===
+=== RatingStar.de Seal ===
 Contributors: phillipb
 Tags: reviews, ratings, rich snippets, schema, seal
 Requires at least: 6.3
@@ -12,7 +12,7 @@ Embed your RatingStar seal and Google review stars (rich snippets) into WordPres
 
 == Description ==
 
-**RatingStar** brings the reviews of your [RatingStar](https://ratingstar.de) profile into your WordPress site:
+**RatingStar.de Seal** brings the reviews of your [RatingStar](https://ratingstar.de) profile into your WordPress site:
 
 * A **seal widget** in nine variants — the static round seal and banner seal, plus the live widgets: profile card, trust bar, hero snippet, featured quote, carousel, wall of love and footer bar.
 * A **site-wide seal**: show the floating profile card or the footer bar on every page — no theme edit, no per-page block.
@@ -32,8 +32,8 @@ Enter your RatingStar profile slug once under *Settings → RatingStar*, then pl
 
 == Installation ==
 
-1. Upload the `ratingstar` folder to `/wp-content/plugins/`, or install the ZIP via *Plugins → Add New → Upload Plugin*.
-2. Activate **RatingStar** through the *Plugins* menu.
+1. Upload the `ratingstar-de-seal` folder to `/wp-content/plugins/`, or install the ZIP via *Plugins → Add New → Upload Plugin*.
+2. Activate **RatingStar.de Seal** through the *Plugins* menu.
 3. Go to *Settings → RatingStar* and enter your **profile slug** (the part after `ratingstar.de/t/`). The slug is verified against your live profile. Optionally add your **API key** (`rs_live_…`) for the rename-proof key-based endpoints.
 4. Whitelist your domain in the RatingStar backend (tab "Auslieferung" / Delivery) and verify it via the `TXT _ratingstar.<domain>` DNS record — otherwise the seal data may be blocked with HTTP 403.
 5. Place the seal on a page or post — `[ratingstar variant="profile-card"]` or the **RatingStar Seal** block — or enable the **site-wide seal** in the settings.

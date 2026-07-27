@@ -36,8 +36,8 @@ class RatingStar_Settings {
 	 */
 	public function add_menu(): void {
 		add_options_page(
-			__( 'RatingStar', 'ratingstar' ),
-			__( 'RatingStar', 'ratingstar' ),
+			__( 'RatingStar', 'ratingstar-de-seal' ),
+			__( 'RatingStar', 'ratingstar-de-seal' ),
 			'manage_options',
 			self::PAGE_SLUG,
 			array( $this, 'render_page' )
@@ -68,14 +68,14 @@ class RatingStar_Settings {
 
 		add_settings_section(
 			'ratingstar_main',
-			__( 'RatingStar connection', 'ratingstar' ),
+			__( 'RatingStar connection', 'ratingstar-de-seal' ),
 			array( $this, 'render_section_intro' ),
 			self::PAGE_SLUG
 		);
 
 		add_settings_field(
 			'profile_slug',
-			__( 'Profile slug', 'ratingstar' ),
+			__( 'Profile slug', 'ratingstar-de-seal' ),
 			array( $this, 'render_field_slug' ),
 			self::PAGE_SLUG,
 			'ratingstar_main',
@@ -84,7 +84,7 @@ class RatingStar_Settings {
 
 		add_settings_field(
 			'embed_key',
-			__( 'Embed key', 'ratingstar' ),
+			__( 'Embed key', 'ratingstar-de-seal' ),
 			array( $this, 'render_field_key' ),
 			self::PAGE_SLUG,
 			'ratingstar_main',
@@ -93,7 +93,7 @@ class RatingStar_Settings {
 
 		add_settings_field(
 			'jsonld_enabled',
-			__( 'Google review stars', 'ratingstar' ),
+			__( 'Google review stars', 'ratingstar-de-seal' ),
 			array( $this, 'render_field_jsonld' ),
 			self::PAGE_SLUG,
 			'ratingstar_main',
@@ -102,7 +102,7 @@ class RatingStar_Settings {
 
 		add_settings_field(
 			'base_origin',
-			__( 'RatingStar base URL', 'ratingstar' ),
+			__( 'RatingStar base URL', 'ratingstar-de-seal' ),
 			array( $this, 'render_field_origin' ),
 			self::PAGE_SLUG,
 			'ratingstar_main',
@@ -111,14 +111,14 @@ class RatingStar_Settings {
 
 		add_settings_section(
 			'ratingstar_sitewide',
-			__( 'Site-wide seal', 'ratingstar' ),
+			__( 'Site-wide seal', 'ratingstar-de-seal' ),
 			array( $this, 'render_section_sitewide' ),
 			self::PAGE_SLUG
 		);
 
 		add_settings_field(
 			'sitewide_variant',
-			__( 'Show on every page', 'ratingstar' ),
+			__( 'Show on every page', 'ratingstar-de-seal' ),
 			array( $this, 'render_field_sitewide_variant' ),
 			self::PAGE_SLUG,
 			'ratingstar_sitewide',
@@ -127,7 +127,7 @@ class RatingStar_Settings {
 
 		add_settings_field(
 			'sitewide_position',
-			__( 'Position', 'ratingstar' ),
+			__( 'Position', 'ratingstar-de-seal' ),
 			array( $this, 'render_field_sitewide_position' ),
 			self::PAGE_SLUG,
 			'ratingstar_sitewide',
@@ -136,7 +136,7 @@ class RatingStar_Settings {
 
 		add_settings_field(
 			'sitewide_overrides',
-			__( 'Embed attributes (advanced)', 'ratingstar' ),
+			__( 'Embed attributes (advanced)', 'ratingstar-de-seal' ),
 			array( $this, 'render_field_sitewide_overrides' ),
 			self::PAGE_SLUG,
 			'ratingstar_sitewide',
@@ -177,7 +177,7 @@ class RatingStar_Settings {
 			add_settings_error(
 				RatingStar_Plugin::OPTION_KEY,
 				'key_invalid',
-				__( 'The API key must look like “rs_live_” followed by 40 letters or digits. Kept the previous value.', 'ratingstar' ),
+				__( 'The API key must look like “rs_live_” followed by 40 letters or digits. Kept the previous value.', 'ratingstar-de-seal' ),
 				'error'
 			);
 		}
@@ -191,7 +191,7 @@ class RatingStar_Settings {
 					'slug_invalid',
 					sprintf(
 						/* translators: 1: profile slug, 2: error detail */
-						__( 'The profile slug “%1$s” could not be verified: %2$s', 'ratingstar' ),
+						__( 'The profile slug “%1$s” could not be verified: %2$s', 'ratingstar-de-seal' ),
 						$slug,
 						$result->get_error_message()
 					),
@@ -203,7 +203,7 @@ class RatingStar_Settings {
 					'slug_ok',
 					sprintf(
 						/* translators: %s: RatingStar profile / company name */
-						__( 'Connected to RatingStar profile: %s', 'ratingstar' ),
+						__( 'Connected to RatingStar profile: %s', 'ratingstar-de-seal' ),
 						$result
 					),
 					'success'
@@ -265,7 +265,7 @@ class RatingStar_Settings {
 		$code = (int) wp_remote_retrieve_response_code( $response );
 
 		if ( 404 === $code ) {
-			return new WP_Error( 'not_found', __( 'no profile exists for this slug.', 'ratingstar' ) );
+			return new WP_Error( 'not_found', __( 'no profile exists for this slug.', 'ratingstar-de-seal' ) );
 		}
 
 		if ( 200 !== $code ) {
@@ -273,7 +273,7 @@ class RatingStar_Settings {
 				'http_error',
 				sprintf(
 					/* translators: %d: HTTP status code */
-					__( 'unexpected response (HTTP %d).', 'ratingstar' ),
+					__( 'unexpected response (HTTP %d).', 'ratingstar-de-seal' ),
 					$code
 				)
 			);
@@ -307,8 +307,8 @@ class RatingStar_Settings {
 	 * Renders the section intro text.
 	 */
 	public function render_section_intro(): void {
-		echo '<p>' . esc_html__( 'Enter your RatingStar profile details. They are used by the seal widget and the Google review stars.', 'ratingstar' ) . '</p>';
-		echo '<p class="description">' . esc_html__( 'Whitelist this site’s domain in your RatingStar backend (tab “Auslieferung” / Delivery) and verify it with a TXT _ratingstar.<domain> DNS record — otherwise the seal data is blocked with HTTP 403. The key-based output works on all plans.', 'ratingstar' ) . '</p>';
+		echo '<p>' . esc_html__( 'Enter your RatingStar profile details. They are used by the seal widget and the Google review stars.', 'ratingstar-de-seal' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Whitelist this site’s domain in your RatingStar backend (tab “Auslieferung” / Delivery) and verify it with a TXT _ratingstar.<domain> DNS record — otherwise the seal data is blocked with HTTP 403. The key-based output works on all plans.', 'ratingstar-de-seal' ) . '</p>';
 	}
 
 	/**
@@ -321,13 +321,13 @@ class RatingStar_Settings {
 			'<input type="text" id="ratingstar_profile_slug" name="%1$s[profile_slug]" value="%2$s" class="regular-text" placeholder="%3$s" />',
 			esc_attr( RatingStar_Plugin::OPTION_KEY ),
 			esc_attr( $settings['profile_slug'] ),
-			esc_attr__( 'e.g. stadtwerk-tauberfranken', 'ratingstar' )
+			esc_attr__( 'e.g. stadtwerk-tauberfranken', 'ratingstar-de-seal' )
 		);
 
 		echo '<p class="description">';
 		printf(
 			/* translators: %s: example profile URL pattern */
-			esc_html__( 'The slug from your profile URL %s.', 'ratingstar' ),
+			esc_html__( 'The slug from your profile URL %s.', 'ratingstar-de-seal' ),
 			'<code>' . esc_html( RatingStar_Plugin::get_origin() . '/t/<slug>' ) . '</code>'
 		);
 		echo '</p>';
@@ -345,7 +345,7 @@ class RatingStar_Settings {
 			esc_attr( $settings['embed_key'] )
 		);
 
-		echo '<p class="description">' . esc_html__( 'API key (format: “rs_live_” + 40 characters) from your RatingStar backend. Drives the rename-proof key-based endpoints. Optional for now.', 'ratingstar' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'API key (format: “rs_live_” + 40 characters) from your RatingStar backend. Drives the rename-proof key-based endpoints. Optional for now.', 'ratingstar-de-seal' ) . '</p>';
 	}
 
 	/**
@@ -358,9 +358,9 @@ class RatingStar_Settings {
 			'<label><input type="checkbox" id="ratingstar_jsonld_enabled" name="%1$s[jsonld_enabled]" value="1" %2$s /> %3$s</label>',
 			esc_attr( RatingStar_Plugin::OPTION_KEY ),
 			checked( ! empty( $settings['jsonld_enabled'] ), true, false ),
-			esc_html__( 'Output Google review stars (JSON-LD) on the front page', 'ratingstar' )
+			esc_html__( 'Output Google review stars (JSON-LD) on the front page', 'ratingstar-de-seal' )
 		);
-		echo '<p class="description">' . esc_html__( 'Adds an AggregateRating snippet to the homepage so Google can show review stars, and disables the seal’s built-in snippet to avoid duplicates.', 'ratingstar' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Adds an AggregateRating snippet to the homepage so Google can show review stars, and disables the seal’s built-in snippet to avoid duplicates.', 'ratingstar-de-seal' ) . '</p>';
 	}
 
 	/**
@@ -378,7 +378,7 @@ class RatingStar_Settings {
 		echo '<p class="description">';
 		printf(
 			/* translators: %s: default origin URL */
-			esc_html__( 'Advanced: the RatingStar origin every URL is built from. Leave as %s unless you use a staging or self-hosted RatingStar.', 'ratingstar' ),
+			esc_html__( 'Advanced: the RatingStar origin every URL is built from. Leave as %s unless you use a staging or self-hosted RatingStar.', 'ratingstar-de-seal' ),
 			'<code>' . esc_html( RATINGSTAR_API_BASE ) . '</code>'
 		);
 		echo '</p>';
@@ -388,7 +388,7 @@ class RatingStar_Settings {
 	 * Renders the site-wide section intro text.
 	 */
 	public function render_section_sitewide(): void {
-		echo '<p>' . esc_html__( 'Show a seal automatically on every page — no theme edit or per-page block needed. Only the self-positioning overlay variants are available here. If you enable this, don’t also place the same variant via block or shortcode, or it will appear twice.', 'ratingstar' ) . '</p>';
+		echo '<p>' . esc_html__( 'Show a seal automatically on every page — no theme edit or per-page block needed. Only the self-positioning overlay variants are available here. If you enable this, don’t also place the same variant via block or shortcode, or it will appear twice.', 'ratingstar-de-seal' ) . '</p>';
 	}
 
 	/**
@@ -398,9 +398,9 @@ class RatingStar_Settings {
 		$settings = RatingStar_Plugin::get_settings();
 
 		$choices = array(
-			''             => __( 'Off', 'ratingstar' ),
-			'profile-card' => __( 'Profile card (floating)', 'ratingstar' ),
-			'footer-bar'   => __( 'Footer bar', 'ratingstar' ),
+			''             => __( 'Off', 'ratingstar-de-seal' ),
+			'profile-card' => __( 'Profile card (floating)', 'ratingstar-de-seal' ),
+			'footer-bar'   => __( 'Footer bar', 'ratingstar-de-seal' ),
 		);
 
 		printf( '<select id="ratingstar_sitewide_variant" name="%s[sitewide_variant]">', esc_attr( RatingStar_Plugin::OPTION_KEY ) );
@@ -414,7 +414,7 @@ class RatingStar_Settings {
 		}
 		echo '</select>';
 
-		echo '<p class="description">' . esc_html__( 'Both are live variants (4-star plan and up); on lower plans seal.js degrades them to a static seal. The floating profile card replaces the former floating badge.', 'ratingstar' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Both are live variants (4-star plan and up); on lower plans seal.js degrades them to a static seal. The floating profile card replaces the former floating badge.', 'ratingstar-de-seal' ) . '</p>';
 	}
 
 	/**
@@ -424,11 +424,11 @@ class RatingStar_Settings {
 		$settings = RatingStar_Plugin::get_settings();
 
 		$choices = array(
-			''             => __( 'Default (portal setting)', 'ratingstar' ),
-			'bottom-right' => __( 'Bottom right', 'ratingstar' ),
-			'bottom-left'  => __( 'Bottom left', 'ratingstar' ),
-			'top-right'    => __( 'Top right', 'ratingstar' ),
-			'top-left'     => __( 'Top left', 'ratingstar' ),
+			''             => __( 'Default (portal setting)', 'ratingstar-de-seal' ),
+			'bottom-right' => __( 'Bottom right', 'ratingstar-de-seal' ),
+			'bottom-left'  => __( 'Bottom left', 'ratingstar-de-seal' ),
+			'top-right'    => __( 'Top right', 'ratingstar-de-seal' ),
+			'top-left'     => __( 'Top left', 'ratingstar-de-seal' ),
 		);
 
 		printf( '<select id="ratingstar_sitewide_position" name="%s[sitewide_position]">', esc_attr( RatingStar_Plugin::OPTION_KEY ) );
@@ -442,7 +442,7 @@ class RatingStar_Settings {
 		}
 		echo '</select>';
 
-		echo '<p class="description">' . esc_html__( 'Screen corner for the floating profile card; the footer bar ignores this.', 'ratingstar' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Screen corner for the floating profile card; the footer bar ignores this.', 'ratingstar-de-seal' ) . '</p>';
 	}
 
 	/**
@@ -458,7 +458,7 @@ class RatingStar_Settings {
 			esc_textarea( $settings['sitewide_overrides'] )
 		);
 
-		echo '<p class="description">' . esc_html__( 'Optional appearance overrides as key=value pairs — copy them from the embed generator in your RatingStar portal; the data- prefix may be included or left out.', 'ratingstar' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Optional appearance overrides as key=value pairs — copy them from the embed generator in your RatingStar portal; the data- prefix may be included or left out.', 'ratingstar-de-seal' ) . '</p>';
 	}
 
 	/**

@@ -220,7 +220,7 @@ class RatingStar_Seal {
 			$defaults[ self::kebab_case( $camel ) ] = '';
 		}
 
-		$atts = shortcode_atts( $defaults, $atts, 'ratingstar' );
+		$atts = shortcode_atts( $defaults, $atts, 'ratingstar-de-seal' );
 
 		$overrides = array();
 		foreach ( self::EMBED_OVERRIDES as $camel ) {
@@ -332,7 +332,7 @@ class RatingStar_Seal {
 		if ( '' === $slug ) {
 			// Only nudge logged-in admins; show nothing to visitors.
 			if ( current_user_can( 'manage_options' ) ) {
-				return '<p class="rs-seal-notice">' . esc_html__( 'RatingStar: set your profile slug under Settings → RatingStar.', 'ratingstar' ) . '</p>';
+				return '<p class="rs-seal-notice">' . esc_html__( 'RatingStar: set your profile slug under Settings → RatingStar.', 'ratingstar-de-seal' ) . '</p>';
 			}
 
 			return '';
@@ -354,7 +354,7 @@ class RatingStar_Seal {
 				'<a class="rs-seal-static-link" href="%1$s" target="_blank" rel="noopener"><img class="rs-seal-static" src="%2$s" alt="%3$s" loading="lazy" decoding="async" /></a>',
 				esc_url( $origin . '/t/' . rawurlencode( $slug ) ),
 				esc_url( $src ),
-				esc_attr__( 'RatingStar rating seal', 'ratingstar' )
+				esc_attr__( 'RatingStar rating seal', 'ratingstar-de-seal' )
 			);
 		}
 

@@ -8,7 +8,7 @@
 	"icon": "star-filled",
 	"description": "Display your RatingStar seal (rating badge) in your chosen variant.",
 	"keywords": [ "ratingstar", "rating", "reviews", "seal", "stars" ],
-	"textdomain": "ratingstar",
+	"textdomain": "ratingstar-de-seal",
 	"attributes": {
 		"variant": {
 			"type": "string",

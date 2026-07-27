@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #
-# Build an installable ratingstar.zip without dev files.
+# Build an installable ratingstar-de-seal.zip without dev files.
 #
-# The archive contains a single top-level "ratingstar/" folder, ready to be
+# The archive contains a single top-level "ratingstar-de-seal/" folder, ready to be
 # uploaded via Plugins → Add New → Upload Plugin. Dev files (.git, CI config,
 # this script, README.md) are excluded; the WordPress.org readme is readme.txt.
 #
@@ -12,7 +12,7 @@
 #
 set -euo pipefail
 
-SLUG="ratingstar"
+SLUG="ratingstar-de-seal"
 
 # Move to the plugin root (this script lives in bin/).
 cd "$(dirname "$0")/.."

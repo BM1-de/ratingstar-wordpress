@@ -1,18 +1,18 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: RatingStar 1.0.0\n"
+"Project-Id-Version: RatingStar.de Seal 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ratingstar\n"
 "Last-Translator: Baumgärtner Marketing GmbH <info@bm1.de>\n"
-"Language-Team: Deutsch (Sie)\n"
+"Language-Team: Deutsch\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-07-21T15:53:46+02:00\n"
 "PO-Revision-Date: 2026-07-21T16:00:00+02:00\n"
-"Language: de_DE_formal\n"
+"Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: WP-CLI 2.12.0\n"
-"X-Domain: ratingstar\n"
+"X-Domain: ratingstar-de-seal\n"
 
 #. Plugin Name of the plugin
 #: ratingstar.php
@@ -29,7 +29,7 @@ msgstr "https://ratingstar.de"
 #. Description of the plugin
 #: ratingstar.php
 msgid "Embed your RatingStar seal and Google review stars (rich snippets) into WordPress."
-msgstr "Bindet Ihr RatingStar-Siegel und Google-Bewertungssterne (Rich Snippets) in WordPress ein."
+msgstr "Bindet dein RatingStar-Siegel und Google-Bewertungssterne (Rich Snippets) in WordPress ein."
 
 #. Author of the plugin
 #: ratingstar.php
@@ -43,7 +43,7 @@ msgstr "https://bm1.de"
 
 #: includes/class-ratingstar-seal.php:333
 msgid "RatingStar: set your profile slug under Settings → RatingStar."
-msgstr "RatingStar: Hinterlegen Sie Ihren Profil-Slug unter Einstellungen → RatingStar."
+msgstr "RatingStar: Hinterlege deinen Profil-Slug unter Einstellungen → RatingStar."
 
 #: includes/class-ratingstar-seal.php:355
 msgid "RatingStar rating seal"
@@ -114,11 +114,11 @@ msgstr "unerwartete Antwort (HTTP %d)."
 
 #: includes/class-ratingstar-settings.php:310
 msgid "Enter your RatingStar profile details. They are used by the seal widget and the Google review stars."
-msgstr "Tragen Sie hier die Daten Ihres RatingStar-Profils ein. Sie werden vom Siegel-Widget und den Google-Bewertungssternen verwendet."
+msgstr "Trage hier die Daten deines RatingStar-Profils ein. Sie werden vom Siegel-Widget und den Google-Bewertungssternen verwendet."
 
 #: includes/class-ratingstar-settings.php:311
 msgid "Whitelist this site’s domain in your RatingStar backend (tab “Auslieferung” / Delivery) and verify it with a TXT _ratingstar.<domain> DNS record — otherwise the seal data is blocked with HTTP 403. The key-based output works on all plans."
-msgstr "Tragen Sie die Domain dieser Website im RatingStar-Backend ein (Tab „Auslieferung“) und verifizieren Sie sie per DNS-Eintrag TXT _ratingstar.<domain> — sonst blockiert die API die Siegel-Daten mit HTTP 403. Die key-basierte Ausgabe funktioniert in allen Tarifen."
+msgstr "Trage die Domain dieser Website im RatingStar-Backend ein (Tab „Auslieferung“) und verifiziere sie per DNS-Eintrag TXT _ratingstar.<domain> — sonst blockiert die API die Siegel-Daten mit HTTP 403. Die key-basierte Ausgabe funktioniert in allen Tarifen."
 
 #: includes/class-ratingstar-settings.php:324
 msgid "e.g. stadtwerk-tauberfranken"
@@ -128,11 +128,11 @@ msgstr "z. B. stadtwerk-tauberfranken"
 #: includes/class-ratingstar-settings.php:330
 #, php-format
 msgid "The slug from your profile URL %s."
-msgstr "Der Slug aus Ihrer Profil-URL %s."
+msgstr "Der Slug aus deiner Profil-URL %s."
 
 #: includes/class-ratingstar-settings.php:348
 msgid "API key (format: “rs_live_” + 40 characters) from your RatingStar backend. Drives the rename-proof key-based endpoints. Optional for now."
-msgstr "API-Key (Format: „rs_live_“ + 40 Zeichen) aus Ihrem RatingStar-Backend. Steuert die umbenennungssicheren key-basierten Endpunkte. Aktuell optional."
+msgstr "API-Key (Format: „rs_live_“ + 40 Zeichen) aus deinem RatingStar-Backend. Steuert die umbenennungssicheren key-basierten Endpunkte. Aktuell optional."
 
 #: includes/class-ratingstar-settings.php:361
 msgid "Output Google review stars (JSON-LD) on the front page"
@@ -146,11 +146,11 @@ msgstr "Ergänzt die Startseite um ein AggregateRating-Snippet, damit Google Bew
 #: includes/class-ratingstar-settings.php:381
 #, php-format
 msgid "Advanced: the RatingStar origin every URL is built from. Leave as %s unless you use a staging or self-hosted RatingStar."
-msgstr "Für Fortgeschrittene: die RatingStar-Origin, aus der jede URL gebaut wird. Belassen Sie den Wert auf %s, außer Sie nutzen ein Staging- oder selbst gehostetes RatingStar."
+msgstr "Für Fortgeschrittene: die RatingStar-Origin, aus der jede URL gebaut wird. Belasse den Wert auf %s, außer du nutzt ein Staging- oder selbst gehostetes RatingStar."
 
 #: includes/class-ratingstar-settings.php:391
 msgid "Show a seal automatically on every page — no theme edit or per-page block needed. Only the self-positioning overlay variants are available here. If you enable this, don’t also place the same variant via block or shortcode, or it will appear twice."
-msgstr "Zeigt automatisch ein Siegel auf jeder Seite — ohne Theme-Änderung oder Block pro Seite. Hier stehen nur die selbst-positionierenden Overlay-Varianten zur Wahl. Wenn Sie das aktivieren, platzieren Sie dieselbe Variante nicht zusätzlich per Block oder Shortcode, sonst erscheint sie doppelt."
+msgstr "Zeigt automatisch ein Siegel auf jeder Seite — ohne Theme-Änderung oder Block pro Seite. Hier stehen nur die selbst-positionierenden Overlay-Varianten zur Wahl. Wenn du das aktivierst, platziere dieselbe Variante nicht zusätzlich per Block oder Shortcode, sonst erscheint sie doppelt."
 
 #: includes/class-ratingstar-settings.php:401
 msgid "Off"
@@ -200,7 +200,7 @@ msgstr "Bildschirm-Ecke für die schwebende Profil-Karte; die Footer-Bar ignorie
 
 #: includes/class-ratingstar-settings.php:461
 msgid "Optional appearance overrides as key=value pairs — copy them from the embed generator in your RatingStar portal; the data- prefix may be included or left out."
-msgstr "Optionale Darstellungs-Overrides als key=value-Paare — kopieren Sie sie aus dem Embed-Generator in Ihrem RatingStar-Portal; das data--Präfix kann mitkopiert oder weggelassen werden."
+msgstr "Optionale Darstellungs-Overrides als key=value-Paare — kopiere sie aus dem Embed-Generator in deinem RatingStar-Portal; das data--Präfix kann mitkopiert oder weggelassen werden."
 
 #: blocks/seal/editor.js:52
 msgid "Inline (at this spot)"
@@ -232,7 +232,7 @@ msgstr "Inline rendert die Karte an genau dieser Stelle; eine Ecke lässt sie fe
 
 #: blocks/seal/editor.js:128
 msgid "Optional appearance overrides for this embed, as key=value pairs — e.g. pc-color=gold car-count=4. Copy them from the embed generator in your RatingStar portal; the data- prefix may be included or left out."
-msgstr "Optionale Darstellungs-Overrides für dieses Embed als key=value-Paare — z. B. pc-color=gold car-count=4. Kopieren Sie sie aus dem Embed-Generator in Ihrem RatingStar-Portal; das data--Präfix kann mitkopiert oder weggelassen werden."
+msgstr "Optionale Darstellungs-Overrides für dieses Embed als key=value-Paare — z. B. pc-color=gold car-count=4. Kopiere sie aus dem Embed-Generator in deinem RatingStar-Portal; das data--Präfix kann mitkopiert oder weggelassen werden."
 
 #: blocks/seal/editor.js:139
 msgid "Seal settings"
@@ -250,7 +250,7 @@ msgstr "RatingStar-Siegel"
 #: blocks/seal/block.json
 msgctxt "block description"
 msgid "Display your RatingStar seal (rating badge) in your chosen variant."
-msgstr "Zeigt Ihr RatingStar-Siegel (Bewertungs-Badge) in der gewünschten Variante an."
+msgstr "Zeigt dein RatingStar-Siegel (Bewertungs-Badge) in der gewünschten Variante an."
 
 #: blocks/seal/block.json
 msgctxt "block keyword"

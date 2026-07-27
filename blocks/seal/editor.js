@@ -26,15 +26,15 @@
 	// plans; live variants need a 4-star+ plan and degrade otherwise (told in
 	// the select's help text). Labels follow the RatingStar portal naming.
 	var VARIANTS = [
-		{ label: __( 'Round seal', 'ratingstar' ), value: 'seal-circle' },
-		{ label: __( 'Banner seal', 'ratingstar' ), value: 'seal-circle-banner' },
-		{ label: __( 'Profile card', 'ratingstar' ), value: 'profile-card' },
-		{ label: __( 'Trust bar', 'ratingstar' ), value: 'bar' },
-		{ label: __( 'Hero snippet', 'ratingstar' ), value: 'hero' },
-		{ label: __( 'Featured quote', 'ratingstar' ), value: 'quote' },
-		{ label: __( 'Carousel', 'ratingstar' ), value: 'carousel' },
-		{ label: __( 'Wall of love', 'ratingstar' ), value: 'wall' },
-		{ label: __( 'Footer bar', 'ratingstar' ), value: 'footer-bar' }
+		{ label: __( 'Round seal', 'ratingstar-de-seal' ), value: 'seal-circle' },
+		{ label: __( 'Banner seal', 'ratingstar-de-seal' ), value: 'seal-circle-banner' },
+		{ label: __( 'Profile card', 'ratingstar-de-seal' ), value: 'profile-card' },
+		{ label: __( 'Trust bar', 'ratingstar-de-seal' ), value: 'bar' },
+		{ label: __( 'Hero snippet', 'ratingstar-de-seal' ), value: 'hero' },
+		{ label: __( 'Featured quote', 'ratingstar-de-seal' ), value: 'quote' },
+		{ label: __( 'Carousel', 'ratingstar-de-seal' ), value: 'carousel' },
+		{ label: __( 'Wall of love', 'ratingstar-de-seal' ), value: 'wall' },
+		{ label: __( 'Footer bar', 'ratingstar-de-seal' ), value: 'footer-bar' }
 	];
 
 	// Legacy stored values → canonical keys (kept working server-side too).
@@ -48,12 +48,12 @@
 	};
 
 	var POSITIONS = [
-		{ label: __( 'Default (portal setting)', 'ratingstar' ), value: '' },
-		{ label: __( 'Inline (at this spot)', 'ratingstar' ), value: 'inline' },
-		{ label: __( 'Bottom right', 'ratingstar' ), value: 'bottom-right' },
-		{ label: __( 'Bottom left', 'ratingstar' ), value: 'bottom-left' },
-		{ label: __( 'Top right', 'ratingstar' ), value: 'top-right' },
-		{ label: __( 'Top left', 'ratingstar' ), value: 'top-left' }
+		{ label: __( 'Default (portal setting)', 'ratingstar-de-seal' ), value: '' },
+		{ label: __( 'Inline (at this spot)', 'ratingstar-de-seal' ), value: 'inline' },
+		{ label: __( 'Bottom right', 'ratingstar-de-seal' ), value: 'bottom-right' },
+		{ label: __( 'Bottom left', 'ratingstar-de-seal' ), value: 'bottom-left' },
+		{ label: __( 'Top right', 'ratingstar-de-seal' ), value: 'top-right' },
+		{ label: __( 'Top left', 'ratingstar-de-seal' ), value: 'top-left' }
 	];
 
 	var POSITIONABLE = [ 'profile-card' ];
@@ -75,10 +75,10 @@
 			var controls = [
 				el( SelectControl, {
 					key: 'variant',
-					label: __( 'Variant', 'ratingstar' ),
+					label: __( 'Variant', 'ratingstar-de-seal' ),
 					value: variant,
 					options: VARIANTS,
-					help: __( 'The round and banner seal work on every plan; the other variants are live widgets (4-star plan and up — below that, seal.js shows the banner seal instead).', 'ratingstar' ),
+					help: __( 'The round and banner seal work on every plan; the other variants are live widgets (4-star plan and up — below that, seal.js shows the banner seal instead).', 'ratingstar-de-seal' ),
 					onChange: function ( value ) {
 						var next = { variant: value };
 						// Live-only variants have no static image — drop the flag
@@ -91,9 +91,9 @@
 				} ),
 				el( TextControl, {
 					key: 'slug',
-					label: __( 'Profile slug (optional override)', 'ratingstar' ),
+					label: __( 'Profile slug (optional override)', 'ratingstar-de-seal' ),
 					value: a.slug || '',
-					placeholder: __( 'Default: slug from Settings → RatingStar', 'ratingstar' ),
+					placeholder: __( 'Default: slug from Settings → RatingStar', 'ratingstar-de-seal' ),
 					onChange: function ( value ) { props.setAttributes( { slug: value } ); }
 				} )
 			];
@@ -101,8 +101,8 @@
 			if ( showStatic ) {
 				controls.push( el( ToggleControl, {
 					key: 'static',
-					label: __( 'Static image (no JavaScript)', 'ratingstar' ),
-					help: __( 'Render the seal as a plain, linked SVG image instead of the live widget — for email/PDF/AMP/no-JS.', 'ratingstar' ),
+					label: __( 'Static image (no JavaScript)', 'ratingstar-de-seal' ),
+					help: __( 'Render the seal as a plain, linked SVG image instead of the live widget — for email/PDF/AMP/no-JS.', 'ratingstar-de-seal' ),
 					checked: !! a.static,
 					onChange: function ( value ) { props.setAttributes( { static: value } ); }
 				} ) );
@@ -111,10 +111,10 @@
 			if ( showPosition ) {
 				controls.push( el( SelectControl, {
 					key: 'position',
-					label: __( 'Placement', 'ratingstar' ),
+					label: __( 'Placement', 'ratingstar-de-seal' ),
 					value: a.position || '',
 					options: POSITIONS,
-					help: __( 'Inline renders the card right here; a corner floats it fixed on screen (the former floating badge).', 'ratingstar' ),
+					help: __( 'Inline renders the card right here; a corner floats it fixed on screen (the former floating badge).', 'ratingstar-de-seal' ),
 					onChange: function ( value ) { props.setAttributes( { position: value } ); }
 				} ) );
 			}
@@ -124,8 +124,8 @@
 			// portal (seal.js validates the values).
 			controls.push( el( TextareaControl, {
 				key: 'overrides',
-				label: __( 'Embed attributes (advanced)', 'ratingstar' ),
-				help: __( 'Optional appearance overrides for this embed, as key=value pairs — e.g. pc-color=gold car-count=4. Copy them from the embed generator in your RatingStar portal; the data- prefix may be included or left out.', 'ratingstar' ),
+				label: __( 'Embed attributes (advanced)', 'ratingstar-de-seal' ),
+				help: __( 'Optional appearance overrides for this embed, as key=value pairs — e.g. pc-color=gold car-count=4. Copy them from the embed generator in your RatingStar portal; the data- prefix may be included or left out.', 'ratingstar-de-seal' ),
 				value: a.overrides || '',
 				onChange: function ( value ) { props.setAttributes( { overrides: value } ); }
 			} ) );
@@ -136,7 +136,7 @@
 				el(
 					InspectorControls,
 					null,
-					el( PanelBody, { title: __( 'Seal settings', 'ratingstar' ), initialOpen: true }, controls )
+					el( PanelBody, { title: __( 'Seal settings', 'ratingstar-de-seal' ), initialOpen: true }, controls )
 				),
 				el(
 					'div',
@@ -155,7 +155,7 @@
 						},
 						el( 'strong', null, '★ RatingStar' ),
 						el( 'br' ),
-						__( 'Seal preview', 'ratingstar' ) + ' — ' + variant + ( a.slug ? ' (' + a.slug + ')' : '' )
+						__( 'Seal preview', 'ratingstar-de-seal' ) + ' — ' + variant + ( a.slug ? ' (' + a.slug + ')' : '' )
 					)
 				)
 			);

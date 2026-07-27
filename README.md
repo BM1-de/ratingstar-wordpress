@@ -1,4 +1,4 @@
-# RatingStar for WordPress
+# RatingStar.de Seal for WordPress
 
 Embed your [RatingStar](https://ratingstar.de) seal and Google review stars
 (rich snippets) into any WordPress site.
@@ -21,9 +21,9 @@ Embed your [RatingStar](https://ratingstar.de) seal and Google review stars
 
 ## Installation
 
-1. Upload the `ratingstar` folder to `wp-content/plugins/`, or install the ZIP
+1. Upload the `ratingstar-de-seal` folder to `wp-content/plugins/`, or install the ZIP
    via *Plugins → Add New → Upload Plugin*.
-2. Activate **RatingStar** under *Plugins*.
+2. Activate **RatingStar.de Seal** under *Plugins*.
 3. Open *Settings → RatingStar* and enter your profile slug and embed key.
 
 ## Usage

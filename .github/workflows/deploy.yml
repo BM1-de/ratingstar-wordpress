@@ -22,10 +22,10 @@ jobs:
         env:
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
-          SLUG: ratingstar
+          SLUG: ratingstar-de-seal
 
       - name: Upload release ZIP as workflow artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ratingstar
-          path: ${{ github.workspace }}/ratingstar.zip
+          name: ratingstar-de-seal
+          path: ${{ github.workspace }}/ratingstar-de-seal.zip
