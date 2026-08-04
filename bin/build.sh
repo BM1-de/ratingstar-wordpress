@@ -28,6 +28,7 @@ rsync -a "${ROOT}/" "${DEST}/" \
 	--exclude='.github' \
 	--exclude='.gitignore' \
 	--exclude='.distignore' \
+	--exclude='.wordpress-org' \
 	--exclude='bin' \
 	--exclude='languages' \
 	--exclude='node_modules' \
