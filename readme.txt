@@ -30,6 +30,21 @@ Enter your RatingStar profile slug once under *Settings → RatingStar*, then pl
 * When the JSON-LD output is enabled, the seal's own snippet is suppressed so the `AggregateRating` is never duplicated.
 * The static image is rendered and cached by ratingstar.de, with long-lived CDN and browser caching.
 
+= Deutsch =
+
+**RatingStar.de Seal** bringt die Bewertungen Ihres [RatingStar](https://ratingstar.de)-Profils auf Ihre WordPress-Seite. RatingStar ist eine deutsche Bewertungsplattform; Profil, Portal und Support sind deutschsprachig.
+
+* **Bewertungssiegel in neun Varianten** — statisches Rundsiegel und Banderole sowie die Live-Widgets: Profilkarte, Trust-Bar, Hero-Snippet, Zitat-Karte, Karussell, Wall of Love und Footer-Leiste.
+* **Seitenweites Siegel** — schwebende Profilkarte oder Footer-Leiste auf jeder Seite, ohne Theme-Anpassung und ohne Block auf jeder einzelnen Seite.
+* **Google-Sterne** — server-seitiges JSON-LD (`LocalBusiness` mit `AggregateRating`), damit Suchmaschinen Sternebewertungen zu Ihrer Seite anzeigen können.
+* **Statischer Bildmodus** — Rundsiegel, Banderole und Profilkarte als reines SVG mit Link aufs Profil, für Umgebungen ohne JavaScript.
+
+Tragen Sie Ihren RatingStar-Profil-Slug einmalig unter *Einstellungen → RatingStar* ein und platzieren Sie das Siegel dann mit dem Shortcode `[ratingstar]` oder dem Block **RatingStar Seal** — oder schalten Sie das seitenweite Siegel ein.
+
+**Aussehen anpassen:** Jede Einbindung akzeptiert die Gestaltungs-Attribute aus dem Embed-Generator in Ihrem RatingStar-Portal (etwa `pc-color`, `car-count`, `footer-bar-bg`). Sie funktionieren als Shortcode-Attribute (`[ratingstar variant="carousel" car-count="4"]`), im Feld „Embed-Attribute" des Blocks oder in den Einstellungen für das seitenweite Siegel; ungültige Werte fallen still auf den Standard zurück.
+
+**Schlank und schnell:** Das Siegel-Skript wird asynchron und nur auf Seiten mit Siegel geladen. Die Bewertungsdaten fürs JSON-LD holt Ihr Server selbst — bei hinterlegtem API-Key umbenennungs-fest über den key-basierten Endpunkt — und speichert sie 6 Stunden zwischen; ausgegeben wird das Markup nur auf der Startseite. Ist die JSON-LD-Ausgabe aktiv, unterdrückt das Siegel sein eigenes Snippet, damit die Bewertung nie doppelt im Markup steht.
+
 == Installation ==
 
 1. Upload the `ratingstar-de-seal` folder to `/wp-content/plugins/`, or install the ZIP via *Plugins → Add New → Upload Plugin*.
@@ -37,6 +52,14 @@ Enter your RatingStar profile slug once under *Settings → RatingStar*, then pl
 3. Go to *Settings → RatingStar* and enter your **profile slug** (the part after `ratingstar.de/t/`). The slug is verified against your live profile. Optionally add your **API key** (`rs_live_…`) for the rename-proof key-based endpoints.
 4. Whitelist your domain in the RatingStar backend (tab "Auslieferung" / Delivery) and verify it via the `TXT _ratingstar.<domain>` DNS record — otherwise the seal data may be blocked with HTTP 403.
 5. Place the seal on a page or post — `[ratingstar variant="profile-card"]` or the **RatingStar Seal** block — or enable the **site-wide seal** in the settings.
+
+= Deutsch =
+
+1. Plugin über *Plugins → Installieren* suchen und installieren — oder den Ordner `ratingstar-de-seal` nach `/wp-content/plugins/` hochladen.
+2. **RatingStar.de Seal** unter *Plugins* aktivieren.
+3. Unter *Einstellungen → RatingStar* den **Profil-Slug** eintragen (der Teil hinter `ratingstar.de/t/`). Der Slug wird gegen Ihr Live-Profil geprüft. Optional den **API-Key** (`rs_live_…`) für die umbenennungs-festen key-basierten Endpunkte hinterlegen.
+4. Ihre Domain im RatingStar-Backend unter „Auslieferung" freischalten und per DNS-Eintrag `TXT _ratingstar.<domain>` bestätigen — sonst können die Siegel-Daten mit HTTP 403 blockiert werden.
+5. Siegel auf einer Seite platzieren — `[ratingstar variant="profile-card"]` oder Block **RatingStar Seal** — oder in den Einstellungen das **seitenweite Siegel** aktivieren.
 
 == Frequently Asked Questions ==
 

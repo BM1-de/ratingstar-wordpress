@@ -3,6 +3,9 @@
 /.github
 /.gitignore
 /.distignore
+# Directory artwork (icon, banner, screenshots): the deploy action syncs this
+# folder to the SVN assets/ directory, it must not end up inside the plugin.
+/.wordpress-org
 /bin
 /node_modules
 /vendor
