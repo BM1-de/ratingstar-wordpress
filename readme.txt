@@ -1,18 +1,18 @@
 === RatingStar.de Seal ===
 Contributors: phillipb
-Tags: reviews, ratings, rich snippets, schema, seal
+Tags: reviews, customer reviews, review widget, rich snippets, trust seal
 Requires at least: 6.3
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Embed your RatingStar seal and Google review stars (rich snippets) into WordPress — via block, shortcode or automatically on every page.
+Show your customer reviews on your WordPress site: RatingStar seals, review widgets and Google review stars — via block, shortcode or site-wide.
 
 == Description ==
 
-**RatingStar.de Seal** brings the reviews of your [RatingStar](https://ratingstar.de) profile into your WordPress site:
+[RatingStar](https://ratingstar.de) is the review tool for businesses: collect customer reviews, bundle reviews from Google and other platforms, and show them all on your own website. **RatingStar.de Seal** brings them into WordPress:
 
 * A **seal widget** in nine variants — the static round seal and banner seal, plus the live widgets: profile card, trust bar, hero snippet, featured quote, carousel, wall of love and footer bar.
 * A **site-wide seal**: show the floating profile card or the footer bar on every page — no theme edit, no per-page block.
@@ -92,6 +92,10 @@ Service provider: Baumgärtner Marketing GmbH, Germany.
 
 == Changelog ==
 
+= 1.0.2 =
+* Clearer plugin description: RatingStar collects customer reviews, bundles
+  reviews from Google and other platforms and shows them on your website.
+
 = 1.0.1 =
 * The German description and installation steps now come from the translation
   packages on translate.wordpress.org instead of being embedded in the readme.
@@ -106,6 +110,9 @@ Service provider: Baumgärtner Marketing GmbH, Germany.
 * German translations (de_DE and de_DE_formal), including the block editor.
 
 == Upgrade Notice ==
+
+= 1.0.2 =
+Documentation only — updated plugin description.
 
 = 1.0.1 =
 Documentation only — the German texts now ship as a translation package.

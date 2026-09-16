@@ -3,7 +3,7 @@
  * Plugin Name:       RatingStar.de Seal
  * Plugin URI:        https://ratingstar.de/plugins#wordpress
  * Description:       Embed your RatingStar seal and Google review stars (rich snippets) into WordPress.
- * Version:           1.0.1
+ * Version:           1.0.2
  * Requires at least: 6.3
  * Requires PHP:      8.1
  * Author:            Baumgärtner Marketing GmbH
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'RATINGSTAR_VERSION', '1.0.1' );
+define( 'RATINGSTAR_VERSION', '1.0.2' );
 define( 'RATINGSTAR_FILE', __FILE__ );
 define( 'RATINGSTAR_PATH', plugin_dir_path( __FILE__ ) );
 define( 'RATINGSTAR_URL', plugin_dir_url( __FILE__ ) );

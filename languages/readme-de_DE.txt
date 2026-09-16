@@ -10,14 +10,15 @@
 
 == Kurzbeschreibung (Short description) ==
 
-Bewertungssiegel und Google-Sterne (Rich Snippets) von RatingStar in
-WordPress einbinden — per Block, Shortcode oder automatisch auf jeder Seite.
+Zeigen Sie Ihre Kundenbewertungen auf Ihrer WordPress-Seite: RatingStar-Siegel,
+Bewertungs-Widgets und Google-Sterne — per Block, Shortcode oder seitenweit.
 
 
 == Beschreibung (Description) ==
 
-**RatingStar.de Seal** bringt die Bewertungen Ihres RatingStar-Profils auf
-Ihre WordPress-Seite:
+RatingStar ist das Bewertungstool für Unternehmen: Kundenbewertungen sammeln,
+Bewertungen aus Google und anderen Portalen bündeln und alles auf der eigenen
+Website zeigen. **RatingStar.de Seal** bringt sie in WordPress:
 
 * Ein **Bewertungssiegel in neun Varianten** — statisches Rundsiegel und
   Banderole sowie die Live-Widgets: Profilkarte, Trust-Bar, Hero-Snippet,
