@@ -1,0 +1,165 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Language: de\n"
+"Project-Id-Version: Plugins - RatingStar.de Seal - Stable Readme\n"
+
+msgid "Show your customer reviews on your WordPress site: RatingStar seals, review widgets and Google review stars — via block, shortcode or site-wide."
+msgstr "Zeigen Sie Ihre Kundenbewertungen auf Ihrer WordPress-Seite: RatingStar-Siegel, Bewertungs-Widgets und Google-Sterne — per Block, Shortcode oder seitenweit."
+
+msgid "The seal works with your public profile slug alone. The API key (format <code>rs_live_…</code> from your RatingStar backend) is recommended for the Google review stars: it drives the rename-proof key-based endpoints, which keep working when your profile slug changes and are open on all plans."
+msgstr "Das Siegel funktioniert allein mit Ihrem öffentlichen Profil-Slug. Für die Google-Sterne empfehlen wir den API-Key (Format <code>rs_live_…</code> aus Ihrem RatingStar-Backend): Er treibt die key-basierten Endpunkte, die auch nach einer Umbenennung Ihres Profils weiterarbeiten und in jedem Tarif offen sind."
+
+msgid "The seal widget loads <code>seal.js</code> and rating data from <code>ratingstar.de</code>, so visitors' browsers connect to that domain when a seal is shown. Mention this in your privacy policy and, if you use a consent solution, treat <code>ratingstar.de</code> accordingly. The server-side Google review stars (JSON-LD) do <strong>not</strong> require any client-side connection; the static image mode only requests a single image."
+msgstr "Das Siegel-Widget lädt <code>seal.js</code> und die Bewertungsdaten von <code>ratingstar.de</code> — der Browser Ihrer Besucher verbindet sich also mit dieser Domain, sobald ein Siegel angezeigt wird. Nennen Sie das in Ihrer Datenschutzerklärung und behandeln Sie <code>ratingstar.de</code> entsprechend, falls Sie eine Consent-Lösung einsetzen. Die server-seitigen Google-Sterne (JSON-LD) brauchen <strong>keine</strong> Verbindung aus dem Browser; der statische Bildmodus fordert lediglich ein einzelnes Bild an."
+
+msgid "Yes. The rating data for the JSON-LD is cached server-side for 6 hours via a WordPress transient, so page caches stay light. The seal itself renders client-side from live data; the static image is cached by CDN and browser."
+msgstr "Ja. Die Bewertungsdaten fürs JSON-LD werden server-seitig 6 Stunden lang in einem WordPress-Transient zwischengespeichert, Ihre Seiten-Caches bleiben also leicht. Das Siegel selbst rendert client-seitig aus Live-Daten; das statische Bild wird von CDN und Browser zwischengespeichert."
+
+msgid "Make sure a profile slug is saved under <em>Settings → RatingStar</em> and that the page contains the <code>[ratingstar]</code> shortcode, the RatingStar Seal block or an enabled site-wide seal. Check that your domain is whitelisted and DNS-verified in the RatingStar backend. If you use a caching or \"remove unused JavaScript\" plugin, make sure <code>seal.js</code> from <code>ratingstar.de</code> is not blocked."
+msgstr "Prüfen Sie, ob unter <em>Einstellungen → RatingStar</em> ein Profil-Slug gespeichert ist und ob die Seite den Shortcode <code>[ratingstar]</code>, den Block RatingStar Seal oder ein aktiviertes seitenweites Siegel enthält. Prüfen Sie außerdem, ob Ihre Domain im RatingStar-Backend freigeschaltet und per DNS bestätigt ist. Wenn Sie ein Caching-Plugin oder eine Funktion „ungenutztes JavaScript entfernen“ einsetzen, stellen Sie sicher, dass <code>seal.js</code> von <code>ratingstar.de</code> nicht blockiert wird."
+
+msgid "Open the embed generator in your RatingStar portal, configure the widget and copy the resulting attributes into the shortcode, the block's \"Embed attributes\" field or the site-wide settings. The <code>data-</code> prefix may be included or left out; invalid values fall back silently."
+msgstr "Öffnen Sie den Embed-Generator in Ihrem RatingStar-Portal, stellen Sie das Widget ein und übernehmen Sie die erzeugten Attribute in den Shortcode, in das Feld „Embed-Attribute“ des Blocks oder in die Einstellungen für das seitenweite Siegel. Das <code>data-</code>-Präfix dürfen Sie mitschreiben oder weglassen; ungültige Werte fallen still auf den Standard zurück."
+
+msgid "The round seal and the banner seal are static and work on every plan. Profile card, trust bar, hero snippet, featured quote, carousel, wall of love and footer bar are live widgets and need a 4-star plan or higher — on lower plans seal.js shows the banner seal instead."
+msgstr "Rundsiegel und Banderole sind statisch und funktionieren in jedem Tarif. Profilkarte, Trust-Bar, Hero-Snippet, Zitat-Karte, Karussell, Wall of Love und Footer-Leiste sind Live-Widgets und brauchen mindestens den 4-Sterne-Tarif — in niedrigeren Tarifen zeigt seal.js stattdessen die Banderole."
+
+msgid "It is the last part of your public profile URL: <code>https://ratingstar.de/t/&lt;slug&gt;</code>. Enter just the <code>&lt;slug&gt;</code> part on the settings page."
+msgstr "Es ist der letzte Teil Ihrer öffentlichen Profil-URL: <code>https://ratingstar.de/t/&lt;slug&gt;</code>. Tragen Sie auf der Einstellungsseite nur den <code>&lt;slug&gt;</code>-Teil ein."
+
+msgid "Do I need an embed key?"
+msgstr "Brauche ich einen Embed-Key?"
+
+msgid "Data protection / GDPR"
+msgstr "Datenschutz / DSGVO"
+
+msgid "Does this work with caching plugins?"
+msgstr "Funktioniert das mit Caching-Plugins?"
+
+msgid "The seal does not appear."
+msgstr "Das Siegel erscheint nicht."
+
+msgid "How do I change colours, sizes and other options?"
+msgstr "Wie ändere ich Farben, Größen und andere Optionen?"
+
+msgid "Which variants are there?"
+msgstr "Welche Varianten gibt es?"
+
+msgid "Where do I find my profile slug?"
+msgstr "Wo finde ich meinen Profil-Slug?"
+
+msgid "Place the seal on a page or post — <code>[ratingstar variant=\"profile-card\"]</code> or the <strong>RatingStar Seal</strong> block — or enable the <strong>site-wide seal</strong> in the settings."
+msgstr "Siegel auf einer Seite oder in einem Beitrag platzieren — <code>[ratingstar variant=\"profile-card\"]</code> oder der Block <strong>RatingStar Seal</strong> — oder in den Einstellungen das <strong>seitenweite Siegel</strong> aktivieren."
+
+msgid "Whitelist your domain in the RatingStar backend (tab \"Auslieferung\" / Delivery) and verify it via the <code>TXT _ratingstar.&lt;domain&gt;</code> DNS record — otherwise the seal data may be blocked with HTTP 403."
+msgstr "Ihre Domain im RatingStar-Backend unter „Auslieferung“ freischalten und per DNS-Eintrag <code>TXT _ratingstar.&lt;domain&gt;</code> bestätigen — sonst können die Siegel-Daten mit HTTP 403 blockiert werden."
+
+msgid "Go to <em>Settings → RatingStar</em> and enter your <strong>profile slug</strong> (the part after <code>ratingstar.de/t/</code>). The slug is verified against your live profile. Optionally add your <strong>API key</strong> (<code>rs_live_…</code>) for the rename-proof key-based endpoints."
+msgstr "Unter <em>Einstellungen → RatingStar</em> den <strong>Profil-Slug</strong> eintragen (der Teil hinter <code>ratingstar.de/t/</code>). Der Slug wird gegen Ihr Live-Profil geprüft. Optional den <strong>API-Key</strong> (<code>rs_live_…</code>) für die umbenennungs-festen key-basierten Endpunkte hinterlegen."
+
+msgid "Activate <strong>RatingStar.de Seal</strong> through the <em>Plugins</em> menu."
+msgstr "<strong>RatingStar.de Seal</strong> unter <em>Plugins</em> aktivieren."
+
+msgid "Upload the <code>ratingstar-de-seal</code> folder to <code>/wp-content/plugins/</code>, or install the ZIP via <em>Plugins → Add New → Upload Plugin</em>."
+msgstr "Plugin über <em>Plugins → Installieren</em> suchen und installieren — oder den Ordner <code>ratingstar-de-seal</code> nach <code>/wp-content/plugins/</code> hochladen bzw. das ZIP über <em>Plugins → Installieren → Plugin hochladen</em> einspielen."
+
+msgid "Service provider: Baumgärtner Marketing GmbH, Germany."
+msgstr "Diensteanbieter: Baumgärtner Marketing GmbH, Deutschland."
+
+msgid "What is sent, and when:"
+msgstr "Was wann übertragen wird:"
+
+msgid "This plugin connects to the <strong>RatingStar</strong> platform (https://ratingstar.de), a review collection and rating seal service operated by Baumgärtner Marketing GmbH. The connection is what the plugin is for: it displays your RatingStar seal with live rating data and outputs your rating as Google review stars. Without a RatingStar profile the plugin does nothing."
+msgstr "Dieses Plugin verbindet sich mit der <strong>RatingStar</strong>-Plattform (https://ratingstar.de), einem Dienst für Bewertungserfassung und Bewertungssiegel der Baumgärtner Marketing GmbH. Diese Verbindung ist der Zweck des Plugins: Sie zeigt Ihr RatingStar-Siegel mit Live-Bewertungsdaten und gibt Ihre Bewertung als Google-Sterne aus. Ohne RatingStar-Profil tut das Plugin nichts."
+
+msgid "<strong>Why it stays fast and clean:</strong>"
+msgstr "<strong>Warum es schlank und schnell bleibt:</strong>"
+
+msgid "<strong>Customising the look:</strong> every embed accepts the appearance attributes produced by the embed generator in your RatingStar portal (for example <code>pc-color</code>, <code>car-count</code>, <code>footer-bar-bg</code>). Use them as shortcode attributes (<code>[ratingstar variant=\"carousel\" car-count=\"4\"]</code>), paste them into the block's \"Embed attributes\" field, or into the site-wide settings — seal.js validates the values."
+msgstr "<strong>Aussehen anpassen:</strong> Jede Einbindung akzeptiert die Gestaltungs-Attribute aus dem Embed-Generator in Ihrem RatingStar-Portal (etwa <code>pc-color</code>, <code>car-count</code>, <code>footer-bar-bg</code>). Nutzen Sie sie als Shortcode-Attribute (<code>[ratingstar variant=\"carousel\" car-count=\"4\"]</code>), im Feld „Embed-Attribute“ des Blocks oder in den Einstellungen für das seitenweite Siegel — seal.js prüft die Werte."
+
+msgid "Enter your RatingStar profile slug once under <em>Settings → RatingStar</em>, then place the seal anywhere with the <code>[ratingstar]</code> shortcode or the <strong>RatingStar Seal</strong> block — or switch on the site-wide seal."
+msgstr "Tragen Sie Ihren RatingStar-Profil-Slug einmalig unter <em>Einstellungen → RatingStar</em> ein und platzieren Sie das Siegel dann mit dem Shortcode <code>[ratingstar]</code> oder dem Block <strong>RatingStar Seal</strong> — oder schalten Sie das seitenweite Siegel ein."
+
+msgid "<a href=\"https://ratingstar.de\">RatingStar</a> is the review tool for businesses: collect customer reviews, bundle reviews from Google and other platforms, and show them all on your own website. <strong>RatingStar.de Seal</strong> brings them into WordPress:"
+msgstr "<a href=\"https://ratingstar.de\">RatingStar</a> ist das Bewertungstool für Unternehmen: Kundenbewertungen sammeln, Bewertungen aus Google und anderen Portalen bündeln und alles auf der eigenen Website zeigen. <strong>RatingStar.de Seal</strong> bringt sie in WordPress:"
+
+msgid "Privacy policy: https://ratingstar.de/datenschutz"
+msgstr "Datenschutzerklärung: https://ratingstar.de/datenschutz"
+
+msgid "Terms of service: https://ratingstar.de/agb"
+msgstr "AGB: https://ratingstar.de/agb"
+
+msgid "<strong>Settings:</strong> When you save a changed profile slug, your web server verifies it against ratingstar.de once."
+msgstr "<strong>Einstellungen:</strong> Wenn Sie einen geänderten Profil-Slug speichern, prüft Ihr Webserver ihn einmalig gegen ratingstar.de."
+
+msgid "<strong>Google review stars (JSON-LD):</strong> Your web server — not the visitor — fetches the rating summary from ratingstar.de (identified by your site URL in the user agent) and caches it for 6 hours. No visitor data is involved."
+msgstr "<strong>Google-Sterne (JSON-LD):</strong> Ihr Webserver — nicht der Besucher — ruft die Bewertungs-Zusammenfassung von ratingstar.de ab (erkennbar an Ihrer Website-URL im User-Agent) und speichert sie 6 Stunden zwischen. Dabei sind keine Besucherdaten im Spiel."
+
+msgid "<strong>Static image mode:</strong> The visitor's browser loads a single SVG image from ratingstar.de."
+msgstr "<strong>Statischer Bildmodus:</strong> Der Browser des Besuchers lädt ein einzelnes SVG-Bild von ratingstar.de."
+
+msgid "<strong>Seal widget:</strong> When a page containing a seal is shown, the visitor's browser loads <code>seal.js</code>, the seal styles and the rating data for the configured profile from ratingstar.de, and requests a tracking pixel that counts the seal impression (and, on click, the click). As with any web request, the visitor's IP address and user agent technically reach the server; the plugin itself transmits no names, e-mail addresses or other personal fields."
+msgstr "<strong>Siegel-Widget:</strong> Wird eine Seite mit Siegel aufgerufen, lädt der Browser des Besuchers <code>seal.js</code>, die Siegel-Styles und die Bewertungsdaten des eingestellten Profils von ratingstar.de und fordert einen Zählpixel an, der die Einblendung (und beim Klick den Klick) zählt. Wie bei jeder Web-Anfrage erreichen IP-Adresse und User-Agent des Besuchers technisch den Server; das Plugin selbst überträgt keine Namen, E-Mail-Adressen oder andere personenbezogenen Felder."
+
+msgid "The static image is rendered and cached by ratingstar.de, with long-lived CDN and browser caching."
+msgstr "Das statische Bild wird von ratingstar.de gerendert und mit langlebigem CDN- und Browser-Cache ausgeliefert."
+
+msgid "When the JSON-LD output is enabled, the seal's own snippet is suppressed so the <code>AggregateRating</code> is never duplicated."
+msgstr "Ist die JSON-LD-Ausgabe aktiv, unterdrückt das Siegel sein eigenes Snippet, damit die <code>AggregateRating</code> nie doppelt im Markup steht."
+
+msgid "The JSON-LD rating is fetched server-side — key-based when an API key is set, so it survives a profile rename — and cached for 6 hours; it is printed only on your front page."
+msgstr "Die Bewertungsdaten fürs JSON-LD holt Ihr Server selbst — bei hinterlegtem API-Key über den key-basierten Endpunkt, der eine Profil-Umbenennung übersteht — und speichert sie 6 Stunden zwischen; ausgegeben wird das Markup nur auf Ihrer Startseite."
+
+msgid "The seal script (<code>seal.js</code>) is loaded asynchronously and only on pages that actually contain a seal."
+msgstr "Das Siegel-Skript (<code>seal.js</code>) wird asynchron geladen, und nur auf Seiten, die tatsächlich ein Siegel enthalten."
+
+msgid "A <strong>static image mode</strong>: the round seal, banner seal and profile card as a plain SVG image, linked to your profile — for contexts without JavaScript."
+msgstr "Ein <strong>statischer Bildmodus</strong>: Rundsiegel, Banderole und Profilkarte als reines SVG mit Link aufs Profil — für Umgebungen ohne JavaScript."
+
+msgid "<strong>Google review stars</strong> — server-side JSON-LD (<code>LocalBusiness</code> with <code>AggregateRating</code>) so search engines can show star ratings for your site."
+msgstr "<strong>Google-Sterne</strong> — server-seitiges JSON-LD (<code>LocalBusiness</code> mit <code>AggregateRating</code>), damit Suchmaschinen Sternebewertungen zu Ihrer Seite anzeigen können."
+
+msgid "A <strong>site-wide seal</strong>: show the floating profile card or the footer bar on every page — no theme edit, no per-page block."
+msgstr "Ein <strong>seitenweites Siegel</strong>: schwebende Profilkarte oder Footer-Leiste auf jeder Seite — ohne Theme-Anpassung, ohne Block auf jeder einzelnen Seite."
+
+msgid "A <strong>seal widget</strong> in nine variants — the static round seal and banner seal, plus the live widgets: profile card, trust bar, hero snippet, featured quote, carousel, wall of love and footer bar."
+msgstr "Ein <strong>Bewertungssiegel in neun Varianten</strong> — statisches Rundsiegel und Banderole sowie die Live-Widgets: Profilkarte, Trust-Bar, Hero-Snippet, Zitat-Karte, Karussell, Wall of Love und Footer-Leiste."
+
+msgid "External services"
+msgstr "Externe Dienste"
+
+msgid "The seal rendered on the front end."
+msgstr "Das Siegel im Frontend."
+
+msgid "The RatingStar Seal block with variant, placement and embed attributes."
+msgstr "Der Block RatingStar Seal mit Variante, Platzierung und Embed-Attributen."
+
+msgid "Settings → RatingStar: profile connection, Google review stars and the site-wide seal."
+msgstr "Einstellungen → RatingStar: Profil-Verbindung, Google-Sterne und seitenweites Siegel."
+
+msgid "German translations (de_DE and de_DE_formal), including the block editor."
+msgstr "Deutsche Übersetzungen (de_DE und de_DE_formal), auch für den Block-Editor."
+
+msgid "Slug verification, configurable base origin, domain-whitelist hints."
+msgstr "Slug-Prüfung, konfigurierbare Basis-Adresse, Hinweise zur Domain-Freigabe."
+
+msgid "Linked static image mode (SVG) for round seal, banner seal and profile card."
+msgstr "Verlinkter statischer Bildmodus (SVG) für Rundsiegel, Banderole und Profilkarte."
+
+msgid "Server-side Google review stars: key-based <code>LocalBusiness</code> JSON-LD, cached for 6 hours, duplicate-free."
+msgstr "Server-seitige Google-Sterne: key-basiertes <code>LocalBusiness</code>-JSON-LD, 6 Stunden zwischengespeichert, ohne Dopplung."
+
+msgid "Site-wide seal: floating profile card or footer bar on every page."
+msgstr "Seitenweites Siegel: schwebende Profilkarte oder Footer-Leiste auf jeder Seite."
+
+msgid "Seal widget in nine variants (shortcode + block) with the portal's per-embed appearance attributes."
+msgstr "Bewertungssiegel in neun Varianten (Shortcode + Block) mit den Gestaltungs-Attributen aus dem Portal."
+
+msgid "First public release."
+msgstr "Erste öffentliche Version."
+
