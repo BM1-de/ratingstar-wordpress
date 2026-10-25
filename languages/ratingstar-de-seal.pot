@@ -120,7 +120,7 @@ msgid "Enter your RatingStar profile details. They are used by the seal widget a
 msgstr ""
 
 #: includes/class-ratingstar-settings.php:311
-msgid "Whitelist this site’s domain in your RatingStar backend (tab “Auslieferung” / Delivery) and verify it with a TXT _ratingstar.<domain> DNS record — otherwise the seal data is blocked with HTTP 403. The key-based output works on all plans."
+msgid "Whitelist this site’s domain in your RatingStar backend (Siegel & Widgets → Domains & Statistik) and verify it with a TXT _ratingstar.<domain> DNS record — otherwise the seal data is blocked with HTTP 403. The key-based output works on all plans."
 msgstr ""
 
 #: includes/class-ratingstar-settings.php:324
@@ -218,15 +218,15 @@ msgid "Profile card"
 msgstr ""
 
 #: blocks/seal/editor.js:32
-msgid "Trust bar"
+msgid "Rating bar"
 msgstr ""
 
 #: blocks/seal/editor.js:33
-msgid "Hero snippet"
+msgid "Overall rating"
 msgstr ""
 
 #: blocks/seal/editor.js:34
-msgid "Featured quote"
+msgid "Quote"
 msgstr ""
 
 #: blocks/seal/editor.js:35
@@ -234,7 +234,7 @@ msgid "Carousel"
 msgstr ""
 
 #: blocks/seal/editor.js:36
-msgid "Wall of love"
+msgid "Review wall"
 msgstr ""
 
 #: blocks/seal/editor.js:52

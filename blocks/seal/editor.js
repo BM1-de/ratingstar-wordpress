@@ -29,11 +29,11 @@
 		{ label: __( 'Round seal', 'ratingstar-de-seal' ), value: 'seal-circle' },
 		{ label: __( 'Banner seal', 'ratingstar-de-seal' ), value: 'seal-circle-banner' },
 		{ label: __( 'Profile card', 'ratingstar-de-seal' ), value: 'profile-card' },
-		{ label: __( 'Trust bar', 'ratingstar-de-seal' ), value: 'bar' },
-		{ label: __( 'Hero snippet', 'ratingstar-de-seal' ), value: 'hero' },
-		{ label: __( 'Featured quote', 'ratingstar-de-seal' ), value: 'quote' },
+		{ label: __( 'Rating bar', 'ratingstar-de-seal' ), value: 'bar' },
+		{ label: __( 'Overall rating', 'ratingstar-de-seal' ), value: 'hero' },
+		{ label: __( 'Quote', 'ratingstar-de-seal' ), value: 'quote' },
 		{ label: __( 'Carousel', 'ratingstar-de-seal' ), value: 'carousel' },
-		{ label: __( 'Wall of love', 'ratingstar-de-seal' ), value: 'wall' },
+		{ label: __( 'Review wall', 'ratingstar-de-seal' ), value: 'wall' },
 		{ label: __( 'Footer bar', 'ratingstar-de-seal' ), value: 'footer-bar' }
 	];
 

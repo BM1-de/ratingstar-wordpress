@@ -25,8 +25,8 @@ msgstr "Prüf, ob unter <em>Einstellungen → RatingStar</em> ein Profil-Slug ge
 msgid "Open the embed generator in your RatingStar portal, configure the widget and copy the resulting attributes into the shortcode, the block's \"Embed attributes\" field or the site-wide settings. The <code>data-</code> prefix may be included or left out; invalid values fall back silently."
 msgstr "Öffne den Embed-Generator in deinem RatingStar-Portal, stell das Widget ein und übernimm die erzeugten Attribute in den Shortcode, in das Feld „Embed-Attribute“ des Blocks oder in die Einstellungen für das seitenweite Siegel. Das <code>data-</code>-Präfix darfst du mitschreiben oder weglassen; ungültige Werte fallen still auf den Standard zurück."
 
-msgid "The round seal and the banner seal are static and work on every plan. Profile card, trust bar, hero snippet, featured quote, carousel, wall of love and footer bar are live widgets and need a 4-star plan or higher — on lower plans seal.js shows the banner seal instead."
-msgstr "Rundsiegel und Banderole sind statisch und funktionieren in jedem Tarif. Profilkarte, Trust-Bar, Hero-Snippet, Zitat-Karte, Karussell, Wall of Love und Footer-Leiste sind Live-Widgets und brauchen mindestens den 4-Sterne-Tarif — in niedrigeren Tarifen zeigt seal.js stattdessen die Banderole."
+msgid "The round seal and the banner seal are static and work on every plan. Profile card, rating bar, overall rating, quote, carousel, review wall and footer bar are live widgets and need a 4-star plan or higher — on lower plans seal.js shows the banner seal instead."
+msgstr "Rundsiegel und Banderole sind statisch und funktionieren in jedem Tarif. Profil-Karte, Bewertungsleiste, Gesamtnote, Zitat, Karussell, Bewertungswand und Fußleiste sind Live-Widgets und brauchen mindestens den 4-Sterne-Tarif — in niedrigeren Tarifen zeigt seal.js stattdessen die Banderole."
 
 msgid "It is the last part of your public profile URL: <code>https://ratingstar.de/t/&lt;slug&gt;</code>. Enter just the <code>&lt;slug&gt;</code> part on the settings page."
 msgstr "Es ist der letzte Teil deiner öffentlichen Profil-URL: <code>https://ratingstar.de/t/&lt;slug&gt;</code>. Trag auf der Einstellungsseite nur den <code>&lt;slug&gt;</code>-Teil ein."
@@ -55,8 +55,8 @@ msgstr "Wo finde ich meinen Profil-Slug?"
 msgid "Place the seal on a page or post — <code>[ratingstar variant=\"profile-card\"]</code> or the <strong>RatingStar Seal</strong> block — or enable the <strong>site-wide seal</strong> in the settings."
 msgstr "Siegel auf einer Seite oder in einem Beitrag platzieren — <code>[ratingstar variant=\"profile-card\"]</code> oder der Block <strong>RatingStar Seal</strong> — oder in den Einstellungen das <strong>seitenweite Siegel</strong> aktivieren."
 
-msgid "Whitelist your domain in the RatingStar backend (tab \"Auslieferung\" / Delivery) and verify it via the <code>TXT _ratingstar.&lt;domain&gt;</code> DNS record — otherwise the seal data may be blocked with HTTP 403."
-msgstr "Deine Domain im RatingStar-Backend unter „Auslieferung“ freischalten und per DNS-Eintrag <code>TXT _ratingstar.&lt;domain&gt;</code> bestätigen — sonst können die Siegel-Daten mit HTTP 403 blockiert werden."
+msgid "Whitelist your domain in the RatingStar backend (Siegel &amp; Widgets → Domains &amp; Statistik) and verify it via the <code>TXT _ratingstar.&lt;domain&gt;</code> DNS record — otherwise the seal data may be blocked with HTTP 403."
+msgstr "Deine Domain im RatingStar-Backend unter „Siegel &amp; Widgets → Domains &amp; Statistik“ freischalten und per DNS-Eintrag <code>TXT _ratingstar.&lt;domain&gt;</code> bestätigen — sonst können die Siegel-Daten mit HTTP 403 blockiert werden."
 
 msgid "Go to <em>Settings → RatingStar</em> and enter your <strong>profile slug</strong> (the part after <code>ratingstar.de/t/</code>). The slug is verified against your live profile. Optionally add your <strong>API key</strong> (<code>rs_live_…</code>) for the rename-proof key-based endpoints."
 msgstr "Unter <em>Einstellungen → RatingStar</em> den <strong>Profil-Slug</strong> eintragen (der Teil hinter <code>ratingstar.de/t/</code>). Der Slug wird gegen dein Live-Profil geprüft. Optional den <strong>API-Key</strong> (<code>rs_live_…</code>) für die umbenennungs-festen key-basierten Endpunkte hinterlegen."
@@ -79,8 +79,8 @@ msgstr "Dieses Plugin verbindet sich mit der <strong>RatingStar</strong>-Plattfo
 msgid "<strong>Why it stays fast and clean:</strong>"
 msgstr "<strong>Warum es schlank und schnell bleibt:</strong>"
 
-msgid "<strong>Customising the look:</strong> every embed accepts the appearance attributes produced by the embed generator in your RatingStar portal (for example <code>pc-color</code>, <code>car-count</code>, <code>footer-bar-bg</code>). Use them as shortcode attributes (<code>[ratingstar variant=\"carousel\" car-count=\"4\"]</code>), paste them into the block's \"Embed attributes\" field, or into the site-wide settings — seal.js validates the values."
-msgstr "<strong>Aussehen anpassen:</strong> Jede Einbindung akzeptiert die Gestaltungs-Attribute aus dem Embed-Generator in deinem RatingStar-Portal (etwa <code>pc-color</code>, <code>car-count</code>, <code>footer-bar-bg</code>). Nutz sie als Shortcode-Attribute (<code>[ratingstar variant=\"carousel\" car-count=\"4\"]</code>), im Feld „Embed-Attribute“ des Blocks oder in den Einstellungen für das seitenweite Siegel — seal.js prüft die Werte."
+msgid "<strong>Customising the look:</strong> every embed accepts the appearance attributes produced by the embed generator in your RatingStar portal (for example <code>pc-color</code>, <code>car-count</code>, <code>footer-bar-bg</code>, or <code>theme</code> for a dark look). Use them as shortcode attributes (<code>[ratingstar variant=\"carousel\" car-count=\"4\"]</code>), paste them into the block's \"Embed attributes\" field, or into the site-wide settings — seal.js validates the values."
+msgstr "<strong>Aussehen anpassen:</strong> Jede Einbindung akzeptiert die Gestaltungs-Attribute aus dem Embed-Generator in deinem RatingStar-Portal (etwa <code>pc-color</code>, <code>car-count</code>, <code>footer-bar-bg</code> oder <code>theme</code> für die dunkle Fassung). Nutz sie als Shortcode-Attribute (<code>[ratingstar variant=\"carousel\" car-count=\"4\"]</code>), im Feld „Embed-Attribute“ des Blocks oder in den Einstellungen für das seitenweite Siegel — seal.js prüft die Werte."
 
 msgid "Enter your RatingStar profile slug once under <em>Settings → RatingStar</em>, then place the seal anywhere with the <code>[ratingstar]</code> shortcode or the <strong>RatingStar Seal</strong> block — or switch on the site-wide seal."
 msgstr "Trag deinen RatingStar-Profil-Slug einmalig unter <em>Einstellungen → RatingStar</em> ein und platzier das Siegel dann mit dem Shortcode <code>[ratingstar]</code> oder dem Block <strong>RatingStar Seal</strong> — oder schalte das seitenweite Siegel ein."
@@ -119,16 +119,16 @@ msgid "The seal script (<code>seal.js</code>) is loaded asynchronously and only 
 msgstr "Das Siegel-Skript (<code>seal.js</code>) wird asynchron geladen, und nur auf Seiten, die tatsächlich ein Siegel enthalten."
 
 msgid "A <strong>static image mode</strong>: the round seal, banner seal and profile card as a plain SVG image, linked to your profile — for contexts without JavaScript."
-msgstr "Ein <strong>statischer Bildmodus</strong>: Rundsiegel, Banderole und Profilkarte als reines SVG mit Link aufs Profil — für Umgebungen ohne JavaScript."
+msgstr "Ein <strong>statischer Bildmodus</strong>: Rundsiegel, Banderole und Profil-Karte als reines SVG mit Link aufs Profil — für Umgebungen ohne JavaScript."
 
 msgid "<strong>Google review stars</strong> — server-side JSON-LD (<code>LocalBusiness</code> with <code>AggregateRating</code>) so search engines can show star ratings for your site."
 msgstr "<strong>Google-Sterne</strong> — server-seitiges JSON-LD (<code>LocalBusiness</code> mit <code>AggregateRating</code>), damit Suchmaschinen Sternebewertungen zu deiner Seite anzeigen können."
 
 msgid "A <strong>site-wide seal</strong>: show the floating profile card or the footer bar on every page — no theme edit, no per-page block."
-msgstr "Ein <strong>seitenweites Siegel</strong>: schwebende Profilkarte oder Footer-Leiste auf jeder Seite — ohne Theme-Anpassung, ohne Block auf jeder einzelnen Seite."
+msgstr "Ein <strong>seitenweites Siegel</strong>: schwebende Profil-Karte oder Fußleiste auf jeder Seite — ohne Theme-Anpassung, ohne Block auf jeder einzelnen Seite."
 
-msgid "A <strong>seal widget</strong> in nine variants — the static round seal and banner seal, plus the live widgets: profile card, trust bar, hero snippet, featured quote, carousel, wall of love and footer bar."
-msgstr "Ein <strong>Bewertungssiegel in neun Varianten</strong> — statisches Rundsiegel und Banderole sowie die Live-Widgets: Profilkarte, Trust-Bar, Hero-Snippet, Zitat-Karte, Karussell, Wall of Love und Footer-Leiste."
+msgid "A <strong>seal widget</strong> in nine variants — the static round seal and banner seal, plus the live widgets: profile card, rating bar, overall rating, quote, carousel, review wall and footer bar."
+msgstr "Ein <strong>Bewertungssiegel in neun Varianten</strong> — statisches Rundsiegel und Banderole sowie die Live-Widgets: Profil-Karte, Bewertungsleiste, Gesamtnote, Zitat, Karussell, Bewertungswand und Fußleiste."
 
 msgid "External services"
 msgstr "Externe Dienste"
@@ -149,13 +149,13 @@ msgid "Slug verification, configurable base origin, domain-whitelist hints."
 msgstr "Slug-Prüfung, konfigurierbare Basis-Adresse, Hinweise zur Domain-Freigabe."
 
 msgid "Linked static image mode (SVG) for round seal, banner seal and profile card."
-msgstr "Verlinkter statischer Bildmodus (SVG) für Rundsiegel, Banderole und Profilkarte."
+msgstr "Verlinkter statischer Bildmodus (SVG) für Rundsiegel, Banderole und Profil-Karte."
 
 msgid "Server-side Google review stars: key-based <code>LocalBusiness</code> JSON-LD, cached for 6 hours, duplicate-free."
 msgstr "Server-seitige Google-Sterne: key-basiertes <code>LocalBusiness</code>-JSON-LD, 6 Stunden zwischengespeichert, ohne Dopplung."
 
 msgid "Site-wide seal: floating profile card or footer bar on every page."
-msgstr "Seitenweites Siegel: schwebende Profilkarte oder Footer-Leiste auf jeder Seite."
+msgstr "Seitenweites Siegel: schwebende Profil-Karte oder Fußleiste auf jeder Seite."
 
 msgid "Seal widget in nine variants (shortcode + block) with the portal's per-embed appearance attributes."
 msgstr "Bewertungssiegel in neun Varianten (Shortcode + Block) mit den Gestaltungs-Attributen aus dem Portal."
@@ -163,8 +163,8 @@ msgstr "Bewertungssiegel in neun Varianten (Shortcode + Block) mit den Gestaltun
 msgid "First public release."
 msgstr "Erste öffentliche Version."
 
-msgid "Ihre Domain im RatingStar-Backend unter „Auslieferung\" freischalten und per DNS-Eintrag <code>TXT _ratingstar.&lt;domain&gt;</code> bestätigen — sonst können die Siegel-Daten mit HTTP 403 blockiert werden."
-msgstr "Deine Domain im RatingStar-Backend unter „Auslieferung\" freischalten und per DNS-Eintrag <code>TXT _ratingstar.&lt;domain&gt;</code> bestätigen — sonst können die Siegel-Daten mit HTTP 403 blockiert werden."
+msgid "Ihre Domain im RatingStar-Backend unter „Siegel &amp; Widgets → Domains &amp; Statistik\" freischalten und per DNS-Eintrag <code>TXT _ratingstar.&lt;domain&gt;</code> bestätigen — sonst können die Siegel-Daten mit HTTP 403 blockiert werden."
+msgstr "Deine Domain im RatingStar-Backend unter „Siegel &amp; Widgets → Domains &amp; Statistik\" freischalten und per DNS-Eintrag <code>TXT _ratingstar.&lt;domain&gt;</code> bestätigen — sonst können die Siegel-Daten mit HTTP 403 blockiert werden."
 
 msgid "Unter <em>Einstellungen → RatingStar</em> den <strong>Profil-Slug</strong> eintragen (der Teil hinter <code>ratingstar.de/t/</code>). Der Slug wird gegen Ihr Live-Profil geprüft. Optional den <strong>API-Key</strong> (<code>rs_live_…</code>) für die umbenennungs-festen key-basierten Endpunkte hinterlegen."
 msgstr "Unter <em>Einstellungen → RatingStar</em> den <strong>Profil-Slug</strong> eintragen (der Teil hinter <code>ratingstar.de/t/</code>). Der Slug wird gegen dein Live-Profil geprüft. Optional den <strong>API-Key</strong> (<code>rs_live_…</code>) für die umbenennungs-festen key-basierten Endpunkte hinterlegen."
@@ -172,8 +172,8 @@ msgstr "Unter <em>Einstellungen → RatingStar</em> den <strong>Profil-Slug</str
 msgid "<strong>Schlank und schnell:</strong> Das Siegel-Skript wird asynchron und nur auf Seiten mit Siegel geladen. Die Bewertungsdaten fürs JSON-LD holt Ihr Server selbst — bei hinterlegtem API-Key umbenennungs-fest über den key-basierten Endpunkt — und speichert sie 6 Stunden zwischen; ausgegeben wird das Markup nur auf der Startseite. Ist die JSON-LD-Ausgabe aktiv, unterdrückt das Siegel sein eigenes Snippet, damit die Bewertung nie doppelt im Markup steht."
 msgstr "<strong>Schlank und schnell:</strong> Das Siegel-Skript wird asynchron und nur auf Seiten mit Siegel geladen. Die Bewertungsdaten fürs JSON-LD holt dein Server selbst — bei hinterlegtem API-Key umbenennungs-fest über den key-basierten Endpunkt — und speichert sie 6 Stunden zwischen; ausgegeben wird das Markup nur auf der Startseite. Ist die JSON-LD-Ausgabe aktiv, unterdrückt das Siegel sein eigenes Snippet, damit die Bewertung nie doppelt im Markup steht."
 
-msgid "<strong>Aussehen anpassen:</strong> Jede Einbindung akzeptiert die Gestaltungs-Attribute aus dem Embed-Generator in Ihrem RatingStar-Portal (etwa <code>pc-color</code>, <code>car-count</code>, <code>footer-bar-bg</code>). Sie funktionieren als Shortcode-Attribute (<code>[ratingstar variant=\"carousel\" car-count=\"4\"]</code>), im Feld „Embed-Attribute\" des Blocks oder in den Einstellungen für das seitenweite Siegel; ungültige Werte fallen still auf den Standard zurück."
-msgstr "<strong>Aussehen anpassen:</strong> Jede Einbindung akzeptiert die Gestaltungs-Attribute aus dem Embed-Generator in deinem RatingStar-Portal (etwa <code>pc-color</code>, <code>car-count</code>, <code>footer-bar-bg</code>). Sie funktionieren als Shortcode-Attribute (<code>[ratingstar variant=\"carousel\" car-count=\"4\"]</code>), im Feld „Embed-Attribute\" des Blocks oder in den Einstellungen für das seitenweite Siegel; ungültige Werte fallen still auf den Standard zurück."
+msgid "<strong>Aussehen anpassen:</strong> Jede Einbindung akzeptiert die Gestaltungs-Attribute aus dem Embed-Generator in Ihrem RatingStar-Portal (etwa <code>pc-color</code>, <code>car-count</code>, <code>footer-bar-bg</code> oder <code>theme</code> für die dunkle Fassung). Sie funktionieren als Shortcode-Attribute (<code>[ratingstar variant=\"carousel\" car-count=\"4\"]</code>), im Feld „Embed-Attribute\" des Blocks oder in den Einstellungen für das seitenweite Siegel; ungültige Werte fallen still auf den Standard zurück."
+msgstr "<strong>Aussehen anpassen:</strong> Jede Einbindung akzeptiert die Gestaltungs-Attribute aus dem Embed-Generator in deinem RatingStar-Portal (etwa <code>pc-color</code>, <code>car-count</code>, <code>footer-bar-bg</code> oder <code>theme</code> für die dunkle Fassung). Sie funktionieren als Shortcode-Attribute (<code>[ratingstar variant=\"carousel\" car-count=\"4\"]</code>), im Feld „Embed-Attribute\" des Blocks oder in den Einstellungen für das seitenweite Siegel; ungültige Werte fallen still auf den Standard zurück."
 
 msgid "Tragen Sie Ihren RatingStar-Profil-Slug einmalig unter <em>Einstellungen → RatingStar</em> ein und platzieren Sie das Siegel dann mit dem Shortcode <code>[ratingstar]</code> oder dem Block <strong>RatingStar Seal</strong> — oder schalten Sie das seitenweite Siegel ein."
 msgstr "Trag deinen RatingStar-Profil-Slug einmalig unter <em>Einstellungen → RatingStar</em> ein und platzier das Siegel dann mit dem Shortcode <code>[ratingstar]</code> oder dem Block <strong>RatingStar Seal</strong> — oder schalte das seitenweite Siegel ein."

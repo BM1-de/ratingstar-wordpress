@@ -115,6 +115,7 @@ class RatingStar_Seal {
 		'footerBarPosition',
 		'reviewsOnlyNamed',
 		'reviewsOnlyWithComment',
+		'theme',
 	);
 
 	/** Registered handle for the external seal.js. */

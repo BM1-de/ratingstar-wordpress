@@ -134,16 +134,8 @@ msgstr ""
 "Siegel-Widget und den Google-Bewertungssternen verwendet."
 
 #: includes/class-ratingstar-settings.php:311
-msgid ""
-"Whitelist this site’s domain in your RatingStar backend (tab "
-"“Auslieferung” / Delivery) and verify it with a TXT _ratingstar.<domain> DNS "
-"record — otherwise the seal data is blocked with HTTP 403. The key-based "
-"output works on all plans."
-msgstr ""
-"Tragen Sie die Domain dieser Website im RatingStar-Backend ein (Tab "
-"„Auslieferung“) und verifizieren Sie sie per DNS-Eintrag TXT _ratingstar."
-"<domain> — sonst blockiert die API die Siegel-Daten mit HTTP 403. Die key-"
-"basierte Ausgabe funktioniert in allen Tarifen."
+msgid "Whitelist this site’s domain in your RatingStar backend (Siegel & Widgets → Domains & Statistik) and verify it with a TXT _ratingstar.<domain> DNS record — otherwise the seal data is blocked with HTTP 403. The key-based output works on all plans."
+msgstr "Tragen Sie die Domain dieser Website im RatingStar-Backend unter „Siegel & Widgets → Domains & Statistik“ ein und verifizieren Sie sie per DNS-Eintrag TXT _ratingstar.<domain> — sonst blockiert die API die Siegel-Daten mit HTTP 403. Die key-basierte Ausgabe funktioniert in allen Tarifen."
 
 #: includes/class-ratingstar-settings.php:324
 msgid "e.g. stadtwerk-tauberfranken"
@@ -210,7 +202,7 @@ msgstr "Profil-Karte (schwebend)"
 
 #: includes/class-ratingstar-settings.php:403 blocks/seal/editor.js:37
 msgid "Footer bar"
-msgstr "Footer-Bar"
+msgstr "Fußleiste"
 
 #: includes/class-ratingstar-settings.php:417
 msgid ""
@@ -272,24 +264,24 @@ msgid "Profile card"
 msgstr "Profil-Karte"
 
 #: blocks/seal/editor.js:32
-msgid "Trust bar"
-msgstr "Trust-Bar"
+msgid "Rating bar"
+msgstr "Bewertungsleiste"
 
 #: blocks/seal/editor.js:33
-msgid "Hero snippet"
-msgstr "Hero-Snippet"
+msgid "Overall rating"
+msgstr "Gesamtnote"
 
 #: blocks/seal/editor.js:34
-msgid "Featured quote"
-msgstr "Featured Quote"
+msgid "Quote"
+msgstr "Zitat"
 
 #: blocks/seal/editor.js:35
 msgid "Carousel"
-msgstr "Carousel"
+msgstr "Karussell"
 
 #: blocks/seal/editor.js:36
-msgid "Wall of love"
-msgstr "Wall of Love"
+msgid "Review wall"
+msgstr "Bewertungswand"
 
 #: blocks/seal/editor.js:52
 msgid "Inline (at this spot)"

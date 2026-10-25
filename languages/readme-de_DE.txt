@@ -21,14 +21,14 @@ Bewertungen aus Google und anderen Portalen bündeln und alles auf der eigenen
 Website zeigen. **RatingStar.de Seal** bringt sie in WordPress:
 
 * Ein **Bewertungssiegel in neun Varianten** — statisches Rundsiegel und
-  Banderole sowie die Live-Widgets: Profilkarte, Trust-Bar, Hero-Snippet,
-  Zitat-Karte, Karussell, Wall of Love und Footer-Leiste.
-* Ein **seitenweites Siegel**: schwebende Profilkarte oder Footer-Leiste auf
+  Banderole sowie die Live-Widgets: Profil-Karte, Bewertungsleiste, Gesamtnote,
+  Zitat, Karussell, Bewertungswand und Fußleiste.
+* Ein **seitenweites Siegel**: schwebende Profil-Karte oder Fußleiste auf
   jeder Seite — ohne Theme-Anpassung, ohne Block auf jeder einzelnen Seite.
 * **Google-Sterne** — server-seitiges JSON-LD (`LocalBusiness` mit
   `AggregateRating`), damit Suchmaschinen Sternebewertungen zu Ihrer Seite
   anzeigen können.
-* Ein **statischer Bildmodus**: Rundsiegel, Banderole und Profilkarte als
+* Ein **statischer Bildmodus**: Rundsiegel, Banderole und Profil-Karte als
   reines SVG mit Link aufs Profil — für Umgebungen ohne JavaScript.
 
 Tragen Sie Ihren RatingStar-Profil-Slug einmalig unter *Einstellungen →
@@ -38,7 +38,7 @@ seitenweite Siegel ein.
 
 **Aussehen anpassen:** Jede Einbindung akzeptiert die Gestaltungs-Attribute
 aus dem Embed-Generator in Ihrem RatingStar-Portal (etwa `pc-color`,
-`car-count`, `footer-bar-bg`). Nutzen Sie sie als Shortcode-Attribute
+`car-count`, `footer-bar-bg` oder `theme` für die dunkle Fassung). Nutzen Sie sie als Shortcode-Attribute
 (`[ratingstar variant="carousel" car-count="4"]`), im Feld „Embed-Attribute"
 des Blocks oder in den Einstellungen für das seitenweite Siegel — seal.js
 prüft die Werte.
@@ -67,7 +67,7 @@ prüft die Werte.
    hinter `ratingstar.de/t/`). Der Slug wird gegen Ihr Live-Profil geprüft.
    Optional den **API-Key** (`rs_live_…`) für die umbenennungs-festen
    key-basierten Endpunkte hinterlegen.
-4. Ihre Domain im RatingStar-Backend unter „Auslieferung" freischalten und per
+4. Ihre Domain im RatingStar-Backend unter „Siegel & Widgets → Domains & Statistik" freischalten und per
    DNS-Eintrag `TXT _ratingstar.<domain>` bestätigen — sonst können die
    Siegel-Daten mit HTTP 403 blockiert werden.
 5. Siegel auf einer Seite oder in einem Beitrag platzieren —
@@ -86,8 +86,8 @@ Es ist der letzte Teil Ihrer öffentlichen Profil-URL:
 = Welche Varianten gibt es? =
 
 Rundsiegel und Banderole sind statisch und funktionieren in jedem Tarif.
-Profilkarte, Trust-Bar, Hero-Snippet, Zitat-Karte, Karussell, Wall of Love und
-Footer-Leiste sind Live-Widgets und brauchen mindestens den 4-Sterne-Tarif —
+Profil-Karte, Bewertungsleiste, Gesamtnote, Zitat, Karussell, Bewertungswand und
+Fußleiste sind Live-Widgets und brauchen mindestens den 4-Sterne-Tarif —
 in niedrigeren Tarifen zeigt seal.js stattdessen die Banderole.
 
 = Wie ändere ich Farben, Größen und andere Optionen? =
@@ -180,12 +180,12 @@ Diensteanbieter: Baumgärtner Marketing GmbH, Deutschland.
 * Erste öffentliche Version.
 * Bewertungssiegel in neun Varianten (Shortcode + Block) mit den
   Gestaltungs-Attributen aus dem Portal.
-* Seitenweites Siegel: schwebende Profilkarte oder Footer-Leiste auf jeder
+* Seitenweites Siegel: schwebende Profil-Karte oder Fußleiste auf jeder
   Seite.
 * Server-seitige Google-Sterne: key-basiertes `LocalBusiness`-JSON-LD,
   6 Stunden zwischengespeichert, ohne Dopplung.
 * Verlinkter statischer Bildmodus (SVG) für Rundsiegel, Banderole und
-  Profilkarte.
+  Profil-Karte.
 * Slug-Prüfung, konfigurierbare Basis-Adresse, Hinweise zur Domain-Freigabe.
 * Deutsche Übersetzungen (de_DE und de_DE_formal), auch für den Block-Editor.
 

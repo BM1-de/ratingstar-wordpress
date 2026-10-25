@@ -4,7 +4,7 @@ Tags: reviews, customer reviews, review widget, rich snippets, trust seal
 Requires at least: 6.3
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 1.0.2
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,14 +14,14 @@ Show your customer reviews on your WordPress site: RatingStar seals, review widg
 
 [RatingStar](https://ratingstar.de) is the review tool for businesses: collect customer reviews, bundle reviews from Google and other platforms, and show them all on your own website. **RatingStar.de Seal** brings them into WordPress:
 
-* A **seal widget** in nine variants — the static round seal and banner seal, plus the live widgets: profile card, trust bar, hero snippet, featured quote, carousel, wall of love and footer bar.
+* A **seal widget** in nine variants — the static round seal and banner seal, plus the live widgets: profile card, rating bar, overall rating, quote, carousel, review wall and footer bar.
 * A **site-wide seal**: show the floating profile card or the footer bar on every page — no theme edit, no per-page block.
 * **Google review stars** — server-side JSON-LD (`LocalBusiness` with `AggregateRating`) so search engines can show star ratings for your site.
 * A **static image mode**: the round seal, banner seal and profile card as a plain SVG image, linked to your profile — for contexts without JavaScript.
 
 Enter your RatingStar profile slug once under *Settings → RatingStar*, then place the seal anywhere with the `[ratingstar]` shortcode or the **RatingStar Seal** block — or switch on the site-wide seal.
 
-**Customising the look:** every embed accepts the appearance attributes produced by the embed generator in your RatingStar portal (for example `pc-color`, `car-count`, `footer-bar-bg`). Use them as shortcode attributes (`[ratingstar variant="carousel" car-count="4"]`), paste them into the block's "Embed attributes" field, or into the site-wide settings — seal.js validates the values.
+**Customising the look:** every embed accepts the appearance attributes produced by the embed generator in your RatingStar portal (for example `pc-color`, `car-count`, `footer-bar-bg`, or `theme` for a dark look). Use them as shortcode attributes (`[ratingstar variant="carousel" car-count="4"]`), paste them into the block's "Embed attributes" field, or into the site-wide settings — seal.js validates the values.
 
 **Why it stays fast and clean:**
 
@@ -35,7 +35,7 @@ Enter your RatingStar profile slug once under *Settings → RatingStar*, then pl
 1. Upload the `ratingstar-de-seal` folder to `/wp-content/plugins/`, or install the ZIP via *Plugins → Add New → Upload Plugin*.
 2. Activate **RatingStar.de Seal** through the *Plugins* menu.
 3. Go to *Settings → RatingStar* and enter your **profile slug** (the part after `ratingstar.de/t/`). The slug is verified against your live profile. Optionally add your **API key** (`rs_live_…`) for the rename-proof key-based endpoints.
-4. Whitelist your domain in the RatingStar backend (tab "Auslieferung" / Delivery) and verify it via the `TXT _ratingstar.<domain>` DNS record — otherwise the seal data may be blocked with HTTP 403.
+4. Whitelist your domain in the RatingStar backend (Siegel & Widgets → Domains & Statistik) and verify it via the `TXT _ratingstar.<domain>` DNS record — otherwise the seal data may be blocked with HTTP 403.
 5. Place the seal on a page or post — `[ratingstar variant="profile-card"]` or the **RatingStar Seal** block — or enable the **site-wide seal** in the settings.
 
 == Frequently Asked Questions ==
@@ -46,7 +46,7 @@ It is the last part of your public profile URL: `https://ratingstar.de/t/<slug>`
 
 = Which variants are there? =
 
-The round seal and the banner seal are static and work on every plan. Profile card, trust bar, hero snippet, featured quote, carousel, wall of love and footer bar are live widgets and need a 4-star plan or higher — on lower plans seal.js shows the banner seal instead.
+The round seal and the banner seal are static and work on every plan. Profile card, rating bar, overall rating, quote, carousel, review wall and footer bar are live widgets and need a 4-star plan or higher — on lower plans seal.js shows the banner seal instead.
 
 = How do I change colours, sizes and other options? =
 
@@ -92,6 +92,15 @@ Service provider: Baumgärtner Marketing GmbH, Germany.
 
 == Changelog ==
 
+= 1.1.0 =
+* Widget names follow the RatingStar portal: rating bar, overall rating, quote,
+  carousel, review wall and footer bar (in German: Bewertungsleiste, Gesamtnote,
+  Zitat, Karussell, Bewertungswand, Fußleiste).
+* New appearance attribute `theme="dark"`: a dark look for the rating bar,
+  overall rating, quote, carousel and review wall.
+* The domain whitelist hint points to the new place in the RatingStar backend
+  (Siegel & Widgets → Domains & Statistik).
+
 = 1.0.2 =
 * Clearer plugin description: RatingStar collects customer reviews, bundles
   reviews from Google and other platforms and shows them on your website.
@@ -110,6 +119,9 @@ Service provider: Baumgärtner Marketing GmbH, Germany.
 * German translations (de_DE and de_DE_formal), including the block editor.
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+Dark look for the live widgets (`theme="dark"`) and the widget names of the RatingStar portal.
 
 = 1.0.2 =
 Documentation only — updated plugin description.
