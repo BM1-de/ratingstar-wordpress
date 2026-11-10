@@ -66,8 +66,8 @@ class RatingStar_JsonLd {
 
 	/**
 	 * Returns the cached JSON-LD as an array, fetching it on a miss. Null when
-	 * nothing is configured, the request fails (e.g. 403 tier-gating), or the
-	 * response is not valid schema.
+	 * nothing is configured, the request fails (e.g. 403 tier-gating), the
+	 * response is not valid schema, or the cache takes no entries.
 	 *
 	 * @return array|null
 	 */
@@ -84,6 +84,14 @@ class RatingStar_JsonLd {
 			return null;
 		}
 
+		// Store the entry as "failed" before asking RatingStar. If the cache takes
+		// no entries (read-only database, failing object cache), the answer could
+		// not be stored either and every front page view would ask again — so
+		// print nothing and do not ask.
+		if ( ! set_transient( self::TRANSIENT_KEY, array(), self::NEGATIVE_TTL ) ) {
+			return null;
+		}
+
 		$response = wp_remote_get(
 			$url,
 			array(
@@ -92,10 +100,10 @@ class RatingStar_JsonLd {
 			)
 		);
 
-		// 403 (json-api-tier / embed-not-authorized) or a transient error: cache
-		// an empty marker briefly and emit nothing, never breaking the page.
+		// 403 (json-api-tier / embed-not-authorized) or a transient error: the
+		// empty marker stored above stays for a short time; emit nothing, never
+		// breaking the page.
 		if ( is_wp_error( $response ) || 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
-			set_transient( self::TRANSIENT_KEY, array(), self::NEGATIVE_TTL );
 			return null;
 		}
 
@@ -103,7 +111,6 @@ class RatingStar_JsonLd {
 
 		// Must look like schema.org JSON-LD (has an @type); otherwise ignore.
 		if ( ! is_array( $data ) || empty( $data['@type'] ) ) {
-			set_transient( self::TRANSIENT_KEY, array(), self::NEGATIVE_TTL );
 			return null;
 		}
 
