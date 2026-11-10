@@ -6,8 +6,10 @@
  * wp_head on the front page. The endpoint is key-based when an API key is set
  * (rename-proof, preferred), otherwise slug-based. The app builds the schema —
  * LocalBusiness with an aggregateRating only when real ratings exist and the
- * plan allows it, a bare LocalBusiness otherwise — and the plugin passes it
- * through unchanged (never inventing or zero-ing a rating). Cached for 6 hours.
+ * plan allows it, a bare LocalBusiness otherwise — and the plugin passes its
+ * content on unchanged (never inventing or zero-ing a rating). The response
+ * itself never reaches the page as raw text: it is decoded, checked to be a
+ * LocalBusiness object and encoded again. Cached for 6 hours.
  *
  * @package RatingStar
  */
@@ -29,6 +31,15 @@ class RatingStar_JsonLd {
 
 	/** Shorter cache for failures (403/tier or transient errors), to retry sooner. */
 	const NEGATIVE_TTL = 15 * MINUTE_IN_SECONDS;
+
+	/** Timeout of the request to RatingStar in seconds. */
+	const HTTP_TIMEOUT = 5;
+
+	/**
+	 * Writes <, >, &, ' and " as \uXXXX: a company name or review text that
+	 * contains "</script>" or "<!--" cannot end or distort the script block.
+	 */
+	const JSON_FLAGS = JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
 
 	/**
 	 * Hooks the JSON-LD output into wp_head.
@@ -59,23 +70,23 @@ class RatingStar_JsonLd {
 			return;
 		}
 
-		// Re-encode the validated data so the output is safe inside <script>
-		// (wp_json_encode escapes "/", preventing a "</script>" break-out).
-		echo "\n" . '<script type="application/ld+json">' . wp_json_encode( $jsonld ) . '</script>' . "\n";
+		// Re-encode the validated data so the output is safe inside <script>.
+		echo "\n" . '<script type="application/ld+json">' . wp_json_encode( $jsonld, self::JSON_FLAGS ) . '</script>' . "\n";
 	}
 
 	/**
 	 * Returns the cached JSON-LD as an array, fetching it on a miss. Null when
 	 * nothing is configured, the request fails (e.g. 403 tier-gating), the
-	 * response is not valid schema, or the cache takes no entries.
+	 * response is not a LocalBusiness object, or the cache takes no entries.
 	 *
 	 * @return array|null
 	 */
 	private function get_jsonld(): ?array {
 		$cached = get_transient( self::TRANSIENT_KEY );
 
+		// An empty array marks a remembered failure.
 		if ( false !== $cached ) {
-			return ( is_array( $cached ) && array() !== $cached ) ? $cached : null;
+			return self::is_local_business( $cached ) ? $cached : null;
 		}
 
 		$url = $this->endpoint();
@@ -95,7 +106,7 @@ class RatingStar_JsonLd {
 		$response = wp_remote_get(
 			$url,
 			array(
-				'timeout'    => 8,
+				'timeout'    => self::HTTP_TIMEOUT,
 				'user-agent' => 'RatingStar-WP/' . RATINGSTAR_VERSION . '; ' . home_url( '/' ),
 			)
 		);
@@ -109,14 +120,24 @@ class RatingStar_JsonLd {
 
 		$data = json_decode( wp_remote_retrieve_body( $response ), true );
 
-		// Must look like schema.org JSON-LD (has an @type); otherwise ignore.
-		if ( ! is_array( $data ) || empty( $data['@type'] ) ) {
+		// Anything but a LocalBusiness object (error page, broken JSON, another
+		// type) is ignored.
+		if ( ! self::is_local_business( $data ) ) {
 			return null;
 		}
 
 		set_transient( self::TRANSIENT_KEY, $data, self::CACHE_TTL );
 
 		return $data;
+	}
+
+	/**
+	 * Whether the value is a decoded schema.org LocalBusiness object.
+	 *
+	 * @param mixed $data Decoded response or cached value.
+	 */
+	private static function is_local_business( $data ): bool {
+		return is_array( $data ) && isset( $data['@type'] ) && 'LocalBusiness' === $data['@type'];
 	}
 
 	/**
