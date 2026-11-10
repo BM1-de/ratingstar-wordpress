@@ -4,7 +4,7 @@ Tags: reviews, customer reviews, review widget, rich snippets, trust seal
 Requires at least: 6.3
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -92,6 +92,15 @@ Service provider: Baumgärtner Marketing GmbH, Germany.
 
 == Changelog ==
 
+= 1.1.1 =
+* Google review stars: the JSON-LD block is written with `<`, `>`, `&` and
+  quotes encoded, so no company name or review text can end or distort it.
+* Google review stars: only a `LocalBusiness` answer is accepted, and the
+  request to ratingstar.de times out after 5 instead of 8 seconds.
+* Google review stars: if WordPress cannot store the cached rating data
+  (read-only database, failing object cache), the plugin prints no block and
+  no longer asks ratingstar.de on every front page view.
+
 = 1.1.0 =
 * Widget names follow the RatingStar portal: rating bar, overall rating, quote,
   carousel, review wall and footer bar (in German: Bewertungsleiste, Gesamtnote,
@@ -119,6 +128,9 @@ Service provider: Baumgärtner Marketing GmbH, Germany.
 * German translations (de_DE and de_DE_formal), including the block editor.
 
 == Upgrade Notice ==
+
+= 1.1.1 =
+Hardening of the Google review stars: stricter output encoding, and no repeated requests to ratingstar.de when the cache cannot store data.
 
 = 1.1.0 =
 Dark look for the live widgets (`theme="dark"`) and the widget names of the RatingStar portal.
