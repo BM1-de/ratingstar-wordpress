@@ -25,9 +25,8 @@ Website zeigen. **RatingStar.de Seal** bringt sie in WordPress:
   Zitat, Karussell, Bewertungswand und Fußleiste.
 * Ein **seitenweites Siegel**: schwebende Profil-Karte oder Fußleiste auf
   jeder Seite — ohne Theme-Anpassung, ohne Block auf jeder einzelnen Seite.
-* **Google-Sterne** — server-seitiges JSON-LD (`LocalBusiness` mit
-  `AggregateRating`), damit Suchmaschinen Sternebewertungen zu Ihrer Seite
-  anzeigen können.
+* **Google-Sterne** — server-seitiges JSON-LD (`AggregateRating`), damit
+  Suchmaschinen Sternebewertungen zu Ihrer Seite anzeigen können.
 * Ein **statischer Bildmodus**: Rundsiegel, Banderole und Profil-Karte als
   reines SVG mit Link aufs Profil — für Umgebungen ohne JavaScript.
 

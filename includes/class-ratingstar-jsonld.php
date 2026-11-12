@@ -5,11 +5,13 @@
  * Fetches the ready-made JSON-LD from the RatingStar app and prints it into
  * wp_head on the front page. The endpoint is key-based when an API key is set
  * (rename-proof, preferred), otherwise slug-based. The app builds the schema —
- * LocalBusiness with an aggregateRating only when real ratings exist and the
- * plan allows it, a bare LocalBusiness otherwise — and the plugin passes its
- * content on unchanged (never inventing or zero-ing a rating). The response
- * itself never reaches the page as raw text: it is decoded, checked to be a
- * LocalBusiness object and encoded again. Cached for 6 hours.
+ * with an aggregateRating only when real ratings exist and the plan allows it,
+ * a bare LocalBusiness otherwise — and the plugin passes its content on
+ * unchanged (never inventing or zero-ing a rating). The schema.org type is
+ * the one set in the RatingStar backend (Product or LocalBusiness); the
+ * plugin asks for it with `?schema=product`. The response itself never
+ * reaches the page as raw text: it is decoded, checked to be one of the two
+ * types and encoded again. Cached for 6 hours.
  *
  * @package RatingStar
  */
@@ -19,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Outputs the RatingStar LocalBusiness JSON-LD for the configured profile.
+ * Outputs the RatingStar JSON-LD for the configured profile.
  */
 class RatingStar_JsonLd {
 
@@ -77,7 +79,7 @@ class RatingStar_JsonLd {
 	/**
 	 * Returns the cached JSON-LD as an array, fetching it on a miss. Null when
 	 * nothing is configured, the request fails (e.g. 403 tier-gating), the
-	 * response is not a LocalBusiness object, or the cache takes no entries.
+	 * response is not a rating object, or the cache takes no entries.
 	 *
 	 * @return array|null
 	 */
@@ -86,7 +88,7 @@ class RatingStar_JsonLd {
 
 		// An empty array marks a remembered failure.
 		if ( false !== $cached ) {
-			return self::is_local_business( $cached ) ? $cached : null;
+			return self::is_rating_object( $cached ) ? $cached : null;
 		}
 
 		$url = $this->endpoint();
@@ -120,9 +122,9 @@ class RatingStar_JsonLd {
 
 		$data = json_decode( wp_remote_retrieve_body( $response ), true );
 
-		// Anything but a LocalBusiness object (error page, broken JSON, another
-		// type) is ignored.
-		if ( ! self::is_local_business( $data ) ) {
+		// Anything but a LocalBusiness or Product object (error page, broken
+		// JSON, another type) is ignored.
+		if ( ! self::is_rating_object( $data ) ) {
 			return null;
 		}
 
@@ -131,18 +133,23 @@ class RatingStar_JsonLd {
 		return $data;
 	}
 
+	/** schema.org types RatingStar answers with, see endpoint(). */
+	const ACCEPTED_TYPES = array( 'LocalBusiness', 'Product' );
+
 	/**
-	 * Whether the value is a decoded schema.org LocalBusiness object.
+	 * Whether the value is a decoded schema.org object of an accepted type.
 	 *
 	 * @param mixed $data Decoded response or cached value.
 	 */
-	private static function is_local_business( $data ): bool {
-		return is_array( $data ) && isset( $data['@type'] ) && 'LocalBusiness' === $data['@type'];
+	private static function is_rating_object( $data ): bool {
+		return is_array( $data ) && isset( $data['@type'] ) && in_array( $data['@type'], self::ACCEPTED_TYPES, true );
 	}
 
 	/**
 	 * Builds the JSON-LD endpoint URL. Key-based when an API key is configured
-	 * (rename-proof, works on all plans), otherwise slug-based.
+	 * (rename-proof, works on all plans), otherwise slug-based. `schema=product`
+	 * tells RatingStar that this plugin can print the Product type; the answer
+	 * is a Product only when that is set in the RatingStar backend.
 	 *
 	 * @return string|null
 	 */
@@ -151,11 +158,11 @@ class RatingStar_JsonLd {
 		$origin   = RatingStar_Plugin::get_origin();
 
 		if ( '' !== $settings['embed_key'] ) {
-			return $origin . '/seal/k/' . rawurlencode( $settings['embed_key'] ) . '.jsonld';
+			return $origin . '/seal/k/' . rawurlencode( $settings['embed_key'] ) . '.jsonld?schema=product';
 		}
 
 		if ( '' !== $settings['profile_slug'] ) {
-			return $origin . '/seal/' . rawurlencode( $settings['profile_slug'] ) . '.jsonld';
+			return $origin . '/seal/' . rawurlencode( $settings['profile_slug'] ) . '.jsonld?schema=product';
 		}
 
 		return null;

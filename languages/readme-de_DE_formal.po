@@ -121,8 +121,8 @@ msgstr "Das Siegel-Skript (<code>seal.js</code>) wird asynchron geladen, und nur
 msgid "A <strong>static image mode</strong>: the round seal, banner seal and profile card as a plain SVG image, linked to your profile — for contexts without JavaScript."
 msgstr "Ein <strong>statischer Bildmodus</strong>: Rundsiegel, Banderole und Profil-Karte als reines SVG mit Link aufs Profil — für Umgebungen ohne JavaScript."
 
-msgid "<strong>Google review stars</strong> — server-side JSON-LD (<code>LocalBusiness</code> with <code>AggregateRating</code>) so search engines can show star ratings for your site."
-msgstr "<strong>Google-Sterne</strong> — server-seitiges JSON-LD (<code>LocalBusiness</code> mit <code>AggregateRating</code>), damit Suchmaschinen Sternebewertungen zu Ihrer Seite anzeigen können."
+msgid "<strong>Google review stars</strong> — server-side JSON-LD (<code>AggregateRating</code>) so search engines can show star ratings for your site."
+msgstr "<strong>Google-Sterne</strong> — server-seitiges JSON-LD (<code>AggregateRating</code>), damit Suchmaschinen Sternebewertungen zu Ihrer Seite anzeigen können."
 
 msgid "A <strong>site-wide seal</strong>: show the floating profile card or the footer bar on every page — no theme edit, no per-page block."
 msgstr "Ein <strong>seitenweites Siegel</strong>: schwebende Profil-Karte oder Fußleiste auf jeder Seite — ohne Theme-Anpassung, ohne Block auf jeder einzelnen Seite."

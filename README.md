@@ -15,8 +15,8 @@ Published on WordPress.org as
   review wall and footer bar; via the `[ratingstar]` shortcode or the
   **RatingStar Seal** block.
 - **Site-wide seal** — floating profile card or footer bar on every page.
-- **Google review stars** — server-side `LocalBusiness` JSON-LD with
-  `AggregateRating` on the front page, key-based and cached for 6 hours.
+- **Google review stars** — server-side JSON-LD with `AggregateRating` on
+  the front page, key-based and cached for 6 hours.
 
 ## Requirements
 

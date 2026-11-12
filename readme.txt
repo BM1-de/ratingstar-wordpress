@@ -16,7 +16,7 @@ Show your customer reviews on your WordPress site: RatingStar seals, review widg
 
 * A **seal widget** in nine variants — the static round seal and banner seal, plus the live widgets: profile card, rating bar, overall rating, quote, carousel, review wall and footer bar.
 * A **site-wide seal**: show the floating profile card or the footer bar on every page — no theme edit, no per-page block.
-* **Google review stars** — server-side JSON-LD (`LocalBusiness` with `AggregateRating`) so search engines can show star ratings for your site.
+* **Google review stars** — server-side JSON-LD (`AggregateRating`) so search engines can show star ratings for your site.
 * A **static image mode**: the round seal, banner seal and profile card as a plain SVG image, linked to your profile — for contexts without JavaScript.
 
 Enter your RatingStar profile slug once under *Settings → RatingStar*, then place the seal anywhere with the `[ratingstar]` shortcode or the **RatingStar Seal** block — or switch on the site-wide seal.
