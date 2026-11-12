@@ -4,7 +4,7 @@ Tags: reviews, customer reviews, review widget, rich snippets, trust seal
 Requires at least: 6.3
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.1.1
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -92,6 +92,12 @@ Service provider: Baumgärtner Marketing GmbH, Germany.
 
 == Changelog ==
 
+= 1.2.0 =
+* Google review stars: the plugin asks RatingStar for the schema.org type set
+  in your RatingStar account ("Google-Sterne" page: Product or LocalBusiness)
+  and accepts both. Until now it accepted `LocalBusiness` only.
+* Texts no longer name a fixed type.
+
 = 1.1.1 =
 * Google review stars: the JSON-LD block is written with `<`, `>`, `&` and
   quotes encoded, so no company name or review text can end or distort it.
@@ -128,6 +134,9 @@ Service provider: Baumgärtner Marketing GmbH, Germany.
 * German translations (de_DE and de_DE_formal), including the block editor.
 
 == Upgrade Notice ==
+
+= 1.2.0 =
+The Google review stars follow the schema.org type set in your RatingStar account (Product or LocalBusiness).
 
 = 1.1.1 =
 Hardening of the Google review stars: stricter output encoding, and no repeated requests to ratingstar.de when the cache cannot store data.
